@@ -1,6 +1,7 @@
 module com.example.bai_tap_lon {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.sql;
 
 
     opens com.example.bai_tap_lon to javafx.fxml;
