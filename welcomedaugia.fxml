@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<VBox fx:id="myLabel" onDragDetected="#onHelloButtonClick" spacing="20.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.main.HelloController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+   <StackPane prefHeight="150.0" prefWidth="200.0">
+      <children>
+         <ImageView fx:id="myBackground" fitHeight="574.0" fitWidth="354.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../../../../../../../Bai_Tap_Lon/src/main/resources/pink_aura_wallpaper.jpg" />
+            </image>
+            <cursor>
+               <Cursor fx:constant="MOVE" />
+            </cursor>
+         </ImageView>
+          <Button fx:id="mySignIn" onAction="#onHelloButtonClick" prefHeight="29.0" prefWidth="59.0" text="LOG IN" translateY="-3.0" />
+         <StackPane prefHeight="91.0" prefWidth="151.0">
+            <children>
+               <Text fx:id="myText" fill="#3675c2" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="ĐẤU GIÁ UY TÍN" translateY="-40.0">
+                  <font>
+                     <Font name="System Bold" size="23.0" />
+                  </font>
+               </Text>
+               <Button fx:id="mySignUp" mnemonicParsing="false" onAction="#onHelloButtonClick" prefHeight="31.0" prefWidth="61.0" text="SIGN UP" translateY="37.0" />
+            </children>
+         </StackPane>
+      </children>
+   </StackPane>
+
+          <Label fx:id="welcomeText" />
+</VBox>
