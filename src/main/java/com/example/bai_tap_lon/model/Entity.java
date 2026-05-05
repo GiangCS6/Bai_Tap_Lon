@@ -1,4 +1,13 @@
 package com.example.bai_tap_lon.model;
 
-public class Entity {
+public abstract class Entity {
+    private final int id;
+
+    protected Entity(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
 }

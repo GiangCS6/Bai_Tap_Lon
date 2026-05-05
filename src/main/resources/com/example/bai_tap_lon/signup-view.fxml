@@ -1,14 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="CONTROLLER_NAME"
-            prefHeight="400.0" prefWidth="600.0">
+<VBox alignment="CENTER" prefHeight="460.0" prefWidth="600.0" spacing="14.0"
+      style="-fx-background-color: #f6f8fb;"
+      xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.bai_tap_lon.controller.LoginController">
+    <padding>
+        <Insets bottom="32.0" left="48.0" right="48.0" top="32.0" />
+    </padding>
 
-</AnchorPane>
+    <Label style="-fx-font-size: 28; -fx-font-weight: bold; -fx-text-fill: #1f3349;" text="Tao tai khoan" />
+    <Label style="-fx-text-fill: #607080;" text="Nhap thong tin de bat dau dau gia" />
+
+    <VBox maxWidth="360.0" spacing="10.0">
+        <TextField prefHeight="38.0" promptText="Ho va ten" />
+        <TextField prefHeight="38.0" promptText="Email" />
+        <TextField prefHeight="38.0" promptText="Ten dang nhap" />
+        <PasswordField prefHeight="38.0" promptText="Mat khau" />
+        <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#handleCreateAccount" prefHeight="38.0"
+                style="-fx-background-color: #265f9f; -fx-text-fill: white; -fx-font-weight: bold;"
+                text="SIGN UP" />
+        <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#showLogin" prefHeight="36.0"
+                style="-fx-background-color: transparent; -fx-border-color: #265f9f; -fx-text-fill: #265f9f;"
+                text="Da co tai khoan" />
+        <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#showWelcome" prefHeight="32.0"
+                style="-fx-background-color: transparent; -fx-text-fill: #607080;"
+                text="Quay lai" />
+    </VBox>
+</VBox>
