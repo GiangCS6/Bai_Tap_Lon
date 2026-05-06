@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="376.0" prefWidth="598.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.login.LoginController">
+   <children>
+      <ImageView fitHeight="403.0" fitWidth="598.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../438abc001afe1b036fb795b7d34bb99f.jpg" />
+         </image>
+      </ImageView>
+      <Label text="log in" textFill="#57a1c3" translateY="-140.0">
+         <font>
+            <Font name=".VnStamp Normal" size="44.0" />
+         </font>
+      </Label>
+      <Label text="user name" textFill="#57a1c3" translateY="-85.0">
+         <font>
+            <Font name=".VnStamp Normal" size="16.0" />
+         </font>
+      </Label>
+      <Label text="password" textFill="#57a1c3" translateY="-10.0">
+         <font>
+            <Font name=".VnStamp Normal" size="16.0" />
+         </font>
+      </Label>
+      <Button mnemonicParsing="false" text="log in" textFill="#57a1c3" translateY="95.0">
+         <font>
+            <Font name=".VnStamp Normal" size="21.0" />
+         </font>
+      </Button>
+      <TextField maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="22.0" prefWidth="200.0" translateY="-50.0" />
+      <TextField layoutX="209.0" layoutY="185.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="22.0" prefWidth="200.0" translateY="25.0" />
+      <CheckBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" text="Remember me" textFill="#57a1c3" translateX="-95.0" translateY="49.0">
+         <font>
+            <Font name="Times New Roman Bold Italic" size="14.0" />
+         </font>
+      </CheckBox>
+      <Hyperlink onAction="#onSignUpButtonClick" text="Don't have account? Create" translateX="95.0" translateY="49.0">
+         <font>
+            <Font name="Times New Roman Bold" size="14.0" />
+         </font>
+      </Hyperlink>
+   </children>
+</StackPane>
