@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" prefHeight="306.0" prefWidth="450.0" spacing="20.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/25" fx:controller="org.example.homepage.HelloController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+   <StackPane prefHeight="150.0" prefWidth="200.0">
+      <children>
+         <ImageView fitHeight="408.0" fitWidth="572.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../../4028675968ae94377cb57a0cbbd01900.jpg" />
+            </image>
+         </ImageView>
+          <Button onAction="#onHelloButtonClick" text="Hello!" />
+      </children>
+   </StackPane>
+
+    <Label fx:id="welcomeText" />
+</VBox>
