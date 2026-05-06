@@ -13,7 +13,7 @@ public class LoginService {
     public LoginService() {
         createUserTable();
         migrateRoleColumn();
-        insertSampleUsers();
+        //insertSampleUsers();
     }
 
     private void createUserTable() {
@@ -55,13 +55,12 @@ public class LoginService {
         }
     }
 
-    public boolean register(String username, String password, String role) {
-        String sql = "INSERT INTO users (username, password, role) VALUES (?, ?, ?)";
+    public boolean register(String username, String password) {
+        String sql = "INSERT INTO users (username, password) VALUES (?, ?)";
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, username);
             pstmt.setString(2, password);
-            pstmt.setString(3, role);
             pstmt.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -69,7 +68,7 @@ public class LoginService {
         }
     }
 
-    public boolean authenticate(String username, String password, String role) {
+    public boolean authenticate(String username, String password) {
         String sql = "SELECT password, role FROM users WHERE username = ?";
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -80,7 +79,7 @@ public class LoginService {
             if (rs.next()) {
                 String dbPassword = rs.getString("password");
                 String dbRole = rs.getString("role");
-                return dbPassword.equals(password) && (dbRole == null || dbRole.equals(role));
+                return dbPassword.equals(password);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -88,11 +87,34 @@ public class LoginService {
         return false;
     }
 
-    public void insertSampleUsers() {
-        register("admin", "admin123", "Admin");
-        register("seller1", "123456", "Seller");
-        register("bidder1", "123456", "Bidder");
+    public String authenticateAndGetRole(String username, String password) {
+        String sql = "SELECT password, role FROM users WHERE username = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, username);
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                String dbPassword = rs.getString("password");
+                String dbRole = rs.getString("role");
+
+                if (dbPassword.equals(password)) {
+                    return dbRole != null ? dbRole : "Bidder"; // fallback nếu role null
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null; // sai username hoặc password
     }
+    // tài khoản mẫuseller
+//    public void insertSampleUsers() {
+//        register("admin", "admin123", "Admin");
+//        register("seller1", "123456", "Seller");
+//        register("bidder1", "123456", "Bidder");
+//    }
 
     private boolean isTableEmpty() {
         String sql = "SELECT COUNT(*) FROM users";

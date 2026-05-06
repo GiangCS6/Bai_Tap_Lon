@@ -5,15 +5,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.io.IOException;
 
 public class LoginController {
 
     @FXML private TextField txtUsername;
-    @FXML private PasswordField txtPassword;
-    @FXML private ComboBox<String> cbRole;
+    @FXML private TextField txtPassword;
     @FXML private Button btnLogin;
 
     private final LoginService loginService = new LoginService();
@@ -22,20 +23,21 @@ public class LoginController {
     private void handleLogin() {
         String username = txtUsername.getText().trim();
         String password = txtPassword.getText().trim();
-        String role = cbRole.getValue();
 
-        if (username.isEmpty() || password.isEmpty() || role == null) {
-            showAlert(Alert.AlertType.WARNING, "Thiếu thông tin", "Vui lòng nhập đầy đủ thông tin và chọn vai trò!");
+        if (username.isEmpty() || password.isEmpty()) {
+            showAlert(Alert.AlertType.WARNING, "Thiếu thông tin", "Vui lòng nhập tên đăng nhập và mật khẩu!");
             return;
         }
 
-        boolean success = loginService.authenticate(username, password, role);
+        // Gọi service mới - tự động lấy role từ DB
+        String role = loginService.authenticateAndGetRole(username, password);
 
-        if (success) {
-            showAlert(Alert.AlertType.INFORMATION, "Thành công", "Đăng nhập thành công với vai trò: " + role);
+        if (role != null) {
+            showAlert(Alert.AlertType.INFORMATION, "Thành công",
+                    "Đăng nhập thành công với vai trò: " + role);
             openMainScreen(role);
         } else {
-            showAlert(Alert.AlertType.ERROR, "Thất bại", "Sai tài khoản, mật khẩu hoặc vai trò!");
+            showAlert(Alert.AlertType.ERROR, "Thất bại", "Sai tên đăng nhập hoặc mật khẩu!");
         }
     }
 

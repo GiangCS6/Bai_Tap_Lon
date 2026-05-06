@@ -78,7 +78,7 @@ public class AdminController {
         dialog.setHeaderText("Nhập thông tin user");
         dialog.setContentText("Username:");
 
-        dialog.showAndWait().ifPresent(username -> {
+        /*dialog.showAndWait().ifPresent(username -> {
             // Tạm thời thêm user mẫu, sau này sẽ làm form đầy đủ
             boolean success = loginService.register(username, "123456", "Bidder");
             if (success) {
@@ -87,7 +87,7 @@ public class AdminController {
             } else {
                 appendLog("❌ Username đã tồn tại!");
             }
-        });
+        });*/
     }
 
     private void editUser(User user) {

@@ -34,13 +34,13 @@ public class SignupController {
             return;
         }
 
-        boolean success = loginService.register(username, password, role);
+        boolean success = loginService.register(username, password);
 
         if (success) {
             showAlert(Alert.AlertType.INFORMATION, "Thành công", "Đăng ký tài khoản thành công!\nBạn có thể đăng nhập ngay.");
             goToLogin();
         } else {
-            showAlert(Alert.AlertType.ERROR, "Thất bại", "Username đã tồn tại!");
+            showAlert(Alert.AlertType.ERROR, "Thất bại", "Username đã tồn tại!" + username + password + role);
         }
     }
 

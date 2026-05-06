@@ -27,16 +27,6 @@
             <PasswordField fx:id="txtPassword" promptText="Nhập mật khẩu" prefWidth="280"/>
         </VBox>
 
-        <ComboBox fx:id="cbRole" promptText="Chọn vai trò" prefWidth="280">
-            <items>
-                <FXCollections fx:factory="observableArrayList">
-                    <String fx:value="Bidder"/>
-                    <String fx:value="Seller"/>
-                    <String fx:value="Admin"/>
-                </FXCollections>
-            </items>
-        </ComboBox>
-
         <Button fx:id="btnLogin" text="ĐĂNG NHẬP" onAction="#handleLogin"
                 prefWidth="280" style="-fx-base: #2196F3; -fx-text-fill: white; -fx-font-size: 15px;"/>
 

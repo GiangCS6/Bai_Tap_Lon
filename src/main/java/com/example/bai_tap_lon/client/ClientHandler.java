@@ -22,6 +22,7 @@ public class ClientHandler implements Runnable {
         void onConnectionClosed();
     }
 
+    // Constructor
     public ClientHandler(String host, int port, AuctionListener listener) throws IOException {
         this.listener = listener;
         this.socket = new Socket(host, port);
@@ -30,6 +31,7 @@ public class ClientHandler implements Runnable {
         System.out.println("✅ Client đã kết nối Server: " + host + ":" + port);
     }
 
+    // thử chạy processMessage nếu có line
     @Override
     public void run() {
         try {
@@ -44,6 +46,7 @@ public class ClientHandler implements Runnable {
         }
     }
 
+    //
     private void processMessage(String msg) {
         Platform.runLater(() -> {
             if (msg.startsWith("LOGIN_SUCCESS:")) {
