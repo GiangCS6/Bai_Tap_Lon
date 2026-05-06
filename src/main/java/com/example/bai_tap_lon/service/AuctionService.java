@@ -5,6 +5,7 @@ import com.example.bai_tap_lon.model.AuctionItem;
 import com.example.bai_tap_lon.model.AuctionStatus;
 import com.example.bai_tap_lon.model.Bid;
 import com.example.bai_tap_lon.model.Bidder;
+import com.example.bai_tap_lon.model.ProductReview;
 import com.example.bai_tap_lon.model.Seller;
 import com.example.bai_tap_lon.model.User;
 import com.example.bai_tap_lon.model.UserRole;
@@ -129,6 +130,19 @@ public class AuctionService {
         }
 
         item.addBid(new Bid(bidder, amount, LocalDateTime.now()));
+    }
+
+    public void reviewItem(User reviewer, AuctionItem item, int rating, String comment) throws AuctionException {
+        requireItem(item);
+        if (reviewer == null || reviewer.getRole() != UserRole.BIDDER) {
+            throw new AuctionException("Chi tai khoan Bidder moi duoc danh gia san pham.");
+        }
+        if (rating < 1 || rating > 5) {
+            throw new AuctionException("Diem danh gia phai tu 1 den 5.");
+        }
+        requireText(comment, "Noi dung danh gia");
+
+        item.addOrReplaceReview(new ProductReview(reviewer, rating, comment.trim(), LocalDateTime.now()));
     }
 
     public void markPaid(User actor, AuctionItem item) throws AuctionException {

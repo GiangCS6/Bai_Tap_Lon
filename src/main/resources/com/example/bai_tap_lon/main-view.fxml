@@ -147,9 +147,27 @@
                                     <Label fx:id="detailCurrentPriceLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                     <Label text="Nguoi dan dau:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
                                     <Label fx:id="detailLeaderLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                    <Label text="Danh gia:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+                                    <Label fx:id="averageRatingLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                                 </GridPane>
-                                <Label style="-fx-font-weight: bold;" text="Lich su dau gia" />
-                                <ListView fx:id="bidHistoryList" VBox.vgrow="ALWAYS" />
+                                <HBox spacing="14.0" VBox.vgrow="ALWAYS">
+                                    <VBox spacing="8.0" HBox.hgrow="ALWAYS">
+                                        <Label style="-fx-font-weight: bold;" text="Lich su dau gia" />
+                                        <ListView fx:id="bidHistoryList" VBox.vgrow="ALWAYS" />
+                                    </VBox>
+                                    <VBox prefWidth="420.0" spacing="8.0">
+                                        <Label style="-fx-font-weight: bold;" text="Danh gia san pham" />
+                                        <HBox spacing="8.0">
+                                            <Label text="Diem:" />
+                                            <ComboBox fx:id="ratingComboBox" prefWidth="90.0" />
+                                            <Button fx:id="submitReviewButton" mnemonicParsing="false" onAction="#handleSubmitReview"
+                                                    style="-fx-background-color: #265f9f; -fx-text-fill: white;"
+                                                    text="Gui danh gia" />
+                                        </HBox>
+                                        <TextArea fx:id="reviewCommentArea" prefRowCount="3" promptText="Nhan xet ve san pham" wrapText="true" />
+                                        <ListView fx:id="reviewList" VBox.vgrow="ALWAYS" />
+                                    </VBox>
+                                </HBox>
                             </VBox>
                         </Tab>
 
