@@ -3,7 +3,6 @@ package com.example.bai_tap_lon.controller;
 import com.example.bai_tap_lon.model.AuctionItem;
 import com.example.bai_tap_lon.model.AuctionStatus;
 import com.example.bai_tap_lon.model.Bid;
-import com.example.bai_tap_lon.model.ProductReview;
 import com.example.bai_tap_lon.model.User;
 import com.example.bai_tap_lon.model.UserRole;
 import com.example.bai_tap_lon.service.AuctionException;
@@ -103,8 +102,6 @@ public class MainController {
     @FXML
     private Label detailLeaderLabel;
     @FXML
-    private Label averageRatingLabel;
-    @FXML
     private ComboBox<AuctionItem> bidItemComboBox;
     @FXML
     private TextField bidAmountField;
@@ -112,14 +109,6 @@ public class MainController {
     private Button bidButton;
     @FXML
     private ListView<String> bidHistoryList;
-    @FXML
-    private ComboBox<Integer> ratingComboBox;
-    @FXML
-    private TextArea reviewCommentArea;
-    @FXML
-    private Button submitReviewButton;
-    @FXML
-    private ListView<String> reviewList;
     @FXML
     private VBox sellerPane;
     @FXML
@@ -149,8 +138,6 @@ public class MainController {
     public void initialize() {
         signupRoleBox.setItems(FXCollections.observableArrayList(UserRole.BIDDER, UserRole.SELLER, UserRole.ADMIN));
         signupRoleBox.setValue(UserRole.BIDDER);
-        ratingComboBox.setItems(FXCollections.observableArrayList(1, 2, 3, 4, 5));
-        ratingComboBox.setValue(5);
 
         nameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getName()));
         priceColumn.setCellValueFactory(data -> new SimpleStringProperty(formatMoney(data.getValue().getCurrentHighestPrice())));
@@ -256,18 +243,6 @@ public class MainController {
     }
 
     @FXML
-    public void handleSubmitReview() {
-        try {
-            service.reviewItem(currentUser, selectedItem(), ratingComboBox.getValue(), reviewCommentArea.getText());
-            reviewCommentArea.clear();
-            refreshView();
-            showMessage("Da gui danh gia san pham.");
-        } catch (AuctionException ex) {
-            showMessage(ex.getMessage());
-        }
-    }
-
-    @FXML
     public void handleAddItem() {
         try {
             AuctionItem item = service.addItem(
@@ -355,7 +330,6 @@ public class MainController {
         boolean isAdmin = loggedIn && user.getRole() == UserRole.ADMIN;
 
         bidButton.setDisable(!isBidder);
-        submitReviewButton.setDisable(!isBidder);
         sellerPane.setDisable(!isSeller);
         adminPane.setDisable(!isAdmin);
         liveAuctionTab.setDisable(!isBidder);
@@ -412,9 +386,7 @@ public class MainController {
             detailStatusLabel.setText("-");
             detailCurrentPriceLabel.setText("-");
             detailLeaderLabel.setText("-");
-            averageRatingLabel.setText("-");
             bidHistoryList.setItems(FXCollections.observableArrayList());
-            reviewList.setItems(FXCollections.observableArrayList());
             return;
         }
 
@@ -426,15 +398,9 @@ public class MainController {
         detailStatusLabel.setText(item.getStatus().name());
         detailCurrentPriceLabel.setText(formatMoney(item.getCurrentHighestPrice()));
         detailLeaderLabel.setText(service.getWinner(item).map(User::getFullName).orElse("Chua co"));
-        averageRatingLabel.setText(formatAverageRating(item));
         bidHistoryList.setItems(FXCollections.observableArrayList(
                 item.getBids().stream()
                         .map(this::formatBid)
-                        .collect(Collectors.toList())
-        ));
-        reviewList.setItems(FXCollections.observableArrayList(
-                item.getReviews().stream()
-                        .map(this::formatReview)
                         .collect(Collectors.toList())
         ));
     }
@@ -488,23 +454,6 @@ public class MainController {
 
     private String formatBid(Bid bid) {
         return formatDateTime(bid.getCreatedAt()) + " - " + bid.getBidder().getFullName() + ": " + formatMoney(bid.getAmount());
-    }
-
-    private String formatAverageRating(AuctionItem item) {
-        if (item.getReviews().isEmpty()) {
-            return "Chua co danh gia";
-        }
-        return String.format(Locale.US, "%.1f/5 (%d danh gia)", item.getAverageRating(), item.getReviews().size());
-    }
-
-    private String formatReview(ProductReview review) {
-        return formatDateTime(review.getCreatedAt())
-                + " - "
-                + review.getReviewer().getFullName()
-                + " - "
-                + review.getRating()
-                + "/5: "
-                + review.getComment();
     }
 
     private void clearSignupFields() {

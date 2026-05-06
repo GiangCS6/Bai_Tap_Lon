@@ -17,7 +17,6 @@ public class AuctionItem extends Entity {
     private final User seller;
     private User leadingBidder;
     private final List<Bid> bids = new ArrayList<>();
-    private final List<ProductReview> reviews = new ArrayList<>();
 
     public AuctionItem(
             int id,
@@ -111,25 +110,6 @@ public class AuctionItem extends Entity {
 
     public List<Bid> getBids() {
         return Collections.unmodifiableList(bids);
-    }
-
-    public void addOrReplaceReview(ProductReview review) {
-        reviews.removeIf(existingReview -> existingReview.getReviewer().getId() == review.getReviewer().getId());
-        reviews.add(review);
-    }
-
-    public List<ProductReview> getReviews() {
-        return Collections.unmodifiableList(reviews);
-    }
-
-    public double getAverageRating() {
-        if (reviews.isEmpty()) {
-            return 0;
-        }
-        return reviews.stream()
-                .mapToInt(ProductReview::getRating)
-                .average()
-                .orElse(0);
     }
 
     public boolean isEditableBy(User user) {
