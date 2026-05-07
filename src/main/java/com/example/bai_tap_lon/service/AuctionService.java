@@ -22,6 +22,39 @@ public class AuctionService {
     private final List<AuctionItem> items = new ArrayList<>();
 
     public AuctionService() {
+        loadData();
+    }
+
+    /**
+     * Tải dữ liệu từ file
+     */
+    private void loadData() {
+        try {
+            // Load users
+            DataPersistence.UserLoadData userData = DataPersistence.loadUsers();
+            users.addAll(userData.users);
+            nextUserId = userData.nextUserId;
+
+            // Load items
+            DataPersistence.ItemLoadData itemData = DataPersistence.loadItems(users);
+            items.addAll(itemData.items);
+            nextItemId = itemData.nextItemId;
+        } catch (Exception e) {
+            System.err.println("Lỗi khi tải dữ liệu: " + e.getMessage());
+            // Nếu có lỗi, tiếp tục với dữ liệu trống
+        }
+    }
+
+    /**
+     * Lưu dữ liệu vào file
+     */
+    private void saveData() {
+        try {
+            DataPersistence.saveUsers(users, nextUserId);
+            DataPersistence.saveItems(items, nextItemId);
+        } catch (Exception e) {
+            System.err.println("Lỗi khi lưu dữ liệu: " + e.getMessage());
+        }
     }
 
     public User login(String username, String password) throws AuctionException {
@@ -29,17 +62,17 @@ public class AuctionService {
                 .filter(user -> user.getUsername().equalsIgnoreCase(username.trim()))
                 .filter(user -> user.hasPassword(password))
                 .findFirst()
-                .orElseThrow(() -> new AuctionException("Sai ten dang nhap hoac mat khau."));
+                .orElseThrow(() -> new AuctionException("Sai tên đăng nhập hoặc mật khẩu."));
     }
 
     public User register(String username, String password, String fullName, UserRole role) throws AuctionException {
-        requireText(username, "Ten dang nhap");
-        requireText(password, "Mat khau");
-        requireText(fullName, "Ho ten");
+        requireText(username, "Tên đăng nhập");
+        requireText(password, "Mật khẩu");
+        requireText(fullName, "Họ tên");
 
         boolean exists = users.stream().anyMatch(user -> user.getUsername().equalsIgnoreCase(username.trim()));
         if (exists) {
-            throw new AuctionException("Ten dang nhap da ton tai.");
+            throw new AuctionException("Tên đăng nhập đã tồn tại.");
         }
 
         User user = switch (role) {
@@ -48,6 +81,7 @@ public class AuctionService {
             case BIDDER -> new Bidder(nextUserId++, username.trim(), password, fullName.trim());
         };
         users.add(user);
+        saveData();
         return user;
     }
 
@@ -69,6 +103,7 @@ public class AuctionService {
         AuctionItem item = new AuctionItem(nextItemId++, name.trim(), description.trim(), startingPrice, startTime, endTime, seller);
         items.add(item);
         updateStatus(item, LocalDateTime.now());
+        saveData();
         return item;
     }
 
@@ -83,10 +118,10 @@ public class AuctionService {
     ) throws AuctionException {
         requireItem(item);
         if (!item.isEditableBy(actor)) {
-            throw new AuctionException("Ban khong co quyen sua san pham nay.");
+            throw new AuctionException("Bạn không có quyền sửa sản phẩm này.");
         }
         if (!item.getBids().isEmpty()) {
-            throw new AuctionException("Khong the sua san pham da co nguoi dau gia.");
+            throw new AuctionException("Không thể sửa sản phẩm đã có người đấu giá.");
         }
 
         validateItem(name, startingPrice, startTime, endTime);
@@ -98,37 +133,40 @@ public class AuctionService {
         item.setEndTime(endTime);
         item.setStatus(AuctionStatus.OPEN);
         updateStatus(item, LocalDateTime.now());
+        saveData();
     }
 
     public void deleteItem(User actor, AuctionItem item) throws AuctionException {
         requireItem(item);
         if (!item.isEditableBy(actor)) {
-            throw new AuctionException("Ban khong co quyen xoa san pham nay.");
+            throw new AuctionException("Bạn không có quyền xóa sản phẩm này.");
         }
         if (!item.getBids().isEmpty()) {
-            throw new AuctionException("Khong the xoa san pham da co nguoi dau gia.");
+            throw new AuctionException("Không thể xóa sản phẩm đã có người đấu giá.");
         }
         items.remove(item);
+        saveData();
     }
 
     public void placeBid(User bidder, AuctionItem item, BigDecimal amount) throws AuctionException {
         requireItem(item);
         if (bidder == null || bidder.getRole() != UserRole.BIDDER) {
-            throw new AuctionException("Chi tai khoan Bidder moi duoc dat gia.");
+            throw new AuctionException("Chỉ tài khoản người đấu giá mới được đặt giá.");
         }
         if (item.getSeller().getId() == bidder.getId()) {
-            throw new AuctionException("Nguoi ban khong duoc dau gia san pham cua minh.");
+            throw new AuctionException("Người bán không được đấu giá sản phẩm của mình.");
         }
 
         updateStatus(item, LocalDateTime.now());
         if (item.getStatus() != AuctionStatus.RUNNING) {
-            throw new AuctionException("Phien dau gia khong o trang thai RUNNING.");
+            throw new AuctionException("Phiên đấu giá không ở trạng thái đang diễn ra.");
         }
         if (amount == null || amount.compareTo(item.getCurrentHighestPrice()) <= 0) {
-            throw new AuctionException("Gia dau phai cao hon gia hien tai.");
+            throw new AuctionException("Không thể đặt giá sản phẩm thấp hơn giá hiện tại");
         }
 
         item.addBid(new Bid(bidder, amount, LocalDateTime.now()));
+        saveData();
     }
 
     public void markPaid(User actor, AuctionItem item) throws AuctionException {
@@ -136,18 +174,20 @@ public class AuctionService {
         requireItem(item);
         updateStatus(item, LocalDateTime.now());
         if (item.getStatus() != AuctionStatus.FINISHED) {
-            throw new AuctionException("Chi phien FINISHED moi co the chuyen sang PAID.");
+            throw new AuctionException("Chỉ phiên đã kết thúc mới có thể chuyển sang đã thanh toán.");
         }
         item.setStatus(AuctionStatus.PAID);
+        saveData();
     }
 
     public void cancel(User actor, AuctionItem item) throws AuctionException {
         requireAdmin(actor);
         requireItem(item);
         if (item.getStatus() == AuctionStatus.PAID) {
-            throw new AuctionException("Khong the huy phien da thanh toan.");
+            throw new AuctionException("Không thể hủy phiên đã thanh toán.");
         }
         item.setStatus(AuctionStatus.CANCELED);
+        saveData();
     }
 
     public Optional<User> getWinner(AuctionItem item) {
@@ -177,36 +217,36 @@ public class AuctionService {
 
     private void validateItem(String name, BigDecimal startingPrice, LocalDateTime startTime, LocalDateTime endTime)
             throws AuctionException {
-        requireText(name, "Ten san pham");
+        requireText(name, "Tên sản phẩm");
         if (startingPrice == null || startingPrice.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new AuctionException("Gia khoi diem phai lon hon 0.");
+            throw new AuctionException("Giá khởi điểm phải lớn hơn 0.");
         }
         if (startTime == null || endTime == null || !endTime.isAfter(startTime)) {
-            throw new AuctionException("Thoi gian ket thuc phai sau thoi gian bat dau.");
+            throw new AuctionException("Thời gian kết thúc phải sau thời gian bắt đầu.");
         }
     }
 
     private void requireSeller(User seller) throws AuctionException {
         if (seller == null || seller.getRole() != UserRole.SELLER) {
-            throw new AuctionException("Chi tai khoan Seller moi duoc quan ly san pham.");
+            throw new AuctionException("Chỉ tài khoản người bán mới được quản lý sản phẩm.");
         }
     }
 
     private void requireAdmin(User actor) throws AuctionException {
         if (actor == null || actor.getRole() != UserRole.ADMIN) {
-            throw new AuctionException("Chi Admin moi duoc thuc hien thao tac nay.");
+            throw new AuctionException("Chỉ quản trị viên mới được thực hiện thao tác này.");
         }
     }
 
     private void requireItem(AuctionItem item) throws AuctionException {
         if (item == null) {
-            throw new AuctionException("Vui long chon mot phien dau gia.");
+            throw new AuctionException("Vui lòng chọn một phiên đấu giá.");
         }
     }
 
     private void requireText(String value, String fieldName) throws AuctionException {
         if (value == null || value.trim().isEmpty()) {
-            throw new AuctionException(fieldName + " khong duoc de trong.");
+            throw new AuctionException(fieldName + " không được để trống.");
         }
     }
 }

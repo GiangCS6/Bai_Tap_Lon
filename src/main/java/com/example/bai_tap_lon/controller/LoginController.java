@@ -42,7 +42,7 @@ public class LoginController {
     @FXML
     public void handleLogin(ActionEvent event) throws IOException {
         if (isBlank(usernameField) || isBlank(passwordField)) {
-            showMessage("Vui long nhap day du ten dang nhap va mat khau.");
+            showMessage("Vui lòng nhập đầy đủ tên đăng nhập và mật khẩu.");
             return;
         }
 
@@ -72,7 +72,7 @@ public class LoginController {
     private void switchScene(ActionEvent event, String fxmlName, double width, double height) throws IOException {
         URL fxml = Application.class.getResource(fxmlName);
         if (fxml == null) {
-            throw new IOException("Cannot find " + fxmlName);
+            throw new IOException("Không tìm thấy " + fxmlName + ".");
         }
 
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

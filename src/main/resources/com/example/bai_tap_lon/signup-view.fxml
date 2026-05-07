@@ -15,22 +15,22 @@
         <Insets bottom="32.0" left="48.0" right="48.0" top="32.0" />
     </padding>
 
-    <Label style="-fx-font-size: 28; -fx-font-weight: bold; -fx-text-fill: #1f3349;" text="Tao tai khoan" />
-    <Label style="-fx-text-fill: #607080;" text="Nhap thong tin de bat dau dau gia" />
+    <Label style="-fx-font-size: 28; -fx-font-weight: bold; -fx-text-fill: #1f3349;" text="Tạo tài khoản" />
+    <Label style="-fx-text-fill: #607080;" text="Nhập thông tin để bắt đầu đấu giá." />
 
     <VBox maxWidth="360.0" spacing="10.0">
-        <TextField prefHeight="38.0" promptText="Ho va ten" />
-        <TextField prefHeight="38.0" promptText="Email" />
-        <TextField prefHeight="38.0" promptText="Ten dang nhap" />
-        <PasswordField prefHeight="38.0" promptText="Mat khau" />
+        <TextField prefHeight="38.0" promptText="Họ và tên" />
+        <TextField prefHeight="38.0" promptText="Địa chỉ thư điện tử" />
+        <TextField prefHeight="38.0" promptText="Tên đăng nhập" />
+        <PasswordField prefHeight="38.0" promptText="Mật khẩu" />
         <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#handleCreateAccount" prefHeight="38.0"
                 style="-fx-background-color: #265f9f; -fx-text-fill: white; -fx-font-weight: bold;"
-                text="SIGN UP" />
+                text="Đăng ký" />
         <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#showLogin" prefHeight="36.0"
                 style="-fx-background-color: transparent; -fx-border-color: #265f9f; -fx-text-fill: #265f9f;"
-                text="Da co tai khoan" />
+                text="Đã có tài khoản" />
         <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#showWelcome" prefHeight="32.0"
                 style="-fx-background-color: transparent; -fx-text-fill: #607080;"
-                text="Quay lai" />
+                text="Quay lại" />
     </VBox>
 </VBox>

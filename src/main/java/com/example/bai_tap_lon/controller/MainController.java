@@ -29,7 +29,9 @@ import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class MainController {
@@ -38,6 +40,7 @@ public class MainController {
     private final NumberFormat moneyFormat = NumberFormat.getNumberInstance(Locale.US);
 
     private User currentUser;
+    private String latestCompletionMessage;
 
     @FXML
     private TextField loginUsernameField;
@@ -84,6 +87,8 @@ public class MainController {
     @FXML
     private TableColumn<AuctionItem, String> statusColumn;
     @FXML
+    private TableColumn<AuctionItem, String> ownerColumn;
+    @FXML
     private TableColumn<AuctionItem, String> endTimeColumn;
     @FXML
     private Label detailNameLabel;
@@ -101,6 +106,8 @@ public class MainController {
     private Label detailCurrentPriceLabel;
     @FXML
     private Label detailLeaderLabel;
+    @FXML
+    private Label detailStartingPriceLabel;
     @FXML
     private ComboBox<AuctionItem> bidItemComboBox;
     @FXML
@@ -141,7 +148,8 @@ public class MainController {
 
         nameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getName()));
         priceColumn.setCellValueFactory(data -> new SimpleStringProperty(formatMoney(data.getValue().getCurrentHighestPrice())));
-        statusColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getStatus().name()));
+        statusColumn.setCellValueFactory(data -> new SimpleStringProperty(formatStatus(data.getValue())));
+        ownerColumn.setCellValueFactory(data -> new SimpleStringProperty(formatOwner(data.getValue())));
         endTimeColumn.setCellValueFactory(data -> new SimpleStringProperty(formatDateTime(data.getValue().getEndTime())));
 
         auctionTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -191,7 +199,7 @@ public class MainController {
             authMessageLabel.setText("");
             loginPasswordField.clear();
             setCurrentUser(currentUser);
-            showMessage("Dang nhap thanh cong.");
+            showMessage(latestCompletionMessage != null ? latestCompletionMessage : "Đăng nhập thành công.");
         } catch (AuctionException ex) {
             authMessageLabel.setText(ex.getMessage());
         }
@@ -210,7 +218,7 @@ public class MainController {
             currentUser = null;
             setCurrentUser(null);
             showAuthChoice();
-            authMessageLabel.setText("Dang ky thanh cong. Hay dang nhap bang tai khoan vua tao.");
+            authMessageLabel.setText("Đăng ký thành công. Hãy đăng nhập bằng tài khoản vừa tạo.");
         } catch (AuctionException ex) {
             authMessageLabel.setText(ex.getMessage());
         }
@@ -221,24 +229,28 @@ public class MainController {
         setCurrentUser(null);
         loginUsernameField.clear();
         loginPasswordField.clear();
-        showMessage("Da dang xuat.");
+        showMessage("Đã đăng xuất.");
     }
 
     @FXML
     public void handleRefresh() {
         refreshView();
-        showMessage("Da cap nhat danh sach phien dau gia.");
+        showMessage(latestCompletionMessage != null ? latestCompletionMessage : "Đã cập nhật danh sách phiên đấu giá.");
     }
 
     @FXML
     public void handlePlaceBid() {
         try {
-            service.placeBid(currentUser, selectedBidItem(), parseMoney(bidAmountField.getText()));
+            AuctionItem item = selectedBidItem();
+            service.placeBid(currentUser, item, parseMoney(bidAmountField.getText()));
             bidAmountField.clear();
             refreshView();
-            showMessage("Dat gia thanh cong.");
-        } catch (AuctionException | NumberFormatException ex) {
+            auctionTable.refresh();
+            showMessage("Đặt giá thành công.");
+        } catch (AuctionException ex) {
             showMessage(ex.getMessage());
+        } catch (NumberFormatException ex) {
+            showMessage("Giá tiền không hợp lệ.");
         }
     }
 
@@ -254,10 +266,16 @@ public class MainController {
                     parseDateTime(itemEndTimeField.getText())
             );
             refreshView();
-            auctionTable.getSelectionModel().select(item);
-            showMessage("Da them san pham dau gia.");
-        } catch (AuctionException | NumberFormatException | DateTimeParseException ex) {
+            auctionTable.getSelectionModel().clearSelection();
+            bidItemComboBox.getSelectionModel().clearSelection();
+            clearItemForm();
+            showMessage("Đã thêm sản phẩm đấu giá.");
+        } catch (AuctionException ex) {
             showMessage(ex.getMessage());
+        } catch (NumberFormatException ex) {
+            showMessage("Giá tiền không hợp lệ.");
+        } catch (DateTimeParseException ex) {
+            showMessage("Thời gian không đúng định dạng yyyy-MM-dd HH:mm.");
         }
     }
 
@@ -276,9 +294,13 @@ public class MainController {
             );
             refreshView();
             auctionTable.getSelectionModel().select(item);
-            showMessage("Da cap nhat san pham.");
-        } catch (AuctionException | NumberFormatException | DateTimeParseException ex) {
+            showMessage("Đã cập nhật sản phẩm.");
+        } catch (AuctionException ex) {
             showMessage(ex.getMessage());
+        } catch (NumberFormatException ex) {
+            showMessage("Giá tiền không hợp lệ.");
+        } catch (DateTimeParseException ex) {
+            showMessage("Thời gian không đúng định dạng yyyy-MM-dd HH:mm.");
         }
     }
 
@@ -287,7 +309,7 @@ public class MainController {
         try {
             service.deleteItem(currentUser, selectedItem());
             refreshView();
-            showMessage("Da xoa san pham.");
+            showMessage("Đã xóa sản phẩm.");
         } catch (AuctionException ex) {
             showMessage(ex.getMessage());
         }
@@ -298,7 +320,7 @@ public class MainController {
         try {
             service.markPaid(currentUser, selectedItem());
             refreshView();
-            showMessage("Da chuyen phien sang PAID.");
+            showMessage("Đã chuyển phiên sang trạng thái đã thanh toán.");
         } catch (AuctionException ex) {
             showMessage(ex.getMessage());
         }
@@ -309,7 +331,7 @@ public class MainController {
         try {
             service.cancel(currentUser, selectedItem());
             refreshView();
-            showMessage("Da huy phien dau gia.");
+            showMessage("Đã hủy phiên đấu giá.");
         } catch (AuctionException ex) {
             showMessage(ex.getMessage());
         }
@@ -323,7 +345,7 @@ public class MainController {
         appPane.setVisible(loggedIn);
         appPane.setManaged(loggedIn);
         logoutButton.setDisable(!loggedIn);
-        currentUserLabel.setText(loggedIn ? user.toString() : "Chua dang nhap");
+        currentUserLabel.setText(loggedIn ? user.toString() : "Chưa đăng nhập");
 
         boolean isBidder = loggedIn && user.getRole() == UserRole.BIDDER;
         boolean isSeller = loggedIn && user.getRole() == UserRole.SELLER;
@@ -358,7 +380,9 @@ public class MainController {
     private void refreshView() {
         AuctionItem selected = auctionTable.getSelectionModel().getSelectedItem();
         AuctionItem selectedBidItem = bidItemComboBox.getSelectionModel().getSelectedItem();
-        var items = FXCollections.observableArrayList(service.getItems());
+        List<AuctionItem> currentItems = service.getItems();
+        latestCompletionMessage = buildCompletionMessage(currentItems);
+        var items = FXCollections.observableArrayList(currentItems);
         auctionTable.setItems(items);
         bidItemComboBox.setItems(items);
         if (selected != null) {
@@ -373,12 +397,13 @@ public class MainController {
                     .findFirst()
                     .ifPresent(item -> bidItemComboBox.getSelectionModel().select(item));
         }
+        auctionTable.refresh();
         showItemDetails(auctionTable.getSelectionModel().getSelectedItem());
     }
 
     private void showItemDetails(AuctionItem item) {
         if (item == null) {
-            detailNameLabel.setText("Chua chon phien");
+            detailNameLabel.setText("Chưa chọn phiên");
             detailDescriptionLabel.setText("");
             detailSellerLabel.setText("-");
             detailStartLabel.setText("-");
@@ -386,6 +411,7 @@ public class MainController {
             detailStatusLabel.setText("-");
             detailCurrentPriceLabel.setText("-");
             detailLeaderLabel.setText("-");
+            detailStartingPriceLabel.setText("-");
             bidHistoryList.setItems(FXCollections.observableArrayList());
             return;
         }
@@ -395,9 +421,10 @@ public class MainController {
         detailSellerLabel.setText(item.getSeller().getFullName());
         detailStartLabel.setText(formatDateTime(item.getStartTime()));
         detailEndLabel.setText(formatDateTime(item.getEndTime()));
-        detailStatusLabel.setText(item.getStatus().name());
+        detailStatusLabel.setText(formatStatus(item));
         detailCurrentPriceLabel.setText(formatMoney(item.getCurrentHighestPrice()));
-        detailLeaderLabel.setText(service.getWinner(item).map(User::getFullName).orElse("Chua co"));
+        detailLeaderLabel.setText(service.getWinner(item).map(User::getFullName).orElse("Chưa có"));
+        detailStartingPriceLabel.setText(formatMoney(item.getStartingPrice()));
         bidHistoryList.setItems(FXCollections.observableArrayList(
                 item.getBids().stream()
                         .map(this::formatBid)
@@ -416,10 +443,18 @@ public class MainController {
         itemEndTimeField.setText(formatDateTime(item.getEndTime()));
     }
 
+    private void clearItemForm() {
+        itemNameField.clear();
+        itemDescriptionArea.clear();
+        itemStartingPriceField.clear();
+        itemStartTimeField.setText(formatDateTime(LocalDateTime.now()));
+        itemEndTimeField.setText(formatDateTime(LocalDateTime.now().plusHours(2)));
+    }
+
     private AuctionItem selectedItem() throws AuctionException {
         AuctionItem item = auctionTable.getSelectionModel().getSelectedItem();
         if (item == null) {
-            throw new AuctionException("Vui long chon mot phien dau gia.");
+            throw new AuctionException("Vui lòng chọn một phiên đấu giá.");
         }
         return item;
     }
@@ -427,14 +462,14 @@ public class MainController {
     private AuctionItem selectedBidItem() throws AuctionException {
         AuctionItem item = bidItemComboBox.getSelectionModel().getSelectedItem();
         if (item == null) {
-            throw new AuctionException("Vui long chon san pham muon dau gia.");
+            throw new AuctionException("Vui lòng chọn sản phẩm muốn đấu giá.");
         }
         return item;
     }
 
     private BigDecimal parseMoney(String rawValue) {
         if (rawValue == null || rawValue.trim().isEmpty()) {
-            throw new NumberFormatException("Gia tien khong duoc de trong.");
+            throw new NumberFormatException("Giá tiền không được để trống.");
         }
         String normalized = rawValue.trim().replace(",", "");
         return new BigDecimal(normalized);
@@ -452,8 +487,51 @@ public class MainController {
         return moneyFormat.format(amount) + " VND";
     }
 
+    private String formatStatus(AuctionItem item) {
+        if (isSuccessfullyAuctioned(item)) {
+            return "Đã được đấu giá";
+        }
+        return item.getStatus().getDisplayName();
+    }
+
+    private String formatOwner(AuctionItem item) {
+        return service.getWinner(item)
+                .filter(winner -> isSuccessfullyAuctioned(item))
+                .map(User::getFullName)
+                .orElse("-");
+    }
+
     private String formatBid(Bid bid) {
         return formatDateTime(bid.getCreatedAt()) + " - " + bid.getBidder().getFullName() + ": " + formatMoney(bid.getAmount());
+    }
+
+    private boolean isSuccessfullyAuctioned(AuctionItem item) {
+        return (item.getStatus() == AuctionStatus.FINISHED || item.getStatus() == AuctionStatus.PAID)
+                && service.getWinner(item).isPresent();
+    }
+
+    private String buildCompletionMessage(List<AuctionItem> items) {
+        if (currentUser == null) {
+            return null;
+        }
+
+        for (AuctionItem item : items) {
+            if (!isSuccessfullyAuctioned(item)) {
+                continue;
+            }
+
+            Optional<User> winner = service.getWinner(item);
+            if (currentUser.getRole() == UserRole.BIDDER
+                    && winner.map(user -> user.getId() == currentUser.getId()).orElse(false)) {
+                return "Bạn đã đấu giá thành công " + item.getName() + ".";
+            }
+
+            if (currentUser.getRole() == UserRole.SELLER && item.getSeller().getId() == currentUser.getId()) {
+                return "Bạn đã bán thành công " + item.getName() + " với giá " + formatMoney(item.getCurrentHighestPrice()) + ".";
+            }
+        }
+
+        return null;
     }
 
     private void clearSignupFields() {

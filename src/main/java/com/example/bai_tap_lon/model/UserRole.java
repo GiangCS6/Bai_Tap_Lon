@@ -1,9 +1,9 @@
 package com.example.bai_tap_lon.model;
 
 public enum UserRole {
-    BIDDER("Bidder"),
-    SELLER("Seller"),
-    ADMIN("Admin");
+    BIDDER("Người đấu giá"),
+    SELLER("Người bán"),
+    ADMIN("Quản trị viên");
 
     private final String displayName;
 

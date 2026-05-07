@@ -12,12 +12,12 @@ public class Application extends javafx.application.Application {
     public void start(Stage stage) throws IOException {
         URL fxml = Application.class.getResource("main-view.fxml");
         if (fxml == null) {
-            throw new IOException("Cannot find main-view.fxml");
+            throw new IOException("Không tìm thấy main-view.fxml.");
         }
 
         FXMLLoader fxmlLoader = new FXMLLoader(fxml);
         Scene scene = new Scene(fxmlLoader.load(), 1120, 720);
-        stage.setTitle("Dau Gia Uy Tin");
+        stage.setTitle("Đấu Giá Uy Tín");
         stage.setScene(scene);
         stage.setMinWidth(980);
         stage.setMinHeight(640);

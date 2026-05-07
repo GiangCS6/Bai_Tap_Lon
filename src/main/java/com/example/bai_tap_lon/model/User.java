@@ -22,6 +22,10 @@ public class User extends Entity {
         return password.equals(rawPassword);
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     public String getFullName() {
         return fullName;
     }

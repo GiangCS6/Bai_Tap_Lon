@@ -26,42 +26,42 @@
 
     <VBox fx:id="authPane" alignment="CENTER" spacing="18.0" style="-fx-background-color: #eef2f6;">
         <VBox maxWidth="420.0" spacing="14.0" style="-fx-background-color: white; -fx-padding: 28; -fx-background-radius: 8;">
-            <Label style="-fx-font-size: 26; -fx-font-weight: bold; -fx-text-fill: #1f3349;" text="DAU GIA UY TIN" />
-            <Label style="-fx-text-fill: #607080;" text="Chon cach bat dau voi he thong dau gia" />
+            <Label style="-fx-font-size: 26; -fx-font-weight: bold; -fx-text-fill: #1f3349;" text="ĐẤU GIÁ UY TÍN" />
+            <Label style="-fx-text-fill: #607080;" text="Chọn cách bắt đầu với hệ thống đấu giá." />
 
             <VBox fx:id="authChoicePane" spacing="10.0">
                 <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#showLoginForm"
                         style="-fx-background-color: #265f9f; -fx-text-fill: white; -fx-font-weight: bold;"
-                        text="LOG IN" />
+                        text="Đăng nhập" />
                 <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#showSignupForm"
                         style="-fx-background-color: transparent; -fx-border-color: #265f9f; -fx-text-fill: #265f9f; -fx-font-weight: bold;"
-                        text="SIGN IN" />
+                        text="Đăng ký" />
             </VBox>
 
             <VBox fx:id="loginPane" managed="false" spacing="10.0" visible="false">
-                <Label style="-fx-font-size: 18; -fx-font-weight: bold;" text="Dang nhap" />
-                <TextField fx:id="loginUsernameField" promptText="Ten dang nhap" />
-                <PasswordField fx:id="loginPasswordField" promptText="Mat khau" />
+                <Label style="-fx-font-size: 18; -fx-font-weight: bold;" text="Đăng nhập" />
+                <TextField fx:id="loginUsernameField" promptText="Tên đăng nhập" />
+                <PasswordField fx:id="loginPasswordField" promptText="Mật khẩu" />
                 <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#handleLogin"
                         style="-fx-background-color: #265f9f; -fx-text-fill: white; -fx-font-weight: bold;"
-                        text="LOG IN" />
+                        text="Đăng nhập" />
                 <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#showAuthChoice"
                         style="-fx-background-color: transparent; -fx-text-fill: #607080;"
-                        text="Quay lai" />
+                        text="Quay lại" />
             </VBox>
 
             <VBox fx:id="signupPane" managed="false" spacing="10.0" visible="false">
-                <Label style="-fx-font-size: 18; -fx-font-weight: bold;" text="Dang ky tai khoan" />
-                <TextField fx:id="signupFullNameField" promptText="Ho va ten" />
-                <TextField fx:id="signupUsernameField" promptText="Ten dang nhap" />
-                <PasswordField fx:id="signupPasswordField" promptText="Mat khau" />
+                <Label style="-fx-font-size: 18; -fx-font-weight: bold;" text="Đăng ký tài khoản" />
+                <TextField fx:id="signupFullNameField" promptText="Họ và tên" />
+                <TextField fx:id="signupUsernameField" promptText="Tên đăng nhập" />
+                <PasswordField fx:id="signupPasswordField" promptText="Mật khẩu" />
                 <ComboBox fx:id="signupRoleBox" maxWidth="Infinity" />
                 <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#handleSignup"
                         style="-fx-background-color: #265f9f; -fx-text-fill: white; -fx-font-weight: bold;"
-                        text="SIGN IN" />
+                        text="Đăng ký" />
                 <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#showAuthChoice"
                         style="-fx-background-color: transparent; -fx-text-fill: #607080;"
-                        text="Quay lai" />
+                        text="Quay lại" />
             </VBox>
 
             <Separator />
@@ -75,10 +75,10 @@
                 <padding>
                     <Insets bottom="14.0" left="18.0" right="18.0" top="14.0" />
                 </padding>
-                <Label style="-fx-font-size: 22; -fx-font-weight: bold; -fx-text-fill: white;" text="DAU GIA UY TIN" />
-                <Label fx:id="currentUserLabel" style="-fx-text-fill: #d7e3ef;" text="Chua dang nhap" />
+                <Label style="-fx-font-size: 22; -fx-font-weight: bold; -fx-text-fill: white;" text="ĐẤU GIÁ UY TÍN" />
+                <Label fx:id="currentUserLabel" style="-fx-text-fill: #d7e3ef;" text="Chưa đăng nhập" />
                 <HBox HBox.hgrow="ALWAYS" />
-                <Button fx:id="logoutButton" disable="true" mnemonicParsing="false" onAction="#handleLogout" text="Dang xuat" />
+                <Button fx:id="logoutButton" disable="true" mnemonicParsing="false" onAction="#handleLogout" text="Đăng xuất" />
             </HBox>
         </top>
 
@@ -89,103 +89,107 @@
                 </padding>
                 <TabPane fx:id="mainTabs" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
                     <tabs>
-                        <Tab text="San pham dau gia">
+                        <Tab text="Sản phẩm đấu giá">
                             <VBox spacing="12.0">
                                 <padding>
                                     <Insets bottom="14.0" left="14.0" right="14.0" top="14.0" />
                                 </padding>
                                 <HBox alignment="CENTER_LEFT" spacing="10.0">
-                                    <Label style="-fx-font-size: 20; -fx-font-weight: bold;" text="San pham dau gia" />
+                                    <Label style="-fx-font-size: 20; -fx-font-weight: bold;" text="Sản phẩm đấu giá" />
                                     <HBox HBox.hgrow="ALWAYS" />
-                                    <Button mnemonicParsing="false" onAction="#handleRefresh" text="Cap nhat trang thai" />
+                                    <Button mnemonicParsing="false" onAction="#handleRefresh" text="Cập nhật trạng thái" />
                                 </HBox>
                                 <HBox spacing="14.0" VBox.vgrow="ALWAYS">
                                     <TableView fx:id="auctionTable" HBox.hgrow="ALWAYS">
                                         <columns>
-                                            <TableColumn fx:id="nameColumn" prefWidth="320.0" text="San pham" />
-                                            <TableColumn fx:id="priceColumn" prefWidth="180.0" text="Gia hien tai" />
-                                            <TableColumn fx:id="statusColumn" prefWidth="130.0" text="Trang thai" />
-                                            <TableColumn fx:id="endTimeColumn" prefWidth="190.0" text="Ket thuc" />
+                                            <TableColumn fx:id="nameColumn" prefWidth="320.0" text="Sản phẩm" />
+                                            <TableColumn fx:id="priceColumn" prefWidth="180.0" text="Giá hiện tại" />
+                                            <TableColumn fx:id="statusColumn" prefWidth="160.0" text="Trạng thái" />
+                                            <TableColumn fx:id="ownerColumn" prefWidth="180.0" text="Chủ sở hữu" />
+                                            <TableColumn fx:id="endTimeColumn" prefWidth="190.0" text="Kết thúc" />
                                         </columns>
                                     </TableView>
 
                                     <VBox fx:id="sellerPane" prefWidth="320.0" spacing="10.0" style="-fx-background-color: white; -fx-padding: 14;">
-                                        <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Them san pham dau gia" />
-                                        <TextField fx:id="itemNameField" promptText="Ten san pham" />
-                                        <TextArea fx:id="itemDescriptionArea" prefRowCount="4" promptText="Mo ta" wrapText="true" />
-                                        <TextField fx:id="itemStartingPriceField" promptText="Gia khoi diem" />
-                                        <Label text="Dinh dang thoi gian: yyyy-MM-dd HH:mm" style="-fx-text-fill: #607080;" />
-                                        <TextField fx:id="itemStartTimeField" promptText="Thoi gian bat dau" />
-                                        <TextField fx:id="itemEndTimeField" promptText="Thoi gian ket thuc" />
-                                        <Button fx:id="addItemButton" maxWidth="Infinity" mnemonicParsing="false" onAction="#handleAddItem" text="Them san pham" />
+                                        <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Thêm sản phẩm đấu giá" />
+                                        <TextField fx:id="itemNameField" promptText="Tên sản phẩm" />
+                                        <TextArea fx:id="itemDescriptionArea" prefRowCount="4" promptText="Mô tả" wrapText="true" />
+                                        <TextField fx:id="itemStartingPriceField" promptText="Giá khởi điểm" />
+                                        <Label text="Định dạng thời gian: yyyy-MM-dd HH:mm." style="-fx-text-fill: #607080;" />
+                                        <TextField fx:id="itemStartTimeField" promptText="Thời gian bắt đầu" />
+                                        <TextField fx:id="itemEndTimeField" promptText="Thời gian kết thúc" />
+                                        <Button fx:id="addItemButton" maxWidth="Infinity" mnemonicParsing="false" onAction="#handleAddItem" text="Thêm sản phẩm" />
                                         <Separator />
-                                        <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Sua / xoa san pham da chon" />
-                                        <Button fx:id="updateItemButton" maxWidth="Infinity" mnemonicParsing="false" onAction="#handleUpdateItem" text="Sua san pham" />
-                                        <Button fx:id="deleteItemButton" maxWidth="Infinity" mnemonicParsing="false" onAction="#handleDeleteItem" text="Xoa san pham" />
+                                        <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Sửa hoặc xóa sản phẩm đã chọn" />
+                                        <Button fx:id="updateItemButton" maxWidth="Infinity" mnemonicParsing="false" onAction="#handleUpdateItem" text="Sửa sản phẩm" />
+                                        <Button fx:id="deleteItemButton" maxWidth="Infinity" mnemonicParsing="false" onAction="#handleDeleteItem" text="Xóa sản phẩm" />
                                     </VBox>
                                 </HBox>
                             </VBox>
                         </Tab>
 
-                        <Tab text="Chi tiet san pham">
+                        <Tab text="Chi tiết sản phẩm">
                             <VBox spacing="12.0" style="-fx-background-color: white;">
                                 <padding>
                                     <Insets bottom="18.0" left="18.0" right="18.0" top="18.0" />
                                 </padding>
-                                <Label fx:id="detailNameLabel" style="-fx-font-size: 22; -fx-font-weight: bold;" text="Chua chon phien" />
+                                <Label fx:id="detailNameLabel" style="-fx-font-size: 22; -fx-font-weight: bold;" text="Chưa chọn phiên" />
                                 <Label fx:id="detailDescriptionLabel" wrapText="true" />
                                 <GridPane hgap="12.0" vgap="9.0">
-                                    <Label text="Seller:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                    <Label text="Người bán:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                                     <Label fx:id="detailSellerLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                                    <Label text="Bat dau:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                    <Label text="Bắt đầu:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
                                     <Label fx:id="detailStartLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                    <Label text="Ket thuc:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                    <Label text="Kết thúc:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
                                     <Label fx:id="detailEndLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                    <Label text="Trang thai:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+                                    <Label text="Trạng thái:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
                                     <Label fx:id="detailStatusLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                    <Label text="Gia cao nhat:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
+                                    <Label text="Giá cao nhất:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
                                     <Label fx:id="detailCurrentPriceLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                    <Label text="Nguoi dan dau:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                                    <Label text="Người dẫn đầu:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
                                     <Label fx:id="detailLeaderLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                    <Label text="Giá khởi điểm:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+                                    <Label fx:id="detailStartingPriceLabel" text="-" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                                 </GridPane>
-                                <Label style="-fx-font-weight: bold;" text="Lich su dau gia" />
+                                <Label style="-fx-font-weight: bold;" text="Lịch sử đấu giá" />
                                 <ListView fx:id="bidHistoryList" VBox.vgrow="ALWAYS" />
                             </VBox>
                         </Tab>
 
-                        <Tab fx:id="liveAuctionTab" text="Dau gia truc tiep">
+                        <Tab fx:id="liveAuctionTab" text="Đấu giá trực tiếp">
                             <VBox spacing="14.0" style="-fx-background-color: white;">
                                 <padding>
                                     <Insets bottom="18.0" left="18.0" right="18.0" top="18.0" />
                                 </padding>
-                                <Label style="-fx-font-size: 20; -fx-font-weight: bold;" text="Dat gia cho phien dang RUNNING" />
-                                <Label wrapText="true" text="Chon san pham muon dau gia, sau do nhap gia cao hon gia hien tai." />
-                                <ComboBox fx:id="bidItemComboBox" maxWidth="420.0" promptText="Chon san pham dau gia" />
+                                <Label style="-fx-font-size: 20; -fx-font-weight: bold;" text="Đặt giá cho phiên đang diễn ra" />
+                                <Label wrapText="true" text="Chọn sản phẩm muốn đấu giá, sau đó nhập giá cao hơn giá hiện tại." />
+                                <ComboBox fx:id="bidItemComboBox" maxWidth="420.0" promptText="Chọn sản phẩm đấu giá" />
                                 <HBox maxWidth="420.0" spacing="8.0">
-                                    <TextField fx:id="bidAmountField" promptText="Gia muon dat" HBox.hgrow="ALWAYS" />
+                                    <TextField fx:id="bidAmountField" promptText="Giá muốn đặt" HBox.hgrow="ALWAYS" />
                                     <Button fx:id="bidButton" mnemonicParsing="false" onAction="#handlePlaceBid"
                                             style="-fx-background-color: #265f9f; -fx-text-fill: white;"
-                                            text="Dat gia" />
+                                            text="Đặt giá" />
                                 </HBox>
                             </VBox>
                         </Tab>
 
-                        <Tab fx:id="adminTab" text="Quan tri Admin">
+                        <Tab fx:id="adminTab" text="Quản trị viên">
                             <VBox fx:id="adminPane" spacing="12.0" style="-fx-background-color: white;">
                                 <padding>
                                     <Insets bottom="18.0" left="18.0" right="18.0" top="18.0" />
                                 </padding>
-                                <Label style="-fx-font-size: 20; -fx-font-weight: bold;" text="Xu ly ket thuc phien dau gia" />
-                                <Label wrapText="true" text="Chon phien FINISHED o tab Danh sach de chuyen sang PAID, hoac huy phien khi can." />
+                                <Label style="-fx-font-size: 20; -fx-font-weight: bold;" text="Xử lý khi phiên đấu giá kết thúc" />
+                                <Label wrapText="true" text="Chọn phiên đã kết thúc trong danh sách để chuyển sang đã thanh toán, hoặc hủy phiên khi cần." />
                                 <HBox spacing="8.0">
-                                    <Button fx:id="markPaidButton" mnemonicParsing="false" onAction="#handleMarkPaid" text="Chuyen sang PAID" />
-                                    <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#handleCancel" text="Huy phien" />
+                                    <Button fx:id="markPaidButton" mnemonicParsing="false" onAction="#handleMarkPaid" text="Chuyển sang đã thanh toán" />
+                                    <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#handleCancel" text="Hủy phiên" />
                                 </HBox>
                             </VBox>
                         </Tab>
                     </tabs>
                 </TabPane>
-                <Label fx:id="systemMessageLabel" minHeight="24.0" style="-fx-text-fill: #1f3349;" />
+                <Label fx:id="systemMessageLabel" minHeight="42.0" maxWidth="Infinity" wrapText="true"
+                       style="-fx-background-color: #fff4cc; -fx-border-color: #d18b00; -fx-border-width: 1.5; -fx-background-radius: 6; -fx-border-radius: 6; -fx-padding: 10 14; -fx-text-fill: #6f4700; -fx-font-weight: bold;" />
             </VBox>
         </center>
     </BorderPane>

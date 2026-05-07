@@ -19,12 +19,12 @@
 
     <VBox alignment="CENTER" maxWidth="360.0" spacing="18.0"
           style="-fx-background-color: rgba(255,255,255,0.82); -fx-background-radius: 8; -fx-padding: 32;">
-        <Text fill="#265f9f" strokeType="OUTSIDE" strokeWidth="0.0" text="DAU GIA UY TIN" textAlignment="CENTER">
+        <Text fill="#265f9f" strokeType="OUTSIDE" strokeWidth="0.0" text="ĐẤU GIÁ UY TÍN" textAlignment="CENTER">
             <font>
                 <Font name="System Bold" size="30.0" />
             </font>
         </Text>
-        <Text fill="#385064" text="Nen tang dau gia truc tuyen" textAlignment="CENTER">
+        <Text fill="#385064" text="Nền tảng đấu giá trực tuyến." textAlignment="CENTER">
             <font>
                 <Font size="15.0" />
             </font>
@@ -32,10 +32,10 @@
         <VBox spacing="10.0">
             <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#showLogin" prefHeight="38.0"
                     style="-fx-background-color: #265f9f; -fx-text-fill: white; -fx-font-weight: bold;"
-                    text="LOG IN" />
+                    text="Đăng nhập" />
             <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#showSignup" prefHeight="38.0"
                     style="-fx-background-color: white; -fx-border-color: #265f9f; -fx-text-fill: #265f9f; -fx-font-weight: bold;"
-                    text="SIGN UP" />
+                    text="Đăng ký" />
         </VBox>
         <padding>
             <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />
