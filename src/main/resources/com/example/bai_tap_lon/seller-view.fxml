@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.bai_tap_lon.controller.SellerController"
+      spacing="15" alignment="CENTER">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="👨‍💼 SELLER DASHBOARD" style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+
+    <Button fx:id="btnPostItem" text="📤 ĐĂNG BÁN SẢN PHẨM MỚI"
+            onAction="#handlePostItem" prefWidth="400"
+            style="-fx-base: #FF9800; -fx-text-fill: white; -fx-font-size: 16px;"/>
+
+    <Label text="📋 Danh sách món bạn đang bán" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+    <TableView fx:id="tableMyItems" prefHeight="350">
+        <columns>
+            <TableColumn fx:id="colItemName" text="Tên sản phẩm" prefWidth="300"/>
+            <TableColumn fx:id="colPrice" text="Giá khởi điểm" prefWidth="200"/>
+            <TableColumn fx:id="colStatus" text="Trạng thái" prefWidth="180"/>
+        </columns>
+    </TableView>
+
+    <TextArea fx:id="txtLog" editable="false" prefHeight="120" wrapText="true"/>
+</VBox>
