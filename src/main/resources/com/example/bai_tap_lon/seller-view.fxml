@@ -4,30 +4,64 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx/21"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.example.bai_tap_lon.controller.SellerController"
-      spacing="15" alignment="CENTER">
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.bai_tap_lon.controller.SellerController">
 
-    <padding>
-        <Insets top="20" right="20" bottom="20" left="20"/>
-    </padding>
+    <top>
+        <VBox spacing="15" alignment="CENTER">
+            <padding>
+                <Insets top="20" right="20" bottom="20" left="20"/>
+            </padding>
 
-    <Label text="👨‍💼 SELLER DASHBOARD" style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+            <Label text="👨‍💼 SELLER DASHBOARD"
+                   style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
 
-    <Button fx:id="btnPostItem" text="📤 ĐĂNG BÁN SẢN PHẨM MỚI"
-            onAction="#handlePostItem" prefWidth="400"
-            style="-fx-base: #FF9800; -fx-text-fill: white; -fx-font-size: 16px;"/>
+            <Button fx:id="btnPostItem"
+                    text="📤 ĐĂNG BÁN SẢN PHẨM"
+                    onAction="#handlePostItem"
+                    prefWidth="350"
+                    style="-fx-base: #FF9800;
+                           -fx-text-fill: white;
+                           -fx-font-size: 16px;"/>
+        </VBox>
+    </top>
 
-    <Label text="📋 Danh sách món bạn đang bán" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+    <center>
+        <TableView fx:id="tableMyItems">
+            <columns>
+                <TableColumn fx:id="colItemName"
+                             text="Tên sản phẩm"
+                             prefWidth="250"/>
 
-    <TableView fx:id="tableMyItems" prefHeight="350">
-        <columns>
-            <TableColumn fx:id="colItemName" text="Tên sản phẩm" prefWidth="300"/>
-            <TableColumn fx:id="colPrice" text="Giá khởi điểm" prefWidth="200"/>
-            <TableColumn fx:id="colStatus" text="Trạng thái" prefWidth="180"/>
-        </columns>
-    </TableView>
+                <TableColumn fx:id="colPrice"
+                             text="Giá"
+                             prefWidth="150"/>
 
-    <TextArea fx:id="txtLog" editable="false" prefHeight="120" wrapText="true"/>
-</VBox>
+                <TableColumn fx:id="colStatus"
+                             text="Trạng thái"
+                             prefWidth="150"/>
+            </columns>
+        </TableView>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER"
+              spacing="40"
+              prefHeight="60"
+              style="-fx-background-color: #f5f5f5;
+                     -fx-border-color: #ddd;
+                     -fx-border-width: 1 0 0 0;">
+
+            <Button text="⚙ Setting"
+                    onAction="#handleSetting"/>
+
+            <Button text="💰 Wallet"
+                    onAction="#handleWallet"/>
+
+            <Button text="🚪 Logout"
+                    onAction="#handleLogout"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>

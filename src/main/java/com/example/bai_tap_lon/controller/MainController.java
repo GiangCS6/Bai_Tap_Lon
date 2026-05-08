@@ -1,6 +1,8 @@
 package com.example.bai_tap_lon.controller;
 
 import com.example.bai_tap_lon.client.ClientHandler;
+import com.example.bai_tap_lon.model.Product;
+import com.example.bai_tap_lon.service.ProductStore;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,6 +13,7 @@ import java.io.IOException;
 
 public class MainController implements ClientHandler.AuctionListener {
 
+    @FXML private ListView<Product> listProducts;
     @FXML private TableView<AuctionItem> tableItems;
     @FXML private TableColumn<AuctionItem, String> colItemName;
     @FXML private TableColumn<AuctionItem, String> colCurrentPrice;
@@ -32,9 +35,11 @@ public class MainController implements ClientHandler.AuctionListener {
         tableItems.setItems(itemList);
 
         appendLog("🚀 Đang kết nối đến Server đấu giá...");
-
         // Tự động kết nối Server khi mở chương trình
         connectToServer();
+
+        //
+
     }
 
     private void connectToServer() {
@@ -55,6 +60,7 @@ public class MainController implements ClientHandler.AuctionListener {
             btnBid.setDisable(true);
         }
     }
+
 
     @FXML
     private void handleBid() {
@@ -160,4 +166,30 @@ public class MainController implements ClientHandler.AuctionListener {
         public String getHighestBidder() { return highestBidder; }
         public void setHighestBidder(String highestBidder) { this.highestBidder = highestBidder; }
     }
+
+    // =============================== NAVIGATION BAR ==================================
+    @FXML
+    private void handleSetting() {
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText("Màn hình Setting");
+        alert.showAndWait();
+    }
+
+    @FXML
+    private void handleWallet() {
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText("Số dư ví: 5,000,000 VNĐ");
+        alert.showAndWait();
+    }
+
+    @FXML
+    private void handleLogout() {
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText("Đăng xuất thành công!");
+        alert.showAndWait();
+    }
+
 }

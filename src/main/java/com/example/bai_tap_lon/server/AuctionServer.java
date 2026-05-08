@@ -1,4 +1,4 @@
-/*
+
 package com.example.bai_tap_lon.server;
 
 import java.io.*;
@@ -261,8 +261,8 @@ public class AuctionServer {
             writer.println(sb);
         }
 
-        */
-/** Phương thức đóng kết nối - ĐÃ ĐƯỢC KHAI BÁO ĐẦY ĐỦ *//*
+
+/** Phương thức đóng kết nối - ĐÃ ĐƯỢC KHAI BÁO ĐẦY ĐỦ */
 
         private void disconnect() {
             if (username != null) {
@@ -287,53 +287,6 @@ public class AuctionServer {
         public AuctionItem(String name, double startPrice) {
             this.name = name;
             this.currentPrice = startPrice;
-        }
-    }
-}*/
-
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.net.*;
-import java.util.*;
-import java.util.List;
-
-public class AuctionServer implements ActionListener {
-    private static final int PORT = 6001;
-    static List<Client> clients = Collections.synchronizedList(new ArrayList<>());
-
-    Server() {
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        try{
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-
-    public static void broadcast(String message) {
-        for (Client ch : new ArrayList<>(clients)) {
-            ch.sendMessage(message);
-        }
-    }
-
-    public static void main(String[] args) {
-        new Server();
-        try {
-            ServerSocket ss = new ServerSocket(PORT);
-            System.out.println("Server started on port " + PORT);
-            while (true) {
-                Socket s = ss.accept();
-                Client clientHandler = new Client(s);
-                clients.add(clientHandler);         // Keep track of the client
-                new Thread(clientHandler).start();  // This works now because Client is Runnable
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }
