@@ -1,4 +1,4 @@
-package com.example.bai_tap_lon.server;
+package com.example.bai_tap_lon.service;
 
 import com.example.bai_tap_lon.controller.AdminController;
 
@@ -55,7 +55,7 @@ public class LoginService {
         }
     }
 
-    public boolean register(String username, String password) {
+    /*public boolean register(String username, String password) {
         String sql = "INSERT INTO users (username, password) VALUES (?, ?)";
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -65,6 +65,23 @@ public class LoginService {
             return true;
         } catch (SQLException e) {
             return false; // username đã tồn tại
+        }
+    }*/
+    public boolean register(String username, String password, String role) {
+        String sql = "INSERT INTO users (username, password, role) VALUES (?, ?, ?)";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, username);
+            pstmt.setString(2, password);
+            pstmt.setString(3, role);
+
+            pstmt.executeUpdate();
+            return true;
+
+        } catch (SQLException e) {
+            return false;
         }
     }
 

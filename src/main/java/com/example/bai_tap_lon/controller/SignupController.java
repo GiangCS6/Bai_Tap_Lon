@@ -1,6 +1,6 @@
 package com.example.bai_tap_lon.controller;
 
-import com.example.bai_tap_lon.server.LoginService;
+import com.example.bai_tap_lon.service.LoginService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -34,7 +34,7 @@ public class SignupController {
             return;
         }
 
-        boolean success = loginService.register(username, password);
+        boolean success = loginService.register(username, password,role);
 
         if (success) {
             showAlert(Alert.AlertType.INFORMATION, "Thành công", "Đăng ký tài khoản thành công!\nBạn có thể đăng nhập ngay.");

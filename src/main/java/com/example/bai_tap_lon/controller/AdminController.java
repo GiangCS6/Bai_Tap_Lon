@@ -1,6 +1,6 @@
 package com.example.bai_tap_lon.controller;
 
-import com.example.bai_tap_lon.server.LoginService;
+import com.example.bai_tap_lon.service.LoginService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

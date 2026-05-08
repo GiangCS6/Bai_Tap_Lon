@@ -1,5 +1,9 @@
 package com.example.bai_tap_lon.controller;
 
+import com.example.bai_tap_lon.client.ClientHandler;
+import com.example.bai_tap_lon.model.Product;
+import com.example.bai_tap_lon.service.ProductStore;
+import javafx.application.Platform;
 import com.example.bai_tap_lon.model.AuctionItem;
 import com.example.bai_tap_lon.model.AuctionStatus;
 import com.example.bai_tap_lon.model.Bid;
@@ -34,6 +38,11 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+    @FXML private ListView<Product> listProducts;
+    @FXML private TableView<AuctionItem> tableItems;
+    @FXML private TableColumn<AuctionItem, String> colItemName;
+    @FXML private TableColumn<AuctionItem, String> colCurrentPrice;
+    @FXML private TableColumn<AuctionItem, String> colHighestBidder;
 public class MainController {
     private final AuctionService service = new AuctionService();
     private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -205,6 +214,12 @@ public class MainController {
         }
     }
 
+        appendLog("🚀 Đang kết nối đến Server đấu giá...");
+        // Tự động kết nối Server khi mở chương trình
+        connectToServer();
+
+        //
+
     @FXML
     public void handleSignup() {
         try {
@@ -314,6 +329,7 @@ public class MainController {
             showMessage(ex.getMessage());
         }
     }
+
 
     @FXML
     public void handleMarkPaid() {
@@ -546,4 +562,31 @@ public class MainController {
     private void showMessage(String message) {
         systemMessageLabel.setText(message);
     }
+
+    // =============================== NAVIGATION BAR ==================================
+    @FXML
+    private void handleSetting() {
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText("Màn hình Setting");
+        alert.showAndWait();
+    }
+
+    @FXML
+    private void handleWallet() {
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText("Số dư ví: 5,000,000 VNĐ");
+        alert.showAndWait();
+    }
+
+    @FXML
+    private void handleLogout() {
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setContentText("Đăng xuất thành công!");
+        alert.showAndWait();
+    }
+
+}
 }

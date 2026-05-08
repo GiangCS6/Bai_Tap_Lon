@@ -1,4 +1,4 @@
-/*
+
 package com.example.bai_tap_lon.server;
 
 import java.io.*;
@@ -261,8 +261,8 @@ public class AuctionServer {
             writer.println(sb);
         }
 
-        */
-/** Phương thức đóng kết nối - ĐÃ ĐƯỢC KHAI BÁO ĐẦY ĐỦ *//*
+
+/** Phương thức đóng kết nối - ĐÃ ĐƯỢC KHAI BÁO ĐẦY ĐỦ */
 
         private void disconnect() {
             if (username != null) {
