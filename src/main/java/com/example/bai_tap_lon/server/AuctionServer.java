@@ -291,29 +291,21 @@ public class AuctionServer {
     }
 }*/
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+package com.example.bai_tap_lon.server;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.*;
 import java.util.*;
 import java.util.List;
 
-public class AuctionServer implements ActionListener {
+public class AuctionServer {
     private static final int PORT = 6001;
     static List<Client> clients = Collections.synchronizedList(new ArrayList<>());
 
-    Server() {
+    public AuctionServer() {
     }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        try{
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
 
     public static void broadcast(String message) {
         for (Client ch : new ArrayList<>(clients)) {
@@ -322,7 +314,7 @@ public class AuctionServer implements ActionListener {
     }
 
     public static void main(String[] args) {
-        new Server();
+        new AuctionServer();
         try {
             ServerSocket ss = new ServerSocket(PORT);
             System.out.println("Server started on port " + PORT);
@@ -334,6 +326,40 @@ public class AuctionServer implements ActionListener {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private static class Client implements Runnable {
+        private final Socket socket;
+        private PrintWriter writer;
+
+        private Client(Socket socket) {
+            this.socket = socket;
+        }
+
+        @Override
+        public void run() {
+            try (BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
+                writer = new PrintWriter(socket.getOutputStream(), true);
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    broadcast(line);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                clients.remove(this);
+                try {
+                    socket.close();
+                } catch (Exception ignored) {
+                }
+            }
+        }
+
+        private void sendMessage(String message) {
+            if (writer != null) {
+                writer.println(message);
+            }
         }
     }
 }

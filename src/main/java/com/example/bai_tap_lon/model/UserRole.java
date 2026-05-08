@@ -1,15 +1,13 @@
 package com.example.bai_tap_lon.model;
 
-public enum AuctionStatus {
-    OPEN("Chưa bắt đầu"),
-    RUNNING("Đang diễn ra"),
-    FINISHED("Đã kết thúc"),
-    PAID("Đã thanh toán"),
-    CANCELED("Đã hủy");
+public enum UserRole {
+    BIDDER("Người đấu giá"),
+    SELLER("Người bán"),
+    ADMIN("Quản trị viên");
 
     private final String displayName;
 
-    AuctionStatus(String displayName) {
+    UserRole(String displayName) {
         this.displayName = displayName;
     }
 

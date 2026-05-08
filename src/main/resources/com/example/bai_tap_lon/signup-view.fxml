@@ -1,56 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
 
-<?import javafx.collections.FXCollections?>
-<?import java.lang.String?>
-<AnchorPane xmlns="http://javafx.com/javafx/21"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.bai_tap_lon.controller.SignupController"
-            prefHeight="520" prefWidth="400">
+<VBox alignment="CENTER" prefHeight="460.0" prefWidth="600.0" spacing="14.0"
+      style="-fx-background-color: #f6f8fb;"
+      xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.bai_tap_lon.controller.LoginController">
+    <padding>
+        <Insets bottom="32.0" left="48.0" right="48.0" top="32.0" />
+    </padding>
 
-    <VBox alignment="CENTER" spacing="15" AnchorPane.topAnchor="30"
-          AnchorPane.bottomAnchor="30" AnchorPane.leftAnchor="40" AnchorPane.rightAnchor="40">
+    <Label style="-fx-font-size: 28; -fx-font-weight: bold; -fx-text-fill: #1f3349;" text="Tạo tài khoản" />
+    <Label style="-fx-text-fill: #607080;" text="Nhập thông tin để bắt đầu đấu giá." />
 
-        <Label text="📝 ĐĂNG KÝ TÀI KHOẢN" style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
-
-        <VBox spacing="8">
-            <Label text="Tài khoản"/>
-            <TextField fx:id="txtUsername" promptText="Nhập username"/>
-        </VBox>
-
-        <VBox spacing="8">
-            <Label text="Mật khẩu"/>
-            <PasswordField fx:id="txtPassword" promptText="Nhập mật khẩu"/>
-        </VBox>
-
-        <VBox spacing="8">
-            <Label text="Xác nhận mật khẩu"/>
-            <PasswordField fx:id="txtConfirmPassword" promptText="Nhập lại mật khẩu"/>
-        </VBox>
-
-        <VBox spacing="8">
-            <Label text="Vai trò"/>
-            <ComboBox fx:id="cbRole" prefWidth="320">
-                <items>
-                    <FXCollections fx:factory="observableArrayList">
-                        <String fx:value="Bidder"/>
-                        <String fx:value="Seller"/>
-                    </FXCollections>
-                </items>
-            </ComboBox>
-        </VBox>
-
-        <Button fx:id="btnSignup" text="ĐĂNG KÝ" onAction="#handleSignup"
-                prefWidth="320" style="-fx-base: #4CAF50; -fx-text-fill: white; -fx-font-size: 15px;"/>
-
-        <HBox alignment="CENTER" spacing="10">
-            <Label text="Đã có tài khoản?" style="-fx-font-size: 13px;"/>
-            <Hyperlink text="Đăng nhập" onAction="#goToLogin"/>
-        </HBox>
-
+    <VBox maxWidth="360.0" spacing="10.0">
+        <TextField prefHeight="38.0" promptText="Họ và tên" />
+        <TextField prefHeight="38.0" promptText="Địa chỉ thư điện tử" />
+        <TextField prefHeight="38.0" promptText="Tên đăng nhập" />
+        <PasswordField prefHeight="38.0" promptText="Mật khẩu" />
+        <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#handleCreateAccount" prefHeight="38.0"
+                style="-fx-background-color: #265f9f; -fx-text-fill: white; -fx-font-weight: bold;"
+                text="Đăng ký" />
+        <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#showLogin" prefHeight="36.0"
+                style="-fx-background-color: transparent; -fx-border-color: #265f9f; -fx-text-fill: #265f9f;"
+                text="Đã có tài khoản" />
+        <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#showWelcome" prefHeight="32.0"
+                style="-fx-background-color: transparent; -fx-text-fill: #607080;"
+                text="Quay lại" />
     </VBox>
-</AnchorPane>
+</VBox>
