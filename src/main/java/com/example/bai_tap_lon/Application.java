@@ -1,29 +1,27 @@
 package com.example.bai_tap_lon;
 
-
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
 import java.io.IOException;
+import java.net.URL;
 
 public class Application extends javafx.application.Application {
-
     @Override
     public void start(Stage stage) throws IOException {
-        // Bắt đầu từ màn hình Đăng nhập thay vì main-view
-        FXMLLoader fxmlLoader = new FXMLLoader(
-                getClass().getResource("/com/example/bai_tap_lon/login-view.fxml")
-        );
+        URL fxml = Application.class.getResource("main-view.fxml");
+        if (fxml == null) {
+            throw new IOException("Không tìm thấy main-view.fxml.");
+        }
 
-        Scene scene = new Scene(fxmlLoader.load(), 400, 480);
-        stage.setTitle("Auction App - Đăng nhập");
+        FXMLLoader fxmlLoader = new FXMLLoader(fxml);
+        Scene scene = new Scene(fxmlLoader.load(), 1120, 720);
+        stage.setTitle("Đấu Giá Uy Tín");
         stage.setScene(scene);
-        stage.setResizable(false);   // Không cho thay đổi kích thước màn hình login
-        stage.centerOnScreen();
+        stage.setMinWidth(980);
+        stage.setMinHeight(640);
         stage.show();
     }
-
-    public static void main(String[] args) {
-        launch(args);
-    }
 }
+

@@ -15,5 +15,7 @@ public class AuctionSession extends Entity {
     private AuctionStatus status;
 
     // getters, setters, constructor...
-    public AuctionSession(){};
+    public AuctionSession(){
+        super(0);
+    }
 }

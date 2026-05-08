@@ -4,35 +4,215 @@ import com.example.bai_tap_lon.client.ClientHandler;
 import com.example.bai_tap_lon.model.Product;
 import com.example.bai_tap_lon.service.ProductStore;
 import javafx.application.Platform;
+import com.example.bai_tap_lon.model.AuctionItem;
+import com.example.bai_tap_lon.model.AuctionStatus;
+import com.example.bai_tap_lon.model.Bid;
+import com.example.bai_tap_lon.model.User;
+import com.example.bai_tap_lon.model.UserRole;
+import com.example.bai_tap_lon.service.AuctionException;
+import com.example.bai_tap_lon.service.AuctionService;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import java.io.IOException;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 
-public class MainController implements ClientHandler.AuctionListener {
+import java.math.BigDecimal;
+import java.text.NumberFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.util.List;
+import java.util.Locale;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
     @FXML private ListView<Product> listProducts;
     @FXML private TableView<AuctionItem> tableItems;
     @FXML private TableColumn<AuctionItem, String> colItemName;
     @FXML private TableColumn<AuctionItem, String> colCurrentPrice;
     @FXML private TableColumn<AuctionItem, String> colHighestBidder;
+public class MainController {
+    private final AuctionService service = new AuctionService();
+    private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+    private final NumberFormat moneyFormat = NumberFormat.getNumberInstance(Locale.US);
 
-    @FXML private TextField txtBidAmount;
-    @FXML private Button btnBid;
-    @FXML private TextArea txtLog;
+    private User currentUser;
+    private String latestCompletionMessage;
 
-    private ClientHandler clientHandler;
-    private final ObservableList<AuctionItem> itemList = FXCollections.observableArrayList();
+    @FXML
+    private TextField loginUsernameField;
+    @FXML
+    private PasswordField loginPasswordField;
+    @FXML
+    private TextField signupFullNameField;
+    @FXML
+    private TextField signupUsernameField;
+    @FXML
+    private PasswordField signupPasswordField;
+    @FXML
+    private ComboBox<UserRole> signupRoleBox;
+    @FXML
+    private Label authMessageLabel;
+    @FXML
+    private Label currentUserLabel;
+    @FXML
+    private Label systemMessageLabel;
+    @FXML
+    private VBox authPane;
+    @FXML
+    private VBox authChoicePane;
+    @FXML
+    private VBox loginPane;
+    @FXML
+    private VBox signupPane;
+    @FXML
+    private BorderPane appPane;
+    @FXML
+    private Button logoutButton;
+    @FXML
+    private TabPane mainTabs;
+    @FXML
+    private Tab liveAuctionTab;
+    @FXML
+    private Tab adminTab;
+    @FXML
+    private TableView<AuctionItem> auctionTable;
+    @FXML
+    private TableColumn<AuctionItem, String> nameColumn;
+    @FXML
+    private TableColumn<AuctionItem, String> priceColumn;
+    @FXML
+    private TableColumn<AuctionItem, String> statusColumn;
+    @FXML
+    private TableColumn<AuctionItem, String> ownerColumn;
+    @FXML
+    private TableColumn<AuctionItem, String> endTimeColumn;
+    @FXML
+    private Label detailNameLabel;
+    @FXML
+    private Label detailDescriptionLabel;
+    @FXML
+    private Label detailSellerLabel;
+    @FXML
+    private Label detailStartLabel;
+    @FXML
+    private Label detailEndLabel;
+    @FXML
+    private Label detailStatusLabel;
+    @FXML
+    private Label detailCurrentPriceLabel;
+    @FXML
+    private Label detailLeaderLabel;
+    @FXML
+    private Label detailStartingPriceLabel;
+    @FXML
+    private ComboBox<AuctionItem> bidItemComboBox;
+    @FXML
+    private TextField bidAmountField;
+    @FXML
+    private Button bidButton;
+    @FXML
+    private ListView<String> bidHistoryList;
+    @FXML
+    private VBox sellerPane;
+    @FXML
+    private TextField itemNameField;
+    @FXML
+    private TextArea itemDescriptionArea;
+    @FXML
+    private TextField itemStartingPriceField;
+    @FXML
+    private TextField itemStartTimeField;
+    @FXML
+    private TextField itemEndTimeField;
+    @FXML
+    private Button addItemButton;
+    @FXML
+    private Button updateItemButton;
+    @FXML
+    private Button deleteItemButton;
+    @FXML
+    private VBox adminPane;
+    @FXML
+    private Button markPaidButton;
+    @FXML
+    private Button cancelButton;
 
     @FXML
     public void initialize() {
-        // Thiết lập bảng
-        colItemName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        colCurrentPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
-        colHighestBidder.setCellValueFactory(new PropertyValueFactory<>("highestBidder"));
-        tableItems.setItems(itemList);
+        signupRoleBox.setItems(FXCollections.observableArrayList(UserRole.BIDDER, UserRole.SELLER, UserRole.ADMIN));
+        signupRoleBox.setValue(UserRole.BIDDER);
+
+        nameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getName()));
+        priceColumn.setCellValueFactory(data -> new SimpleStringProperty(formatMoney(data.getValue().getCurrentHighestPrice())));
+        statusColumn.setCellValueFactory(data -> new SimpleStringProperty(formatStatus(data.getValue())));
+        ownerColumn.setCellValueFactory(data -> new SimpleStringProperty(formatOwner(data.getValue())));
+        endTimeColumn.setCellValueFactory(data -> new SimpleStringProperty(formatDateTime(data.getValue().getEndTime())));
+
+        auctionTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            showItemDetails(newValue);
+            fillItemForm(newValue);
+            if (newValue != null) {
+                bidItemComboBox.getSelectionModel().select(newValue);
+            }
+        });
+
+        bidItemComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                auctionTable.getSelectionModel().select(newValue);
+                showItemDetails(newValue);
+            }
+        });
+
+        itemStartTimeField.setText(formatDateTime(LocalDateTime.now()));
+        itemEndTimeField.setText(formatDateTime(LocalDateTime.now().plusHours(2)));
+        refreshView();
+        setCurrentUser(null);
+        showAuthChoice();
+    }
+
+    @FXML
+    public void showLoginForm() {
+        setAuthFormVisible(loginPane);
+        authMessageLabel.setText("");
+    }
+
+    @FXML
+    public void showSignupForm() {
+        setAuthFormVisible(signupPane);
+        authMessageLabel.setText("");
+    }
+
+    @FXML
+    public void showAuthChoice() {
+        setAuthFormVisible(authChoicePane);
+        authMessageLabel.setText("");
+    }
+
+    @FXML
+    public void handleLogin() {
+        try {
+            currentUser = service.login(loginUsernameField.getText(), loginPasswordField.getText());
+            authMessageLabel.setText("");
+            loginPasswordField.clear();
+            setCurrentUser(currentUser);
+            showMessage(latestCompletionMessage != null ? latestCompletionMessage : "Đăng nhập thành công.");
+        } catch (AuctionException ex) {
+            authMessageLabel.setText(ex.getMessage());
+        }
+    }
 
         appendLog("🚀 Đang kết nối đến Server đấu giá...");
         // Tự động kết nối Server khi mở chương trình
@@ -40,131 +220,347 @@ public class MainController implements ClientHandler.AuctionListener {
 
         //
 
+    @FXML
+    public void handleSignup() {
+        try {
+            currentUser = service.register(
+                    signupUsernameField.getText(),
+                    signupPasswordField.getText(),
+                    signupFullNameField.getText(),
+                    signupRoleBox.getValue()
+            );
+            clearSignupFields();
+            currentUser = null;
+            setCurrentUser(null);
+            showAuthChoice();
+            authMessageLabel.setText("Đăng ký thành công. Hãy đăng nhập bằng tài khoản vừa tạo.");
+        } catch (AuctionException ex) {
+            authMessageLabel.setText(ex.getMessage());
+        }
     }
 
-    private void connectToServer() {
+    @FXML
+    public void handleLogout() {
+        setCurrentUser(null);
+        loginUsernameField.clear();
+        loginPasswordField.clear();
+        showMessage("Đã đăng xuất.");
+    }
+
+    @FXML
+    public void handleRefresh() {
+        refreshView();
+        showMessage(latestCompletionMessage != null ? latestCompletionMessage : "Đã cập nhật danh sách phiên đấu giá.");
+    }
+
+    @FXML
+    public void handlePlaceBid() {
         try {
-            // Kết nối với Server (không cần login nữa)
-            clientHandler = new ClientHandler("127.0.0.1", 8080, this);
-            Thread thread = new Thread(clientHandler);
-            thread.setDaemon(true);
-            thread.start();
+            AuctionItem item = selectedBidItem();
+            service.placeBid(currentUser, item, parseMoney(bidAmountField.getText()));
+            bidAmountField.clear();
+            refreshView();
+            auctionTable.refresh();
+            showMessage("Đặt giá thành công.");
+        } catch (AuctionException ex) {
+            showMessage(ex.getMessage());
+        } catch (NumberFormatException ex) {
+            showMessage("Giá tiền không hợp lệ.");
+        }
+    }
 
-            appendLog("✅ Đã kết nối Server. Đang tải danh sách món đấu giá...");
+    @FXML
+    public void handleAddItem() {
+        try {
+            AuctionItem item = service.addItem(
+                    currentUser,
+                    itemNameField.getText(),
+                    itemDescriptionArea.getText(),
+                    parseMoney(itemStartingPriceField.getText()),
+                    parseDateTime(itemStartTimeField.getText()),
+                    parseDateTime(itemEndTimeField.getText())
+            );
+            refreshView();
+            auctionTable.getSelectionModel().clearSelection();
+            bidItemComboBox.getSelectionModel().clearSelection();
+            clearItemForm();
+            showMessage("Đã thêm sản phẩm đấu giá.");
+        } catch (AuctionException ex) {
+            showMessage(ex.getMessage());
+        } catch (NumberFormatException ex) {
+            showMessage("Giá tiền không hợp lệ.");
+        } catch (DateTimeParseException ex) {
+            showMessage("Thời gian không đúng định dạng yyyy-MM-dd HH:mm.");
+        }
+    }
 
-            // Tự động yêu cầu danh sách món ngay khi kết nối
-            // (sẽ gọi sau khi ClientHandler kết nối thành công)
+    @FXML
+    public void handleUpdateItem() {
+        try {
+            AuctionItem item = selectedItem();
+            service.updateItem(
+                    currentUser,
+                    item,
+                    itemNameField.getText(),
+                    itemDescriptionArea.getText(),
+                    parseMoney(itemStartingPriceField.getText()),
+                    parseDateTime(itemStartTimeField.getText()),
+                    parseDateTime(itemEndTimeField.getText())
+            );
+            refreshView();
+            auctionTable.getSelectionModel().select(item);
+            showMessage("Đã cập nhật sản phẩm.");
+        } catch (AuctionException ex) {
+            showMessage(ex.getMessage());
+        } catch (NumberFormatException ex) {
+            showMessage("Giá tiền không hợp lệ.");
+        } catch (DateTimeParseException ex) {
+            showMessage("Thời gian không đúng định dạng yyyy-MM-dd HH:mm.");
+        }
+    }
 
-        } catch (IOException e) {
-            appendLog("❌ Không thể kết nối đến Server: " + e.getMessage());
-            btnBid.setDisable(true);
+    @FXML
+    public void handleDeleteItem() {
+        try {
+            service.deleteItem(currentUser, selectedItem());
+            refreshView();
+            showMessage("Đã xóa sản phẩm.");
+        } catch (AuctionException ex) {
+            showMessage(ex.getMessage());
         }
     }
 
 
     @FXML
-    private void handleBid() {
-        AuctionItem selected = tableItems.getSelectionModel().getSelectedItem();
-        if (selected == null) {
-            appendLog("❌ Vui lòng chọn một món đấu giá trong bảng!");
-            return;
-        }
-
-        String amountText = txtBidAmount.getText().trim();
-        if (amountText.isEmpty()) {
-            appendLog("❌ Vui lòng nhập số tiền đấu giá!");
-            return;
-        }
-
+    public void handleMarkPaid() {
         try {
-            double amount = Double.parseDouble(amountText);
-            clientHandler.bid(selected.getName(), amount);
-            txtBidAmount.clear();
-        } catch (NumberFormatException e) {
-            appendLog("❌ Số tiền không hợp lệ!");
+            service.markPaid(currentUser, selectedItem());
+            refreshView();
+            showMessage("Đã chuyển phiên sang trạng thái đã thanh toán.");
+        } catch (AuctionException ex) {
+            showMessage(ex.getMessage());
         }
     }
 
-    // ====================== CALLBACK TỪ CLIENTHANDLER ======================
-    @Override
-    public void onLoginSuccess(String username) {
-        // Không dùng login nữa, nhưng giữ lại để tương thích với ClientHandler
-        appendLog("✅ Đã kết nối thành công với Server đấu giá.");
+    @FXML
+    public void handleCancel() {
+        try {
+            service.cancel(currentUser, selectedItem());
+            refreshView();
+            showMessage("Đã hủy phiên đấu giá.");
+        } catch (AuctionException ex) {
+            showMessage(ex.getMessage());
+        }
     }
 
-    @Override
-    public void onLoginFailed(String message) {
-        appendLog("❌ Kết nối thất bại: " + message);
-    }
+    private void setCurrentUser(User user) {
+        currentUser = user;
+        boolean loggedIn = user != null;
+        authPane.setVisible(!loggedIn);
+        authPane.setManaged(!loggedIn);
+        appPane.setVisible(loggedIn);
+        appPane.setManaged(loggedIn);
+        logoutButton.setDisable(!loggedIn);
+        currentUserLabel.setText(loggedIn ? user.toString() : "Chưa đăng nhập");
 
-    @Override
-    public void onItemListReceived(String rawList) {
-        itemList.clear();
-        String[] items = rawList.split(";");
-        for (String itemStr : items) {
-            if (itemStr.trim().isEmpty()) continue;
-            String[] data = itemStr.split("\\|");
-            if (data.length == 3) {
-                String name = data[0];
-                String price = String.format("%,.0f VNĐ", Double.parseDouble(data[1]));
-                String bidder = data[2];
-                itemList.add(new AuctionItem(name, price, bidder));
+        boolean isBidder = loggedIn && user.getRole() == UserRole.BIDDER;
+        boolean isSeller = loggedIn && user.getRole() == UserRole.SELLER;
+        boolean isAdmin = loggedIn && user.getRole() == UserRole.ADMIN;
+
+        bidButton.setDisable(!isBidder);
+        sellerPane.setDisable(!isSeller);
+        sellerPane.setVisible(isSeller);
+        sellerPane.setManaged(isSeller);
+        adminPane.setDisable(!isAdmin);
+        liveAuctionTab.setDisable(!isBidder);
+        adminTab.setDisable(!isAdmin);
+        if (loggedIn) {
+            if (isBidder) {
+                mainTabs.getSelectionModel().select(liveAuctionTab);
+            } else if (isSeller) {
+                mainTabs.getSelectionModel().select(0);
+            } else if (isAdmin) {
+                mainTabs.getSelectionModel().select(adminTab);
             }
         }
-        appendLog("📋 Đã tải " + itemList.size() + " món đấu giá.");
+        refreshView();
     }
 
-    @Override
-    public void onNewBid(String itemName, double price, String bidder) {
-        for (AuctionItem item : itemList) {
-            if (item.getName().equals(itemName)) {
-                item.setPrice(String.format("%,.0f VNĐ", price));
-                item.setHighestBidder(bidder);
-                break;
+    private void setAuthFormVisible(VBox visiblePane) {
+        authChoicePane.setVisible(visiblePane == authChoicePane);
+        authChoicePane.setManaged(visiblePane == authChoicePane);
+        loginPane.setVisible(visiblePane == loginPane);
+        loginPane.setManaged(visiblePane == loginPane);
+        signupPane.setVisible(visiblePane == signupPane);
+        signupPane.setManaged(visiblePane == signupPane);
+    }
+
+    private void refreshView() {
+        AuctionItem selected = auctionTable.getSelectionModel().getSelectedItem();
+        AuctionItem selectedBidItem = bidItemComboBox.getSelectionModel().getSelectedItem();
+        List<AuctionItem> currentItems = service.getItems();
+        latestCompletionMessage = buildCompletionMessage(currentItems);
+        var items = FXCollections.observableArrayList(currentItems);
+        auctionTable.setItems(items);
+        bidItemComboBox.setItems(items);
+        if (selected != null) {
+            auctionTable.getItems().stream()
+                    .filter(item -> item.getId() == selected.getId())
+                    .findFirst()
+                    .ifPresent(item -> auctionTable.getSelectionModel().select(item));
+        }
+        if (selectedBidItem != null) {
+            bidItemComboBox.getItems().stream()
+                    .filter(item -> item.getId() == selectedBidItem.getId())
+                    .findFirst()
+                    .ifPresent(item -> bidItemComboBox.getSelectionModel().select(item));
+        }
+        auctionTable.refresh();
+        showItemDetails(auctionTable.getSelectionModel().getSelectedItem());
+    }
+
+    private void showItemDetails(AuctionItem item) {
+        if (item == null) {
+            detailNameLabel.setText("Chưa chọn phiên");
+            detailDescriptionLabel.setText("");
+            detailSellerLabel.setText("-");
+            detailStartLabel.setText("-");
+            detailEndLabel.setText("-");
+            detailStatusLabel.setText("-");
+            detailCurrentPriceLabel.setText("-");
+            detailLeaderLabel.setText("-");
+            detailStartingPriceLabel.setText("-");
+            bidHistoryList.setItems(FXCollections.observableArrayList());
+            return;
+        }
+
+        detailNameLabel.setText(item.getName());
+        detailDescriptionLabel.setText(item.getDescription());
+        detailSellerLabel.setText(item.getSeller().getFullName());
+        detailStartLabel.setText(formatDateTime(item.getStartTime()));
+        detailEndLabel.setText(formatDateTime(item.getEndTime()));
+        detailStatusLabel.setText(formatStatus(item));
+        detailCurrentPriceLabel.setText(formatMoney(item.getCurrentHighestPrice()));
+        detailLeaderLabel.setText(service.getWinner(item).map(User::getFullName).orElse("Chưa có"));
+        detailStartingPriceLabel.setText(formatMoney(item.getStartingPrice()));
+        bidHistoryList.setItems(FXCollections.observableArrayList(
+                item.getBids().stream()
+                        .map(this::formatBid)
+                        .collect(Collectors.toList())
+        ));
+    }
+
+    private void fillItemForm(AuctionItem item) {
+        if (item == null) {
+            return;
+        }
+        itemNameField.setText(item.getName());
+        itemDescriptionArea.setText(item.getDescription());
+        itemStartingPriceField.setText(item.getStartingPrice().toPlainString());
+        itemStartTimeField.setText(formatDateTime(item.getStartTime()));
+        itemEndTimeField.setText(formatDateTime(item.getEndTime()));
+    }
+
+    private void clearItemForm() {
+        itemNameField.clear();
+        itemDescriptionArea.clear();
+        itemStartingPriceField.clear();
+        itemStartTimeField.setText(formatDateTime(LocalDateTime.now()));
+        itemEndTimeField.setText(formatDateTime(LocalDateTime.now().plusHours(2)));
+    }
+
+    private AuctionItem selectedItem() throws AuctionException {
+        AuctionItem item = auctionTable.getSelectionModel().getSelectedItem();
+        if (item == null) {
+            throw new AuctionException("Vui lòng chọn một phiên đấu giá.");
+        }
+        return item;
+    }
+
+    private AuctionItem selectedBidItem() throws AuctionException {
+        AuctionItem item = bidItemComboBox.getSelectionModel().getSelectedItem();
+        if (item == null) {
+            throw new AuctionException("Vui lòng chọn sản phẩm muốn đấu giá.");
+        }
+        return item;
+    }
+
+    private BigDecimal parseMoney(String rawValue) {
+        if (rawValue == null || rawValue.trim().isEmpty()) {
+            throw new NumberFormatException("Giá tiền không được để trống.");
+        }
+        String normalized = rawValue.trim().replace(",", "");
+        return new BigDecimal(normalized);
+    }
+
+    private LocalDateTime parseDateTime(String rawValue) {
+        return LocalDateTime.parse(rawValue.trim(), dateTimeFormatter);
+    }
+
+    private String formatDateTime(LocalDateTime dateTime) {
+        return dateTime.format(dateTimeFormatter);
+    }
+
+    private String formatMoney(BigDecimal amount) {
+        return moneyFormat.format(amount) + " VND";
+    }
+
+    private String formatStatus(AuctionItem item) {
+        if (isSuccessfullyAuctioned(item)) {
+            return "Đã được đấu giá";
+        }
+        return item.getStatus().getDisplayName();
+    }
+
+    private String formatOwner(AuctionItem item) {
+        return service.getWinner(item)
+                .filter(winner -> isSuccessfullyAuctioned(item))
+                .map(User::getFullName)
+                .orElse("-");
+    }
+
+    private String formatBid(Bid bid) {
+        return formatDateTime(bid.getCreatedAt()) + " - " + bid.getBidder().getFullName() + ": " + formatMoney(bid.getAmount());
+    }
+
+    private boolean isSuccessfullyAuctioned(AuctionItem item) {
+        return (item.getStatus() == AuctionStatus.FINISHED || item.getStatus() == AuctionStatus.PAID)
+                && service.getWinner(item).isPresent();
+    }
+
+    private String buildCompletionMessage(List<AuctionItem> items) {
+        if (currentUser == null) {
+            return null;
+        }
+
+        for (AuctionItem item : items) {
+            if (!isSuccessfullyAuctioned(item)) {
+                continue;
+            }
+
+            Optional<User> winner = service.getWinner(item);
+            if (currentUser.getRole() == UserRole.BIDDER
+                    && winner.map(user -> user.getId() == currentUser.getId()).orElse(false)) {
+                return "Bạn đã đấu giá thành công " + item.getName() + ".";
+            }
+
+            if (currentUser.getRole() == UserRole.SELLER && item.getSeller().getId() == currentUser.getId()) {
+                return "Bạn đã bán thành công " + item.getName() + " với giá " + formatMoney(item.getCurrentHighestPrice()) + ".";
             }
         }
-        tableItems.refresh();
-        appendLog("🔥 " + bidder + " vừa đấu giá " + String.format("%,.0f VNĐ", price) + " cho " + itemName);
+
+        return null;
     }
 
-    @Override
-    public void onSystemMessage(String message) {
-        appendLog("📢 " + message);
+    private void clearSignupFields() {
+        signupFullNameField.clear();
+        signupUsernameField.clear();
+        signupPasswordField.clear();
+        signupRoleBox.setValue(UserRole.BIDDER);
     }
 
-    @Override
-    public void onError(String message) {
-        appendLog("❌ " + message);
-    }
-
-    @Override
-    public void onConnectionClosed() {
-        appendLog("🔴 Kết nối với Server đã bị ngắt.");
-        btnBid.setDisable(true);
-    }
-
-    private void appendLog(String text) {
-        Platform.runLater(() -> txtLog.appendText(text + "\n"));
-    }
-
-    // Model cho TableView
-    public static class AuctionItem {
-        private String name;
-        private String price;
-        private String highestBidder;
-
-        public AuctionItem(String name, String price, String highestBidder) {
-            this.name = name;
-            this.price = price;
-            this.highestBidder = highestBidder;
-        }
-
-        public String getName() { return name; }
-        public void setName(String name) { this.name = name; }
-        public String getPrice() { return price; }
-        public void setPrice(String price) { this.price = price; }
-        public String getHighestBidder() { return highestBidder; }
-        public void setHighestBidder(String highestBidder) { this.highestBidder = highestBidder; }
+    private void showMessage(String message) {
+        systemMessageLabel.setText(message);
     }
 
     // =============================== NAVIGATION BAR ==================================
@@ -192,4 +588,5 @@ public class MainController implements ClientHandler.AuctionListener {
         alert.showAndWait();
     }
 
+}
 }
