@@ -353,6 +353,8 @@ public class MainController {
 
         bidButton.setDisable(!isBidder);
         sellerPane.setDisable(!isSeller);
+        sellerPane.setVisible(isSeller);
+        sellerPane.setManaged(isSeller);
         adminPane.setDisable(!isAdmin);
         liveAuctionTab.setDisable(!isBidder);
         adminTab.setDisable(!isAdmin);
