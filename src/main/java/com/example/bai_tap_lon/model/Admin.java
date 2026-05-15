@@ -1,28 +1,16 @@
 package com.example.bai_tap_lon.model;
 
-
-import java.time.LocalDateTime;
-
 public class Admin extends User {
     private static final long serialVersionUID = 1L;
 
-    private String adminLevel; // Ví dụ: "SUPER_ADMIN", "MODERATOR"
-    private LocalDateTime lastLogin;
+    private final UserRole originalRole;
 
-    public Admin(String username, String password, String email, String adminLevel) {
-        super(username, password, email);
-        this.adminLevel = adminLevel;
+    public Admin(int id, String username, String password, String fullName) {
+        this(id, username, password, fullName, false, UserRole.BIDDER);
     }
 
-    public String getAdminLevel() { return adminLevel; }
-    public void setAdminLevel(String adminLevel) { this.adminLevel = adminLevel; }
-
-    public LocalDateTime getLastLogin() { return lastLogin; }
-    public void setLastLogin(LocalDateTime lastLogin) { this.lastLogin = lastLogin; }
-
-    @Override
-    public void displayRoleInfo() {
-        System.out.println("Role: Admin | Level: " + adminLevel + " | Username: " + getUsername());
+    public Admin(int id, String username, String password, String fullName, boolean locked) {
+        this(id, username, password, fullName, locked, UserRole.BIDDER);
     }
 
 
@@ -42,12 +30,12 @@ public class Admin extends User {
         // Cập nhật trạng thái phiên đấu giá thành CANCELED
         System.out.println("Phiên đấu giá " + auctionId + " đã bị Admin hủy. Lý do: " + reason);
         return true;
-public class Admin extends User {
-    public Admin(int id, String username, String password, String fullName) {
-        super(id, username, password, fullName, UserRole.ADMIN);
     }
 
-    public Admin(int id, String username, String password, String fullName, boolean locked) {
-        super(id, username, password, fullName, UserRole.ADMIN, locked);
+    private UserRole normalizeOriginalRole(UserRole role) {
+        if (role == null || role == UserRole.ADMIN) {
+            return UserRole.BIDDER;
+        }
+        return role;
     }
 }

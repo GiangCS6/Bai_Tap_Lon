@@ -125,8 +125,42 @@ public class AuctionService {
                 storedUser.getUsername(),
                 storedUser.getPassword(),
                 storedUser.getFullName(),
-                storedUser.isLocked()
+                storedUser.isLocked(),
+                storedUser.getRole()
         ));
+        saveData();
+    }
+
+    public void revokeAdmin(User actor, User target) throws AuctionException {
+        requireRootAdmin(actor);
+        User storedUser = requireStoredUser(target);
+        if (isRootAdmin(storedUser)) {
+            throw new AuctionException("Không thể thu hồi quyền admin của tài khoản admin gốc.");
+        }
+        if (storedUser.getRole() != UserRole.ADMIN) {
+            throw new AuctionException("Tài khoản này không phải admin.");
+        }
+
+        UserRole restoredRole = storedUser instanceof Admin admin ? admin.getOriginalRole() : UserRole.BIDDER;
+        User restoredUser = switch (restoredRole) {
+            case SELLER -> new Seller(
+                    storedUser.getId(),
+                    storedUser.getUsername(),
+                    storedUser.getPassword(),
+                    storedUser.getFullName(),
+                    storedUser.isLocked()
+            );
+            case BIDDER, ADMIN -> new Bidder(
+                    storedUser.getId(),
+                    storedUser.getUsername(),
+                    storedUser.getPassword(),
+                    storedUser.getFullName(),
+                    storedUser.isLocked()
+            );
+        };
+
+        int index = findUserIndexById(storedUser.getId());
+        users.set(index, restoredUser);
         saveData();
     }
 
@@ -159,8 +193,29 @@ public class AuctionService {
     }
 
     public List<AuctionItem> getItems() {
-        updateStatuses();
+        if (updateStatuses()) {
+            saveData();
+        }
         return new ArrayList<>(items);
+    }
+
+    public void setItemWatched(User bidder, AuctionItem item, boolean watched) throws AuctionException {
+        requireItem(item);
+        if (bidder == null || bidder.getRole() != UserRole.BIDDER) {
+            throw new AuctionException("Chỉ tài khoản người đấu giá mới được theo dõi sản phẩm.");
+        }
+        if (bidder.isLocked()) {
+            throw new AuctionException("Tai khoan dang bi khoa.");
+        }
+
+        boolean alreadyWatched = item.isWatchedBy(bidder);
+        if (watched && !alreadyWatched) {
+            item.addWatcher(bidder);
+            saveData();
+        } else if (!watched && alreadyWatched) {
+            item.removeWatcher(bidder);
+            saveData();
+        }
     }
 
     public AuctionItem addItem(
@@ -329,24 +384,34 @@ public class AuctionService {
         updateStatus(item, LocalDateTime.now());
     }
 
-    private void updateStatuses() {
+    private boolean updateStatuses() {
         LocalDateTime now = LocalDateTime.now();
+        boolean changed = false;
         for (AuctionItem item : items) {
-            updateStatus(item, now);
+            changed |= updateStatus(item, now);
         }
+        return changed;
     }
 
-    private void updateStatus(AuctionItem item, LocalDateTime now) {
+    private boolean updateStatus(AuctionItem item, LocalDateTime now) {
         if (item.getStatus() == AuctionStatus.CANCELED || item.getStatus() == AuctionStatus.PAID) {
-            return;
+            return false;
         }
+
+        AuctionStatus nextStatus;
         if (!now.isBefore(item.getEndTime())) {
-            item.setStatus(AuctionStatus.FINISHED);
+            nextStatus = AuctionStatus.FINISHED;
         } else if (!now.isBefore(item.getStartTime())) {
-            item.setStatus(AuctionStatus.RUNNING);
+            nextStatus = AuctionStatus.RUNNING;
         } else {
-            item.setStatus(AuctionStatus.OPEN);
+            nextStatus = AuctionStatus.OPEN;
         }
+
+        if (item.getStatus() == nextStatus) {
+            return false;
+        }
+        item.setStatus(nextStatus);
+        return true;
     }
 
     private void validateItem(String name, BigDecimal startingPrice, LocalDateTime startTime, LocalDateTime endTime)

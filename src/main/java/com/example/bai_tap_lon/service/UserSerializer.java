@@ -1,5 +1,6 @@
 package com.example.bai_tap_lon.service;
 
+import com.example.bai_tap_lon.model.Admin;
 import com.example.bai_tap_lon.model.User;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -18,6 +19,9 @@ public class UserSerializer implements JsonSerializer<User> {
         json.addProperty("password", src.getPassword());
         json.addProperty("fullName", src.getFullName());
         json.addProperty("locked", src.isLocked());
+        if (src instanceof Admin admin) {
+            json.addProperty("originalRole", admin.getOriginalRole().name());
+        }
         return json;
     }
 }

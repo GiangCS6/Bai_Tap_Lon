@@ -5,6 +5,7 @@ import com.example.bai_tap_lon.model.AuctionItem;
 import com.example.bai_tap_lon.model.Bidder;
 import com.example.bai_tap_lon.model.Seller;
 import com.example.bai_tap_lon.model.User;
+import com.example.bai_tap_lon.model.UserRole;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
@@ -98,12 +99,16 @@ public class DataPersistence {
      */
     public static ItemLoadData loadItems(List<User> users) throws IOException {
         File file = new File(ITEMS_FILE);
-        if (!file.exists()) {
+        if (!file.exists() || file.length() == 0) {
             return new ItemLoadData(new ArrayList<>(), 1);
         }
 
         try (FileReader reader = new FileReader(file)) {
             JsonObject json = gson.fromJson(reader, JsonObject.class);
+            if (json == null || !json.has("items")) {
+                return new ItemLoadData(new ArrayList<>(), 1);
+            }
+
             Type itemType = new TypeToken<List<AuctionItem>>(){}.getType();
             List<AuctionItem> items = gson.fromJson(json.getAsJsonArray("items"), itemType);
 
@@ -135,11 +140,25 @@ public class DataPersistence {
         boolean locked = userJson.has("locked") && userJson.get("locked").getAsBoolean();
 
         return switch (type) {
-            case "ADMIN" -> new Admin(id, username, password, fullName, locked);
+            case "ADMIN" -> new Admin(id, username, password, fullName, locked, readOriginalRole(userJson));
             case "SELLER" -> new Seller(id, username, password, fullName, locked);
             case "BIDDER" -> new Bidder(id, username, password, fullName, locked);
             default -> throw new IllegalArgumentException("Unknown user type: " + type);
         };
+    }
+
+    private static UserRole readOriginalRole(JsonObject userJson) {
+        JsonElement originalRole = userJson.get("originalRole");
+        if (originalRole == null || originalRole.isJsonNull()) {
+            return UserRole.BIDDER;
+        }
+
+        try {
+            UserRole role = UserRole.valueOf(originalRole.getAsString());
+            return role == UserRole.ADMIN ? UserRole.BIDDER : role;
+        } catch (IllegalArgumentException ex) {
+            return UserRole.BIDDER;
+        }
     }
 
     /**

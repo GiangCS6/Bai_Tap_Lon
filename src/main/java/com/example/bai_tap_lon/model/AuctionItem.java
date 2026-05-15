@@ -14,10 +14,10 @@ public class AuctionItem extends Entity {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private AuctionStatus status;
-    private final User seller;
+    private User seller;
     private User leadingBidder;
-    private final List<Bid> bids = new ArrayList<>();
-    private final List<Integer> watcherIds = new ArrayList<>();
+    private List<Bid> bids = new ArrayList<>();
+    private List<Integer> watcherIds = new ArrayList<>();
 
     public AuctionItem(
             int id,
@@ -104,30 +104,36 @@ public class AuctionItem extends Entity {
     }
 
     public void addBid(Bid bid) {
+        ensureBids();
         bids.add(bid);
         leadingBidder = bid.getBidder();
         currentHighestPrice = bid.getAmount();
     }
 
     public List<Bid> getBids() {
+        ensureBids();
         return Collections.unmodifiableList(bids);
     }
 
     public List<Integer> getWatcherIds() {
+        ensureWatcherIds();
         return Collections.unmodifiableList(watcherIds);
     }
 
     public boolean isWatchedBy(User user) {
+        ensureWatcherIds();
         return user != null && watcherIds.contains(user.getId());
     }
 
     public void addWatcher(User user) {
+        ensureWatcherIds();
         if (user != null && !watcherIds.contains(user.getId())) {
             watcherIds.add(user.getId());
         }
     }
 
     public void removeWatcher(User user) {
+        ensureWatcherIds();
         if (user != null) {
             watcherIds.remove(Integer.valueOf(user.getId()));
         }
@@ -140,5 +146,17 @@ public class AuctionItem extends Entity {
     @Override
     public String toString() {
         return name;
+    }
+
+    private void ensureBids() {
+        if (bids == null) {
+            bids = new ArrayList<>();
+        }
+    }
+
+    private void ensureWatcherIds() {
+        if (watcherIds == null) {
+            watcherIds = new ArrayList<>();
+        }
     }
 }

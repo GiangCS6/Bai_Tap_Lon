@@ -30,6 +30,7 @@ import java.text.NumberFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
@@ -116,6 +117,14 @@ public class MainController {
     @FXML
     private Button bidButton;
     @FXML
+    private Button watchItemButton;
+    @FXML
+    private ListView<AuctionItem> watchedItemList;
+    @FXML
+    private Label notificationSummaryLabel;
+    @FXML
+    private ListView<String> notificationList;
+    @FXML
     private ListView<String> bidHistoryList;
     @FXML
     private VBox sellerPane;
@@ -157,6 +166,8 @@ public class MainController {
     private Button toggleUserLockButton;
     @FXML
     private Button grantAdminButton;
+    @FXML
+    private Button revokeAdminButton;
     @FXML
     private TableView<AuctionItem> adminProductTable;
     @FXML
@@ -213,6 +224,7 @@ public class MainController {
         auctionTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             showItemDetails(newValue);
             fillItemForm(newValue);
+            updateWatchButton(newValue);
             if (newValue != null && newValue.getStatus() == AuctionStatus.RUNNING) {
                 bidItemComboBox.getSelectionModel().select(newValue);
             } else {
@@ -221,6 +233,12 @@ public class MainController {
         });
 
         bidItemComboBox.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                auctionTable.getSelectionModel().select(newValue);
+                showItemDetails(newValue);
+            }
+        });
+        watchedItemList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 auctionTable.getSelectionModel().select(newValue);
                 showItemDetails(newValue);
@@ -320,6 +338,20 @@ public class MainController {
     }
 
     @FXML
+    public void handleToggleWatch() {
+        try {
+            AuctionItem item = selectedWatchItem();
+            boolean watch = !item.isWatchedBy(currentUser);
+            service.setItemWatched(currentUser, item, watch);
+            refreshView();
+            auctionTable.getSelectionModel().select(item);
+            showMessage((watch ? "Đã theo dõi " : "Đã bỏ theo dõi ") + item.getName() + ".");
+        } catch (AuctionException ex) {
+            showMessage(ex.getMessage());
+        }
+    }
+
+    @FXML
     public void handleAddItem() {
         try {
             service.addItem(
@@ -408,6 +440,18 @@ public class MainController {
             service.grantAdmin(currentUser, selectedUser);
             refreshView();
             showMessage("Đã cấp quyền admin cho " + selectedUser.getUsername() + ".");
+        } catch (AuctionException ex) {
+            showMessage(ex.getMessage());
+        }
+    }
+
+    @FXML
+    public void handleRevokeAdmin() {
+        try {
+            User selectedUser = selectedUser();
+            service.revokeAdmin(currentUser, selectedUser);
+            refreshView();
+            showMessage("Đã thu hồi quyền admin của " + selectedUser.getUsername() + ".");
         } catch (AuctionException ex) {
             showMessage(ex.getMessage());
         }
@@ -520,6 +564,9 @@ public class MainController {
         boolean isAdmin = loggedIn && user.getRole() == UserRole.ADMIN;
 
         bidButton.setDisable(!isBidder);
+        watchItemButton.setVisible(isBidder);
+        watchItemButton.setManaged(isBidder);
+        watchedItemList.setDisable(!isBidder);
         sellerPane.setDisable(!isSeller);
         sellerPane.setVisible(isSeller);
         sellerPane.setManaged(isSeller);
@@ -537,6 +584,7 @@ public class MainController {
             }
         }
         refreshView();
+        updateWatchButton(auctionTable.getSelectionModel().getSelectedItem());
     }
 
     private void setAuthFormVisible(VBox visiblePane) {
@@ -551,9 +599,9 @@ public class MainController {
     private void refreshView() {
         AuctionItem selected = auctionTable.getSelectionModel().getSelectedItem();
         AuctionItem selectedBidItem = bidItemComboBox.getSelectionModel().getSelectedItem();
+        AuctionItem selectedWatchedItem = watchedItemList.getSelectionModel().getSelectedItem();
         AuctionItem selectedAdminItem = adminProductTable.getSelectionModel().getSelectedItem();
         List<AuctionItem> currentItems = service.getItems();
-        latestCompletionMessage = buildCompletionMessage(currentItems);
         var items = FXCollections.observableArrayList(currentItems);
         var liveItems = FXCollections.observableArrayList(
                 currentItems.stream()
@@ -563,6 +611,8 @@ public class MainController {
         auctionTable.setItems(items);
         adminProductTable.setItems(FXCollections.observableArrayList(currentItems));
         bidItemComboBox.setItems(liveItems);
+        refreshWatchedItems(currentItems);
+        refreshNotifications(currentItems);
         if (selected != null) {
             auctionTable.getItems().stream()
                     .filter(item -> item.getId() == selected.getId())
@@ -575,6 +625,12 @@ public class MainController {
                     .findFirst()
                     .ifPresent(item -> bidItemComboBox.getSelectionModel().select(item));
         }
+        if (selectedWatchedItem != null) {
+            watchedItemList.getItems().stream()
+                    .filter(item -> item.getId() == selectedWatchedItem.getId())
+                    .findFirst()
+                    .ifPresent(item -> watchedItemList.getSelectionModel().select(item));
+        }
         if (selectedAdminItem != null) {
             adminProductTable.getItems().stream()
                     .filter(item -> item.getId() == selectedAdminItem.getId())
@@ -585,6 +641,33 @@ public class MainController {
         adminProductTable.refresh();
         showItemDetails(auctionTable.getSelectionModel().getSelectedItem());
         refreshUserTable();
+    }
+
+    private void refreshWatchedItems(List<AuctionItem> currentItems) {
+        if (currentUser == null || currentUser.getRole() != UserRole.BIDDER) {
+            watchedItemList.setItems(FXCollections.observableArrayList());
+            return;
+        }
+
+        watchedItemList.setItems(FXCollections.observableArrayList(
+                currentItems.stream()
+                        .filter(item -> item.isWatchedBy(currentUser))
+                        .collect(Collectors.toList())
+        ));
+    }
+
+    private void refreshNotifications(List<AuctionItem> currentItems) {
+        List<String> notifications = buildRoleNotifications(currentItems);
+        latestCompletionMessage = notifications.isEmpty() ? null : notifications.get(0);
+
+        if (notifications.isEmpty()) {
+            notificationSummaryLabel.setText("Thông báo");
+            notificationList.setItems(FXCollections.observableArrayList(emptyNotificationMessage()));
+            return;
+        }
+
+        notificationSummaryLabel.setText("Thông báo mới: " + notifications.size());
+        notificationList.setItems(FXCollections.observableArrayList(notifications));
     }
 
     private void showItemDetails(AuctionItem item) {
@@ -599,6 +682,7 @@ public class MainController {
             detailLeaderLabel.setText("-");
             detailStartingPriceLabel.setText("-");
             bidHistoryList.setItems(FXCollections.observableArrayList());
+            updateWatchButton(null);
             return;
         }
 
@@ -616,6 +700,7 @@ public class MainController {
                         .map(this::formatBid)
                         .collect(Collectors.toList())
         ));
+        updateWatchButton(item);
     }
 
     private void fillItemForm(AuctionItem item) {
@@ -691,6 +776,20 @@ public class MainController {
         return item;
     }
 
+    private AuctionItem selectedWatchItem() throws AuctionException {
+        AuctionItem item = auctionTable.getSelectionModel().getSelectedItem();
+        if (item == null) {
+            item = bidItemComboBox.getSelectionModel().getSelectedItem();
+        }
+        if (item == null) {
+            item = watchedItemList.getSelectionModel().getSelectedItem();
+        }
+        if (item == null) {
+            throw new AuctionException("Vui lòng chọn sản phẩm muốn theo dõi.");
+        }
+        return item;
+    }
+
     private User selectedUser() throws AuctionException {
         User user = userTable.getSelectionModel().getSelectedItem();
         if (user == null) {
@@ -725,12 +824,24 @@ public class MainController {
         toggleUserLockButton.setDisable(!isAdmin || !hasUser || selectedRootAdmin || selectedSelf);
         toggleUserLockButton.setText(hasUser && selectedUser.isLocked() ? "Mở khóa tài khoản" : "Khóa tài khoản");
         grantAdminButton.setDisable(!canGrantAdmin || !hasUser || selectedUser.getRole() == UserRole.ADMIN);
+        revokeAdminButton.setDisable(!canGrantAdmin || !hasUser || selectedRootAdmin || selectedUser.getRole() != UserRole.ADMIN);
 
         boolean hasProduct = adminProductTable.getSelectionModel().getSelectedItem() != null;
         adminUpdateItemButton.setDisable(!isAdmin || !hasProduct);
         adminCancelItemButton.setDisable(!isAdmin || !hasProduct);
         adminExtendItemButton.setDisable(!isAdmin || !hasProduct);
         adminDeleteItemButton.setDisable(!isAdmin || !hasProduct);
+    }
+
+    private void updateWatchButton(AuctionItem item) {
+        boolean canWatch = currentUser != null && currentUser.getRole() == UserRole.BIDDER && item != null;
+        watchItemButton.setDisable(!canWatch);
+        if (!canWatch) {
+            watchItemButton.setText("Theo dõi sản phẩm");
+            return;
+        }
+
+        watchItemButton.setText(item.isWatchedBy(currentUser) ? "Bỏ theo dõi" : "Theo dõi sản phẩm");
     }
 
     private BigDecimal parseMoney(String rawValue) {
@@ -776,28 +887,81 @@ public class MainController {
                 && service.getWinner(item).isPresent();
     }
 
-    private String buildCompletionMessage(List<AuctionItem> items) {
+    private List<String> buildRoleNotifications(List<AuctionItem> items) {
+        List<String> notifications = new ArrayList<>();
         if (currentUser == null) {
-            return null;
+            return notifications;
         }
 
         for (AuctionItem item : items) {
-            if (!isSuccessfullyAuctioned(item)) {
-                continue;
-            }
-
-            Optional<User> winner = service.getWinner(item);
-            if (currentUser.getRole() == UserRole.BIDDER
-                    && winner.map(user -> user.getId() == currentUser.getId()).orElse(false)) {
-                return "Bạn đã đấu giá thành công " + item.getName() + ".";
-            }
-
-            if (currentUser.getRole() == UserRole.SELLER && item.getSeller().getId() == currentUser.getId()) {
-                return "Bạn đã bán thành công " + item.getName() + " với giá " + formatMoney(item.getCurrentHighestPrice()) + ".";
+            if (currentUser.getRole() == UserRole.BIDDER && item.isWatchedBy(currentUser)) {
+                notifications.add(formatBidderNotification(item));
+            } else if (currentUser.getRole() == UserRole.SELLER
+                    && item.getSeller().getId() == currentUser.getId()
+                    && isClosedForNotification(item)) {
+                notifications.add(formatSellerNotification(item));
+            } else if (currentUser.getRole() == UserRole.ADMIN && isClosedForNotification(item)) {
+                notifications.add(formatAdminNotification(item));
             }
         }
 
-        return null;
+        return notifications;
+    }
+
+    private String formatBidderNotification(AuctionItem item) {
+        if (!isClosedForNotification(item)) {
+            return "Đang theo dõi: " + item.getName()
+                    + " | Trạng thái: " + formatStatus(item)
+                    + " | Giá hiện tại: " + formatMoney(item.getCurrentHighestPrice())
+                    + " | Kết thúc: " + formatDateTime(item.getEndTime());
+        }
+
+        Optional<User> winner = service.getWinner(item);
+        String result = winner
+                .map(user -> user.getId() == currentUser.getId()
+                        ? "Bạn là người thắng"
+                        : "Người thắng: " + user.getFullName())
+                .orElse("Chưa có người thắng");
+
+        return "Sản phẩm theo dõi đã kết thúc: " + item.getName()
+                + " | Trạng thái: " + formatStatus(item)
+                + " | Giá cuối: " + formatMoney(item.getCurrentHighestPrice())
+                + " | " + result;
+    }
+
+    private String formatSellerNotification(AuctionItem item) {
+        return "Sản phẩm của bạn đã kết thúc: " + item.getName()
+                + " | Mô tả: " + item.getDescription()
+                + " | Trạng thái: " + formatStatus(item)
+                + " | Giá khởi điểm: " + formatMoney(item.getStartingPrice())
+                + " | Giá cuối: " + formatMoney(item.getCurrentHighestPrice())
+                + " | Người thắng: " + service.getWinner(item).map(User::getFullName).orElse("Không có")
+                + " | Số lượt đấu giá: " + item.getBids().size()
+                + " | Kết thúc: " + formatDateTime(item.getEndTime());
+    }
+
+    private String formatAdminNotification(AuctionItem item) {
+        return "Phiên đã kết thúc: " + item.getName()
+                + " | Người bán: " + item.getSeller().getFullName()
+                + " | Trạng thái: " + formatStatus(item)
+                + " | Giá cuối: " + formatMoney(item.getCurrentHighestPrice());
+    }
+
+    private boolean isClosedForNotification(AuctionItem item) {
+        return item.getStatus() == AuctionStatus.FINISHED
+                || item.getStatus() == AuctionStatus.PAID
+                || item.getStatus() == AuctionStatus.CANCELED;
+    }
+
+    private String emptyNotificationMessage() {
+        if (currentUser == null) {
+            return "Chưa có thông báo.";
+        }
+        return switch (currentUser.getRole()) {
+            case BIDDER -> "Chưa có thông báo. Hãy theo dõi sản phẩm để nhận cập nhật.";
+            case SELLER -> "Chưa có thông báo về sản phẩm đã kết thúc.";
+            case ADMIN -> "Chưa có thông báo quản trị.";
+        };
     }
 
     private void clearSignupFields() {
