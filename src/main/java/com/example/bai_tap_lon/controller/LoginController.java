@@ -1,6 +1,15 @@
 package com.example.bai_tap_lon.controller;
 
-import com.example.bai_tap_lon.service.LoginService;
+import com.example.bai_tap_lon.Application;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;

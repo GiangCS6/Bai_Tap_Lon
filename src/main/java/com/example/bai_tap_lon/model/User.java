@@ -5,13 +5,19 @@ public class User extends Entity {
     private final String password;
     private final String fullName;
     private final UserRole role;
+    private boolean locked;
 
     public User(int id, String username, String password, String fullName, UserRole role) {
+        this(id, username, password, fullName, role, false);
+    }
+
+    public User(int id, String username, String password, String fullName, UserRole role, boolean locked) {
         super(id);
         this.username = username;
         this.password = password;
         this.fullName = fullName;
         this.role = role;
+        this.locked = locked;
     }
 
     public String getUsername() {
@@ -32,6 +38,14 @@ public class User extends Entity {
 
     public UserRole getRole() {
         return role;
+    }
+
+    public boolean isLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
     }
 
     @Override

@@ -17,6 +17,7 @@ public class AuctionItem extends Entity {
     private final User seller;
     private User leadingBidder;
     private final List<Bid> bids = new ArrayList<>();
+    private final List<Integer> watcherIds = new ArrayList<>();
 
     public AuctionItem(
             int id,
@@ -110,6 +111,26 @@ public class AuctionItem extends Entity {
 
     public List<Bid> getBids() {
         return Collections.unmodifiableList(bids);
+    }
+
+    public List<Integer> getWatcherIds() {
+        return Collections.unmodifiableList(watcherIds);
+    }
+
+    public boolean isWatchedBy(User user) {
+        return user != null && watcherIds.contains(user.getId());
+    }
+
+    public void addWatcher(User user) {
+        if (user != null && !watcherIds.contains(user.getId())) {
+            watcherIds.add(user.getId());
+        }
+    }
+
+    public void removeWatcher(User user) {
+        if (user != null) {
+            watcherIds.remove(Integer.valueOf(user.getId()));
+        }
     }
 
     public boolean isEditableBy(User user) {

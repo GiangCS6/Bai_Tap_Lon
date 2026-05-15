@@ -46,7 +46,8 @@ public class DataPersistence {
     public static void saveUsers(List<User> users, int nextUserId) throws IOException {
         try (FileWriter writer = new FileWriter(USERS_FILE)) {
             JsonObject json = new JsonObject();
-            json.add("users", gson.toJsonTree(users));
+            Type userListType = new TypeToken<List<User>>(){}.getType();
+            json.add("users", gson.toJsonTree(users, userListType));
             json.addProperty("nextUserId", nextUserId);
             gson.toJson(json, writer);
         }
@@ -69,7 +70,7 @@ public class DataPersistence {
                 // Parse users with type discrimination
                 for (JsonElement element : json.getAsJsonArray("users")) {
                     JsonObject userJson = element.getAsJsonObject();
-                    String type = userJson.get("type").getAsString();
+                    String type = readUserType(userJson);
                     User user = parseUser(userJson, type);
                     users.add(user);
                 }
@@ -115,16 +116,28 @@ public class DataPersistence {
         }
     }
 
+    private static String readUserType(JsonObject userJson) {
+        JsonElement type = userJson.get("type");
+        if (type == null || type.isJsonNull()) {
+            type = userJson.get("role");
+        }
+        if (type == null || type.isJsonNull()) {
+            throw new IllegalArgumentException("Missing user type");
+        }
+        return type.getAsString();
+    }
+
     private static User parseUser(JsonObject userJson, String type) {
         int id = userJson.get("id").getAsInt();
         String username = userJson.get("username").getAsString();
         String password = userJson.get("password").getAsString();
         String fullName = userJson.get("fullName").getAsString();
+        boolean locked = userJson.has("locked") && userJson.get("locked").getAsBoolean();
 
         return switch (type) {
-            case "ADMIN" -> new Admin(id, username, password, fullName);
-            case "SELLER" -> new Seller(id, username, password, fullName);
-            case "BIDDER" -> new Bidder(id, username, password, fullName);
+            case "ADMIN" -> new Admin(id, username, password, fullName, locked);
+            case "SELLER" -> new Seller(id, username, password, fullName, locked);
+            case "BIDDER" -> new Bidder(id, username, password, fullName, locked);
             default -> throw new IllegalArgumentException("Unknown user type: " + type);
         };
     }

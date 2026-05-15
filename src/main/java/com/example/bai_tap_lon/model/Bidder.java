@@ -4,4 +4,8 @@ public class Bidder extends User {
     public Bidder(int id, String username, String password, String fullName) {
         super(id, username, password, fullName, UserRole.BIDDER);
     }
+
+    public Bidder(int id, String username, String password, String fullName, boolean locked) {
+        super(id, username, password, fullName, UserRole.BIDDER, locked);
+    }
 }

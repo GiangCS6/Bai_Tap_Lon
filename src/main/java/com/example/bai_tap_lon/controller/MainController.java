@@ -1,8 +1,5 @@
 package com.example.bai_tap_lon.controller;
 
-import com.example.bai_tap_lon.client.ClientHandler;
-import com.example.bai_tap_lon.model.Product;
-import com.example.bai_tap_lon.service.ProductStore;
 import javafx.application.Platform;
 import com.example.bai_tap_lon.model.AuctionItem;
 import com.example.bai_tap_lon.model.AuctionStatus;
@@ -38,11 +35,6 @@ import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-    @FXML private ListView<Product> listProducts;
-    @FXML private TableView<AuctionItem> tableItems;
-    @FXML private TableColumn<AuctionItem, String> colItemName;
-    @FXML private TableColumn<AuctionItem, String> colCurrentPrice;
-    @FXML private TableColumn<AuctionItem, String> colHighestBidder;
 public class MainController {
     private final AuctionService service = new AuctionService();
     private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -149,10 +141,58 @@ public class MainController {
     private Button markPaidButton;
     @FXML
     private Button cancelButton;
+    @FXML
+    private TableView<User> userTable;
+    @FXML
+    private TableColumn<User, String> userUsernameColumn;
+    @FXML
+    private TableColumn<User, String> userFullNameColumn;
+    @FXML
+    private TableColumn<User, String> userRoleColumn;
+    @FXML
+    private TableColumn<User, String> userStatusColumn;
+    @FXML
+    private Button deleteUserButton;
+    @FXML
+    private Button toggleUserLockButton;
+    @FXML
+    private Button grantAdminButton;
+    @FXML
+    private TableView<AuctionItem> adminProductTable;
+    @FXML
+    private TableColumn<AuctionItem, String> adminProductNameColumn;
+    @FXML
+    private TableColumn<AuctionItem, String> adminProductPriceColumn;
+    @FXML
+    private TableColumn<AuctionItem, String> adminProductStatusColumn;
+    @FXML
+    private TableColumn<AuctionItem, String> adminProductSellerColumn;
+    @FXML
+    private TableColumn<AuctionItem, String> adminProductEndTimeColumn;
+    @FXML
+    private TextField adminItemNameField;
+    @FXML
+    private TextArea adminItemDescriptionArea;
+    @FXML
+    private TextField adminItemStartingPriceField;
+    @FXML
+    private TextField adminItemStartTimeField;
+    @FXML
+    private TextField adminItemEndTimeField;
+    @FXML
+    private TextField adminExtendEndTimeField;
+    @FXML
+    private Button adminUpdateItemButton;
+    @FXML
+    private Button adminCancelItemButton;
+    @FXML
+    private Button adminExtendItemButton;
+    @FXML
+    private Button adminDeleteItemButton;
 
     @FXML
     public void initialize() {
-        signupRoleBox.setItems(FXCollections.observableArrayList(UserRole.BIDDER, UserRole.SELLER, UserRole.ADMIN));
+        signupRoleBox.setItems(FXCollections.observableArrayList(UserRole.BIDDER, UserRole.SELLER));
         signupRoleBox.setValue(UserRole.BIDDER);
 
         nameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getName()));
@@ -160,12 +200,23 @@ public class MainController {
         statusColumn.setCellValueFactory(data -> new SimpleStringProperty(formatStatus(data.getValue())));
         ownerColumn.setCellValueFactory(data -> new SimpleStringProperty(formatOwner(data.getValue())));
         endTimeColumn.setCellValueFactory(data -> new SimpleStringProperty(formatDateTime(data.getValue().getEndTime())));
+        userUsernameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getUsername()));
+        userFullNameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getFullName()));
+        userRoleColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getRole().getDisplayName()));
+        userStatusColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().isLocked() ? "Đã khóa" : "Đang hoạt động"));
+        adminProductNameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getName()));
+        adminProductPriceColumn.setCellValueFactory(data -> new SimpleStringProperty(formatMoney(data.getValue().getCurrentHighestPrice())));
+        adminProductStatusColumn.setCellValueFactory(data -> new SimpleStringProperty(formatStatus(data.getValue())));
+        adminProductSellerColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getSeller().getFullName()));
+        adminProductEndTimeColumn.setCellValueFactory(data -> new SimpleStringProperty(formatDateTime(data.getValue().getEndTime())));
 
         auctionTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             showItemDetails(newValue);
             fillItemForm(newValue);
-            if (newValue != null) {
+            if (newValue != null && newValue.getStatus() == AuctionStatus.RUNNING) {
                 bidItemComboBox.getSelectionModel().select(newValue);
+            } else {
+                bidItemComboBox.getSelectionModel().clearSelection();
             }
         });
 
@@ -174,6 +225,11 @@ public class MainController {
                 auctionTable.getSelectionModel().select(newValue);
                 showItemDetails(newValue);
             }
+        });
+        userTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> updateAdminControls());
+        adminProductTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            fillAdminItemForm(newValue);
+            updateAdminControls();
         });
 
         itemStartTimeField.setText(formatDateTime(LocalDateTime.now()));
@@ -213,12 +269,6 @@ public class MainController {
             authMessageLabel.setText(ex.getMessage());
         }
     }
-
-        appendLog("🚀 Đang kết nối đến Server đấu giá...");
-        // Tự động kết nối Server khi mở chương trình
-        connectToServer();
-
-        //
 
     @FXML
     public void handleSignup() {
@@ -272,7 +322,7 @@ public class MainController {
     @FXML
     public void handleAddItem() {
         try {
-            AuctionItem item = service.addItem(
+            service.addItem(
                     currentUser,
                     itemNameField.getText(),
                     itemDescriptionArea.getText(),
@@ -281,9 +331,7 @@ public class MainController {
                     parseDateTime(itemEndTimeField.getText())
             );
             refreshView();
-            auctionTable.getSelectionModel().clearSelection();
-            bidItemComboBox.getSelectionModel().clearSelection();
-            clearItemForm();
+            resetAddItemForm();
             showMessage("Đã thêm sản phẩm đấu giá.");
         } catch (AuctionException ex) {
             showMessage(ex.getMessage());
@@ -353,6 +401,110 @@ public class MainController {
         }
     }
 
+    @FXML
+    public void handleGrantAdmin() {
+        try {
+            User selectedUser = selectedUser();
+            service.grantAdmin(currentUser, selectedUser);
+            refreshView();
+            showMessage("Đã cấp quyền admin cho " + selectedUser.getUsername() + ".");
+        } catch (AuctionException ex) {
+            showMessage(ex.getMessage());
+        }
+    }
+
+    @FXML
+    public void handleRefreshUsers() {
+        refreshUserTable();
+        showMessage("Đã cập nhật danh sách người dùng.");
+    }
+
+    @FXML
+    public void handleDeleteUser() {
+        try {
+            User selectedUser = selectedUser();
+            service.deleteUser(currentUser, selectedUser);
+            refreshView();
+            showMessage("Đã xóa tài khoản " + selectedUser.getUsername() + ".");
+        } catch (AuctionException ex) {
+            showMessage(ex.getMessage());
+        }
+    }
+
+    @FXML
+    public void handleToggleUserLock() {
+        try {
+            User selectedUser = selectedUser();
+            boolean lock = !selectedUser.isLocked();
+            service.setUserLocked(currentUser, selectedUser, lock);
+            refreshView();
+            showMessage((lock ? "Đã khóa tài khoản " : "Đã mở khóa tài khoản ") + selectedUser.getUsername() + ".");
+        } catch (AuctionException ex) {
+            showMessage(ex.getMessage());
+        }
+    }
+
+    @FXML
+    public void handleAdminCancelItem() {
+        try {
+            service.cancel(currentUser, selectedAdminItem());
+            refreshView();
+            showMessage("Đã hủy phiên đấu giá.");
+        } catch (AuctionException ex) {
+            showMessage(ex.getMessage());
+        }
+    }
+
+    @FXML
+    public void handleAdminExtendItem() {
+        try {
+            service.extendAuction(currentUser, selectedAdminItem(), parseDateTime(adminExtendEndTimeField.getText()));
+            refreshView();
+            showMessage("Đã gia hạn thời gian đấu giá.");
+        } catch (AuctionException ex) {
+            showMessage(ex.getMessage());
+        } catch (DateTimeParseException ex) {
+            showMessage("Thời gian không đúng định dạng yyyy-MM-dd HH:mm.");
+        }
+    }
+
+    @FXML
+    public void handleAdminDeleteItem() {
+        try {
+            service.adminDeleteItem(currentUser, selectedAdminItem());
+            refreshView();
+            clearAdminItemForm();
+            showMessage("Đã xóa sản phẩm.");
+        } catch (AuctionException ex) {
+            showMessage(ex.getMessage());
+        }
+    }
+
+    @FXML
+    public void handleAdminUpdateItem() {
+        try {
+            AuctionItem item = selectedAdminItem();
+            service.adminUpdateItem(
+                    currentUser,
+                    item,
+                    adminItemNameField.getText(),
+                    adminItemDescriptionArea.getText(),
+                    parseMoney(adminItemStartingPriceField.getText()),
+                    parseDateTime(adminItemStartTimeField.getText()),
+                    parseDateTime(adminItemEndTimeField.getText())
+            );
+            refreshView();
+            adminProductTable.getSelectionModel().select(item);
+            showMessage("Đã chỉnh sửa thông tin sản phẩm.");
+        } catch (AuctionException ex) {
+            showMessage(ex.getMessage());
+        } catch (NumberFormatException ex) {
+            showMessage("Giá tiền không hợp lệ.");
+        } catch (DateTimeParseException ex) {
+            showMessage("Thời gian không đúng định dạng yyyy-MM-dd HH:mm.");
+        }
+    }
+
     private void setCurrentUser(User user) {
         currentUser = user;
         boolean loggedIn = user != null;
@@ -374,6 +526,7 @@ public class MainController {
         adminPane.setDisable(!isAdmin);
         liveAuctionTab.setDisable(!isBidder);
         adminTab.setDisable(!isAdmin);
+        updateAdminControls();
         if (loggedIn) {
             if (isBidder) {
                 mainTabs.getSelectionModel().select(liveAuctionTab);
@@ -398,11 +551,18 @@ public class MainController {
     private void refreshView() {
         AuctionItem selected = auctionTable.getSelectionModel().getSelectedItem();
         AuctionItem selectedBidItem = bidItemComboBox.getSelectionModel().getSelectedItem();
+        AuctionItem selectedAdminItem = adminProductTable.getSelectionModel().getSelectedItem();
         List<AuctionItem> currentItems = service.getItems();
         latestCompletionMessage = buildCompletionMessage(currentItems);
         var items = FXCollections.observableArrayList(currentItems);
+        var liveItems = FXCollections.observableArrayList(
+                currentItems.stream()
+                        .filter(item -> item.getStatus() == AuctionStatus.RUNNING)
+                        .collect(Collectors.toList())
+        );
         auctionTable.setItems(items);
-        bidItemComboBox.setItems(items);
+        adminProductTable.setItems(FXCollections.observableArrayList(currentItems));
+        bidItemComboBox.setItems(liveItems);
         if (selected != null) {
             auctionTable.getItems().stream()
                     .filter(item -> item.getId() == selected.getId())
@@ -415,14 +575,22 @@ public class MainController {
                     .findFirst()
                     .ifPresent(item -> bidItemComboBox.getSelectionModel().select(item));
         }
+        if (selectedAdminItem != null) {
+            adminProductTable.getItems().stream()
+                    .filter(item -> item.getId() == selectedAdminItem.getId())
+                    .findFirst()
+                    .ifPresent(item -> adminProductTable.getSelectionModel().select(item));
+        }
         auctionTable.refresh();
+        adminProductTable.refresh();
         showItemDetails(auctionTable.getSelectionModel().getSelectedItem());
+        refreshUserTable();
     }
 
     private void showItemDetails(AuctionItem item) {
         if (item == null) {
             detailNameLabel.setText("Chưa chọn phiên");
-            detailDescriptionLabel.setText("");
+            detailDescriptionLabel.setText("Mô tả sản phẩm :");
             detailSellerLabel.setText("-");
             detailStartLabel.setText("-");
             detailEndLabel.setText("-");
@@ -435,7 +603,7 @@ public class MainController {
         }
 
         detailNameLabel.setText(item.getName());
-        detailDescriptionLabel.setText(item.getDescription());
+        detailDescriptionLabel.setText("Mô tả sản phẩm : " + item.getDescription());
         detailSellerLabel.setText(item.getSeller().getFullName());
         detailStartLabel.setText(formatDateTime(item.getStartTime()));
         detailEndLabel.setText(formatDateTime(item.getEndTime()));
@@ -469,10 +637,48 @@ public class MainController {
         itemEndTimeField.setText(formatDateTime(LocalDateTime.now().plusHours(2)));
     }
 
+    private void fillAdminItemForm(AuctionItem item) {
+        if (item == null) {
+            clearAdminItemForm();
+            return;
+        }
+        adminItemNameField.setText(item.getName());
+        adminItemDescriptionArea.setText(item.getDescription());
+        adminItemStartingPriceField.setText(item.getStartingPrice().toPlainString());
+        adminItemStartTimeField.setText(formatDateTime(item.getStartTime()));
+        adminItemEndTimeField.setText(formatDateTime(item.getEndTime()));
+        adminExtendEndTimeField.setText(formatDateTime(item.getEndTime().plusMinutes(30)));
+    }
+
+    private void clearAdminItemForm() {
+        adminItemNameField.clear();
+        adminItemDescriptionArea.clear();
+        adminItemStartingPriceField.clear();
+        adminItemStartTimeField.clear();
+        adminItemEndTimeField.clear();
+        adminExtendEndTimeField.clear();
+    }
+
+    private void resetAddItemForm() {
+        auctionTable.getSelectionModel().clearSelection();
+        bidItemComboBox.getSelectionModel().clearSelection();
+        clearItemForm();
+        showItemDetails(null);
+        itemNameField.requestFocus();
+    }
+
     private AuctionItem selectedItem() throws AuctionException {
         AuctionItem item = auctionTable.getSelectionModel().getSelectedItem();
         if (item == null) {
             throw new AuctionException("Vui lòng chọn một phiên đấu giá.");
+        }
+        return item;
+    }
+
+    private AuctionItem selectedAdminItem() throws AuctionException {
+        AuctionItem item = adminProductTable.getSelectionModel().getSelectedItem();
+        if (item == null) {
+            throw new AuctionException("Vui lòng chọn một sản phẩm.");
         }
         return item;
     }
@@ -483,6 +689,48 @@ public class MainController {
             throw new AuctionException("Vui lòng chọn sản phẩm muốn đấu giá.");
         }
         return item;
+    }
+
+    private User selectedUser() throws AuctionException {
+        User user = userTable.getSelectionModel().getSelectedItem();
+        if (user == null) {
+            throw new AuctionException("Vui lòng chọn một tài khoản.");
+        }
+        return user;
+    }
+
+    private void refreshUserTable() {
+        User selected = userTable.getSelectionModel().getSelectedItem();
+        var users = FXCollections.observableArrayList(service.getUsers());
+        userTable.setItems(users);
+        if (selected != null) {
+            userTable.getItems().stream()
+                    .filter(user -> user.getId() == selected.getId())
+                    .findFirst()
+                    .ifPresent(user -> userTable.getSelectionModel().select(user));
+        }
+        updateAdminControls();
+    }
+
+    private void updateAdminControls() {
+        boolean isAdmin = currentUser != null && currentUser.getRole() == UserRole.ADMIN;
+        boolean canGrantAdmin = service.isRootAdmin(currentUser);
+
+        User selectedUser = userTable.getSelectionModel().getSelectedItem();
+        boolean hasUser = selectedUser != null;
+        boolean selectedRootAdmin = hasUser && service.isRootAdmin(selectedUser);
+        boolean selectedSelf = hasUser && currentUser != null && selectedUser.getId() == currentUser.getId();
+
+        deleteUserButton.setDisable(!isAdmin || !hasUser || selectedRootAdmin || selectedSelf);
+        toggleUserLockButton.setDisable(!isAdmin || !hasUser || selectedRootAdmin || selectedSelf);
+        toggleUserLockButton.setText(hasUser && selectedUser.isLocked() ? "Mở khóa tài khoản" : "Khóa tài khoản");
+        grantAdminButton.setDisable(!canGrantAdmin || !hasUser || selectedUser.getRole() == UserRole.ADMIN);
+
+        boolean hasProduct = adminProductTable.getSelectionModel().getSelectedItem() != null;
+        adminUpdateItemButton.setDisable(!isAdmin || !hasProduct);
+        adminCancelItemButton.setDisable(!isAdmin || !hasProduct);
+        adminExtendItemButton.setDisable(!isAdmin || !hasProduct);
+        adminDeleteItemButton.setDisable(!isAdmin || !hasProduct);
     }
 
     private BigDecimal parseMoney(String rawValue) {
@@ -562,31 +810,4 @@ public class MainController {
     private void showMessage(String message) {
         systemMessageLabel.setText(message);
     }
-
-    // =============================== NAVIGATION BAR ==================================
-    @FXML
-    private void handleSetting() {
-
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText("Màn hình Setting");
-        alert.showAndWait();
-    }
-
-    @FXML
-    private void handleWallet() {
-
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText("Số dư ví: 5,000,000 VNĐ");
-        alert.showAndWait();
-    }
-
-    @FXML
-    private void handleLogout() {
-
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setContentText("Đăng xuất thành công!");
-        alert.showAndWait();
-    }
-
-}
 }
