@@ -1,5 +1,6 @@
 package com.example.bai_tap_lon.model;
 
+
 import java.io.Serializable;
 import java.util.UUID;
 
@@ -25,4 +26,16 @@ public abstract class Entity implements Serializable {
     public void setId(String id) {
         this.id = id;
     }
+
+public abstract class Entity {
+    private final int id;
+
+    protected Entity(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
 }

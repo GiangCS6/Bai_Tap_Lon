@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bai_tap_lon.controller.CreateAuctionController">
+    <VBox alignment="CENTER" prefHeight="600" prefWidth="600.0" spacing="15" style="-fx-padding: 20; -fx-background-color: #f4f4f4;" xmlns:fx="http://javafx.com/fxml">
+
+        <Label contentDisplay="CENTER" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="ĐĂNG BÁN SẢN PHẨM" />
+
+        <TextField fx:id="nameField" prefWidth="350" promptText="Tên sản phẩm" />
+
+        <TextArea fx:id="descriptionArea" prefHeight="120" prefWidth="350" promptText="Mô tả sản phẩm" />
+
+        <TextField fx:id="priceField" prefWidth="350" promptText="Giá khởi điểm" />
+
+        <ComboBox fx:id="categoryBox" prefWidth="350" />
+
+        <Button prefWidth="200" style="-fx-background-color: #4CAF50;                    -fx-text-fill: white;                    -fx-font-weight: bold;" text="Đăng bán" />
+
+    </VBox>
+
+</AnchorPane>
