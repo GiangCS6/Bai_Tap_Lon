@@ -135,7 +135,7 @@
                                 </padding>
                                 <Label fx:id="detailNameLabel" style="-fx-font-size: 22; -fx-font-weight: bold;" text="Chưa chọn phiên" />
                                 <Button fx:id="watchItemButton" disable="true" managed="false" mnemonicParsing="false"
-                                        onAction="#handleToggleWatch" text="Theo doi san pham" visible="false" />
+                                        onAction="#handleToggleWatch" text="Theo dõi sản phẩm" visible="false" />
                                 <Label fx:id="detailDescriptionLabel" wrapText="true" />
                                 <GridPane hgap="12.0" vgap="9.0">
                                     <Label text="Người bán:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
@@ -173,17 +173,17 @@
                                             text="Đặt giá" />
                                 </HBox>
                                 <Separator />
-                                <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="San pham dang theo doi" />
+                                <Label style="-fx-font-size: 16; -fx-font-weight: bold;" text="Sản phẩm đang theo dõi" />
                                 <ListView fx:id="watchedItemList" prefHeight="180.0" VBox.vgrow="ALWAYS" />
                             </VBox>
                         </Tab>
 
-                        <Tab text="Thong bao">
+                        <Tab text="Thông báo">
                             <VBox spacing="12.0" style="-fx-background-color: white;">
                                 <padding>
                                     <Insets bottom="18.0" left="18.0" right="18.0" top="18.0" />
                                 </padding>
-                                <Label fx:id="notificationSummaryLabel" style="-fx-font-size: 20; -fx-font-weight: bold;" text="Thong bao" />
+                                <Label fx:id="notificationSummaryLabel" style="-fx-font-size: 20; -fx-font-weight: bold;" text="Thông báo" />
                                 <ListView fx:id="notificationList" VBox.vgrow="ALWAYS" />
                             </VBox>
                         </Tab>
@@ -206,6 +206,7 @@
                                                     <Button fx:id="deleteUserButton" disable="true" mnemonicParsing="false" onAction="#handleDeleteUser" text="Xóa tài khoản" />
                                                     <Button fx:id="toggleUserLockButton" disable="true" mnemonicParsing="false" onAction="#handleToggleUserLock" text="Khóa tài khoản" />
                                                     <Button fx:id="grantAdminButton" disable="true" mnemonicParsing="false" onAction="#handleGrantAdmin" text="Cấp quyền admin" />
+                                                    <Button fx:id="revokeAdminButton" disable="true" mnemonicParsing="false" onAction="#handleRevokeAdmin" text="Thu hồi quyền admin" />
                                                 </HBox>
                                                 <TableView fx:id="userTable" VBox.vgrow="ALWAYS">
                                                     <columns>

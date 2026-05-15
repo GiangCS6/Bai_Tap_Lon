@@ -125,8 +125,42 @@ public class AuctionService {
                 storedUser.getUsername(),
                 storedUser.getPassword(),
                 storedUser.getFullName(),
-                storedUser.isLocked()
+                storedUser.isLocked(),
+                storedUser.getRole()
         ));
+        saveData();
+    }
+
+    public void revokeAdmin(User actor, User target) throws AuctionException {
+        requireRootAdmin(actor);
+        User storedUser = requireStoredUser(target);
+        if (isRootAdmin(storedUser)) {
+            throw new AuctionException("Không thể thu hồi quyền admin của tài khoản admin gốc.");
+        }
+        if (storedUser.getRole() != UserRole.ADMIN) {
+            throw new AuctionException("Tài khoản này không phải admin.");
+        }
+
+        UserRole restoredRole = storedUser instanceof Admin admin ? admin.getOriginalRole() : UserRole.BIDDER;
+        User restoredUser = switch (restoredRole) {
+            case SELLER -> new Seller(
+                    storedUser.getId(),
+                    storedUser.getUsername(),
+                    storedUser.getPassword(),
+                    storedUser.getFullName(),
+                    storedUser.isLocked()
+            );
+            case BIDDER, ADMIN -> new Bidder(
+                    storedUser.getId(),
+                    storedUser.getUsername(),
+                    storedUser.getPassword(),
+                    storedUser.getFullName(),
+                    storedUser.isLocked()
+            );
+        };
+
+        int index = findUserIndexById(storedUser.getId());
+        users.set(index, restoredUser);
         saveData();
     }
 
@@ -168,7 +202,7 @@ public class AuctionService {
     public void setItemWatched(User bidder, AuctionItem item, boolean watched) throws AuctionException {
         requireItem(item);
         if (bidder == null || bidder.getRole() != UserRole.BIDDER) {
-            throw new AuctionException("Chi tai khoan nguoi dau gia moi duoc theo doi san pham.");
+            throw new AuctionException("Chỉ tài khoản người đấu giá mới được theo dõi sản phẩm.");
         }
         if (bidder.isLocked()) {
             throw new AuctionException("Tai khoan dang bi khoa.");

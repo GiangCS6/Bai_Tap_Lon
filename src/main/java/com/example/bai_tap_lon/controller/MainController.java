@@ -167,6 +167,8 @@ public class MainController {
     @FXML
     private Button grantAdminButton;
     @FXML
+    private Button revokeAdminButton;
+    @FXML
     private TableView<AuctionItem> adminProductTable;
     @FXML
     private TableColumn<AuctionItem, String> adminProductNameColumn;
@@ -343,7 +345,7 @@ public class MainController {
             service.setItemWatched(currentUser, item, watch);
             refreshView();
             auctionTable.getSelectionModel().select(item);
-            showMessage((watch ? "Da theo doi " : "Da bo theo doi ") + item.getName() + ".");
+            showMessage((watch ? "Đã theo dõi " : "Đã bỏ theo dõi ") + item.getName() + ".");
         } catch (AuctionException ex) {
             showMessage(ex.getMessage());
         }
@@ -438,6 +440,18 @@ public class MainController {
             service.grantAdmin(currentUser, selectedUser);
             refreshView();
             showMessage("Đã cấp quyền admin cho " + selectedUser.getUsername() + ".");
+        } catch (AuctionException ex) {
+            showMessage(ex.getMessage());
+        }
+    }
+
+    @FXML
+    public void handleRevokeAdmin() {
+        try {
+            User selectedUser = selectedUser();
+            service.revokeAdmin(currentUser, selectedUser);
+            refreshView();
+            showMessage("Đã thu hồi quyền admin của " + selectedUser.getUsername() + ".");
         } catch (AuctionException ex) {
             showMessage(ex.getMessage());
         }
@@ -647,12 +661,12 @@ public class MainController {
         latestCompletionMessage = notifications.isEmpty() ? null : notifications.get(0);
 
         if (notifications.isEmpty()) {
-            notificationSummaryLabel.setText("Thong bao");
+            notificationSummaryLabel.setText("Thông báo");
             notificationList.setItems(FXCollections.observableArrayList(emptyNotificationMessage()));
             return;
         }
 
-        notificationSummaryLabel.setText("Thong bao moi: " + notifications.size());
+        notificationSummaryLabel.setText("Thông báo mới: " + notifications.size());
         notificationList.setItems(FXCollections.observableArrayList(notifications));
     }
 
@@ -771,7 +785,7 @@ public class MainController {
             item = watchedItemList.getSelectionModel().getSelectedItem();
         }
         if (item == null) {
-            throw new AuctionException("Vui long chon san pham muon theo doi.");
+            throw new AuctionException("Vui lòng chọn sản phẩm muốn theo dõi.");
         }
         return item;
     }
@@ -810,6 +824,7 @@ public class MainController {
         toggleUserLockButton.setDisable(!isAdmin || !hasUser || selectedRootAdmin || selectedSelf);
         toggleUserLockButton.setText(hasUser && selectedUser.isLocked() ? "Mở khóa tài khoản" : "Khóa tài khoản");
         grantAdminButton.setDisable(!canGrantAdmin || !hasUser || selectedUser.getRole() == UserRole.ADMIN);
+        revokeAdminButton.setDisable(!canGrantAdmin || !hasUser || selectedRootAdmin || selectedUser.getRole() != UserRole.ADMIN);
 
         boolean hasProduct = adminProductTable.getSelectionModel().getSelectedItem() != null;
         adminUpdateItemButton.setDisable(!isAdmin || !hasProduct);
@@ -822,11 +837,11 @@ public class MainController {
         boolean canWatch = currentUser != null && currentUser.getRole() == UserRole.BIDDER && item != null;
         watchItemButton.setDisable(!canWatch);
         if (!canWatch) {
-            watchItemButton.setText("Theo doi san pham");
+            watchItemButton.setText("Theo dõi sản phẩm");
             return;
         }
 
-        watchItemButton.setText(item.isWatchedBy(currentUser) ? "Bo theo doi" : "Theo doi san pham");
+        watchItemButton.setText(item.isWatchedBy(currentUser) ? "Bỏ theo dõi" : "Theo dõi sản phẩm");
     }
 
     private BigDecimal parseMoney(String rawValue) {
@@ -895,41 +910,41 @@ public class MainController {
 
     private String formatBidderNotification(AuctionItem item) {
         if (!isClosedForNotification(item)) {
-            return "Dang theo doi: " + item.getName()
-                    + " | Trang thai: " + formatStatus(item)
-                    + " | Gia hien tai: " + formatMoney(item.getCurrentHighestPrice())
-                    + " | Ket thuc: " + formatDateTime(item.getEndTime());
+            return "Đang theo dõi: " + item.getName()
+                    + " | Trạng thái: " + formatStatus(item)
+                    + " | Giá hiện tại: " + formatMoney(item.getCurrentHighestPrice())
+                    + " | Kết thúc: " + formatDateTime(item.getEndTime());
         }
 
         Optional<User> winner = service.getWinner(item);
         String result = winner
                 .map(user -> user.getId() == currentUser.getId()
-                        ? "Ban la nguoi thang"
-                        : "Nguoi thang: " + user.getFullName())
-                .orElse("Chua co nguoi thang");
+                        ? "Bạn là người thắng"
+                        : "Người thắng: " + user.getFullName())
+                .orElse("Chưa có người thắng");
 
-        return "San pham theo doi da ket thuc: " + item.getName()
-                + " | Trang thai: " + formatStatus(item)
-                + " | Gia cuoi: " + formatMoney(item.getCurrentHighestPrice())
+        return "Sản phẩm theo dõi đã kết thúc: " + item.getName()
+                + " | Trạng thái: " + formatStatus(item)
+                + " | Giá cuối: " + formatMoney(item.getCurrentHighestPrice())
                 + " | " + result;
     }
 
     private String formatSellerNotification(AuctionItem item) {
-        return "San pham cua ban da ket thuc: " + item.getName()
-                + " | Mo ta: " + item.getDescription()
-                + " | Trang thai: " + formatStatus(item)
-                + " | Gia khoi diem: " + formatMoney(item.getStartingPrice())
-                + " | Gia cuoi: " + formatMoney(item.getCurrentHighestPrice())
-                + " | Nguoi thang: " + service.getWinner(item).map(User::getFullName).orElse("Khong co")
-                + " | So luot dau gia: " + item.getBids().size()
-                + " | Ket thuc: " + formatDateTime(item.getEndTime());
+        return "Sản phẩm của bạn đã kết thúc: " + item.getName()
+                + " | Mô tả: " + item.getDescription()
+                + " | Trạng thái: " + formatStatus(item)
+                + " | Giá khởi điểm: " + formatMoney(item.getStartingPrice())
+                + " | Giá cuối: " + formatMoney(item.getCurrentHighestPrice())
+                + " | Người thắng: " + service.getWinner(item).map(User::getFullName).orElse("Không có")
+                + " | Số lượt đấu giá: " + item.getBids().size()
+                + " | Kết thúc: " + formatDateTime(item.getEndTime());
     }
 
     private String formatAdminNotification(AuctionItem item) {
-        return "Phien da ket thuc: " + item.getName()
-                + " | Nguoi ban: " + item.getSeller().getFullName()
-                + " | Trang thai: " + formatStatus(item)
-                + " | Gia cuoi: " + formatMoney(item.getCurrentHighestPrice());
+        return "Phiên đã kết thúc: " + item.getName()
+                + " | Người bán: " + item.getSeller().getFullName()
+                + " | Trạng thái: " + formatStatus(item)
+                + " | Giá cuối: " + formatMoney(item.getCurrentHighestPrice());
     }
 
     private boolean isClosedForNotification(AuctionItem item) {
@@ -940,12 +955,12 @@ public class MainController {
 
     private String emptyNotificationMessage() {
         if (currentUser == null) {
-            return "Chua co thong bao.";
+            return "Chưa có thông báo.";
         }
         return switch (currentUser.getRole()) {
-            case BIDDER -> "Chua co thong bao. Hay theo doi san pham de nhan cap nhat.";
-            case SELLER -> "Chua co thong bao ve san pham da ket thuc.";
-            case ADMIN -> "Chua co thong bao quan tri.";
+            case BIDDER -> "Chưa có thông báo. Hãy theo dõi sản phẩm để nhận cập nhật.";
+            case SELLER -> "Chưa có thông báo về sản phẩm đã kết thúc.";
+            case ADMIN -> "Chưa có thông báo quản trị.";
         };
     }
 
