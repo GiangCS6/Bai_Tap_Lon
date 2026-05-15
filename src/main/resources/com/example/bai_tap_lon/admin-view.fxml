@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.bai_tap_lon.controller.AdminController"
+      spacing="15" alignment="CENTER">
+
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+
+    <Label text="👑 ADMIN DASHBOARD - QUẢN LÝ NGƯỜI DÙNG"
+           style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #d32f2f;"/>
+
+    <!-- Nút chức năng -->
+    <HBox spacing="10" alignment="CENTER">
+        <Button fx:id="btnRefresh" text="🔄 Làm mới danh sách" onAction="#refreshUserList"
+                style="-fx-base: #2196F3;"/>
+        <Button fx:id="btnAddUser" text="➕ Thêm User mới" onAction="#openAddUserDialog"
+                style="-fx-base: #4CAF50;"/>
+    </HBox>
+
+    <!-- Bảng danh sách user -->
+    <TableView fx:id="tableUsers" prefHeight="420">
+        <columns>
+            <TableColumn fx:id="colUsername" text="Username" prefWidth="180"/>
+            <TableColumn fx:id="colPassword" text="Mật khẩu" prefWidth="160"/>
+            <TableColumn fx:id="colRole" text="Vai trò" prefWidth="140"/>
+            <TableColumn text="Hành động" prefWidth="200">
+                <cellFactory>
+                    <fx:define>
+                        <TableCell fx:id="actionCell"/>
+                    </fx:define>
+                </cellFactory>
+            </TableColumn>
+        </columns>
+    </TableView>
+
+    <TextArea fx:id="txtLog" editable="false" prefHeight="120" wrapText="true"
+              style="-fx-font-family: monospace;"/>
+</VBox>

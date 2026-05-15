@@ -1,5 +1,6 @@
 package com.example.bai_tap_lon.model;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,5 +43,13 @@ public class Bidder extends User {
         if (!bidHistory.contains(auctionId)) {
             bidHistory.add(auctionId);
         }
+
+public class Bidder extends User {
+    public Bidder(int id, String username, String password, String fullName) {
+        super(id, username, password, fullName, UserRole.BIDDER);
+    }
+
+    public Bidder(int id, String username, String password, String fullName, boolean locked) {
+        super(id, username, password, fullName, UserRole.BIDDER, locked);
     }
 }

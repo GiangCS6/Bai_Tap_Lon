@@ -1,5 +1,6 @@
 package com.example.bai_tap_lon.model;
 
+
 import java.time.LocalDateTime;
 
 public abstract class Item extends Entity {
@@ -36,4 +37,34 @@ public abstract class Item extends Entity {
 
     // Phương thức trừu tượng (Tính Đa hình)
     public abstract void displayItemDetails();
+
+public class Item {
+    private String seller;
+    private String description;
+    private double startPrice;
+
+    public String getSeller() {
+        return seller;
+    }
+
+    public void setSeller(String seller) {
+        this.seller = seller;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public double getStartPrice() {
+        return startPrice;
+    }
+
+    public void setStartPrice(double startPrice) {
+        this.startPrice = startPrice;
+    }
+
 }
