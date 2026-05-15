@@ -159,8 +159,29 @@ public class AuctionService {
     }
 
     public List<AuctionItem> getItems() {
-        updateStatuses();
+        if (updateStatuses()) {
+            saveData();
+        }
         return new ArrayList<>(items);
+    }
+
+    public void setItemWatched(User bidder, AuctionItem item, boolean watched) throws AuctionException {
+        requireItem(item);
+        if (bidder == null || bidder.getRole() != UserRole.BIDDER) {
+            throw new AuctionException("Chi tai khoan nguoi dau gia moi duoc theo doi san pham.");
+        }
+        if (bidder.isLocked()) {
+            throw new AuctionException("Tai khoan dang bi khoa.");
+        }
+
+        boolean alreadyWatched = item.isWatchedBy(bidder);
+        if (watched && !alreadyWatched) {
+            item.addWatcher(bidder);
+            saveData();
+        } else if (!watched && alreadyWatched) {
+            item.removeWatcher(bidder);
+            saveData();
+        }
     }
 
     public AuctionItem addItem(
@@ -329,24 +350,34 @@ public class AuctionService {
         updateStatus(item, LocalDateTime.now());
     }
 
-    private void updateStatuses() {
+    private boolean updateStatuses() {
         LocalDateTime now = LocalDateTime.now();
+        boolean changed = false;
         for (AuctionItem item : items) {
-            updateStatus(item, now);
+            changed |= updateStatus(item, now);
         }
+        return changed;
     }
 
-    private void updateStatus(AuctionItem item, LocalDateTime now) {
+    private boolean updateStatus(AuctionItem item, LocalDateTime now) {
         if (item.getStatus() == AuctionStatus.CANCELED || item.getStatus() == AuctionStatus.PAID) {
-            return;
+            return false;
         }
+
+        AuctionStatus nextStatus;
         if (!now.isBefore(item.getEndTime())) {
-            item.setStatus(AuctionStatus.FINISHED);
+            nextStatus = AuctionStatus.FINISHED;
         } else if (!now.isBefore(item.getStartTime())) {
-            item.setStatus(AuctionStatus.RUNNING);
+            nextStatus = AuctionStatus.RUNNING;
         } else {
-            item.setStatus(AuctionStatus.OPEN);
+            nextStatus = AuctionStatus.OPEN;
         }
+
+        if (item.getStatus() == nextStatus) {
+            return false;
+        }
+        item.setStatus(nextStatus);
+        return true;
     }
 
     private void validateItem(String name, BigDecimal startingPrice, LocalDateTime startTime, LocalDateTime endTime)

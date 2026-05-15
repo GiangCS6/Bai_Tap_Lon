@@ -98,12 +98,16 @@ public class DataPersistence {
      */
     public static ItemLoadData loadItems(List<User> users) throws IOException {
         File file = new File(ITEMS_FILE);
-        if (!file.exists()) {
+        if (!file.exists() || file.length() == 0) {
             return new ItemLoadData(new ArrayList<>(), 1);
         }
 
         try (FileReader reader = new FileReader(file)) {
             JsonObject json = gson.fromJson(reader, JsonObject.class);
+            if (json == null || !json.has("items")) {
+                return new ItemLoadData(new ArrayList<>(), 1);
+            }
+
             Type itemType = new TypeToken<List<AuctionItem>>(){}.getType();
             List<AuctionItem> items = gson.fromJson(json.getAsJsonArray("items"), itemType);
 
