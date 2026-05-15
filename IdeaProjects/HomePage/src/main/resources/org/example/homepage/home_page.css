@@ -1,0 +1,54 @@
+/* style.css */
+
+/* Toàn bộ nền */
+.root {
+    -fx-font-family: "Arial";
+}
+
+/* Header */
+.header-label {
+    -fx-font-size: 22px;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+}
+
+/* Menu bar */
+.menu-bar {
+    -fx-background-color: rgba(255,255,255,0.9);
+}
+
+.menu-bar .button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #004080;
+    -fx-font-size: 14px;
+    -fx-padding: 8 20 8 20;
+    -fx-background-radius: 5;
+}
+
+.menu-bar .button:hover {
+    -fx-background-color: #004080;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+}
+
+/* Banner */
+.banner-label {
+    -fx-font-size: 20px;
+    -fx-text-fill: #ffffff;
+    -fx-font-style: italic;
+}
+
+/* Nút đăng ký/đăng nhập */
+.action-button {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #004080;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-padding: 8 20 8 20;
+    -fx-background-radius: 5;
+}
+
+.action-button:hover {
+    -fx-background-color: #004080;
+    -fx-text-fill: #ffffff;
+}

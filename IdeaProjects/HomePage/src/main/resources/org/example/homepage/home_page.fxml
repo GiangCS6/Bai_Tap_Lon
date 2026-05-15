@@ -5,47 +5,86 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.homepage.HomePageController">
-   <padding>
-      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-   </padding>
-   //Co giãn được theo size màn hình thực
-   <StackPane fx:id="rootStack" VBox.vgrow="ALWAYS">
-      <children>
-         <ImageView
-                 fitHeight="${rootStack.height}"
-                 fitWidth="${rootStack.width}"
-                 pickOnBounds="true"
-                 preserveRatio="false">
-            <image>
-               <Image url="@../../../4028675968ae94377cb57a0cbbd01900.jpg" />
-            </image>
-         </ImageView>
+<StackPane fx:id="rootStack" styleClass="home-root" stylesheets="@home_page.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.homepage.HomePageController">
 
-         <Label fx:id="welcomeText" prefHeight="39.0" prefWidth="227.0" text="the best place" textFill="#57a1c3" translateX="-120.0" translateY="-20.0">
-            <font>
-               <Font name=".VnStamp Normal" size="18.0" />
-            </font>
-         </Label>
-         <Label fx:id="welcomeText1" prefHeight="39.0" prefWidth="252.0" text="to buy and sell!!" textFill="#57a1c3" translateX="-120.0" translateY="20.0">
-            <font>
-               <Font name=".VnStamp Normal" size="18.0" />
-            </font>
-         </Label>
-         <Button mnemonicParsing="false" onAction="#goToLogin" style="-fx-background-color: #FFFFFF;" text="LOG IN" textFill="#57a1c3" translateX="125.0" translateY="-40.0">
-            <font>
-               <Font name="Times New Roman Bold" size="20.0" />
-            </font>
-         </Button>
-         <Button mnemonicParsing="false" onAction="#goToSignUp" style="-fx-background-color: #FFFFFF;" text="SIGN UP" textFill="#57a1c3" translateX="125.0" translateY="40.0">
-            <font>
-               <Font name="Times New Roman Bold" size="20.0" />
-            </font>
-         </Button>
-      </children>
-   </StackPane>
-</VBox>
+    <children>
+        <!-- Background image -->
+        <ImageView fitHeight="${rootStack.height}" fitWidth="${rootStack.width}" pickOnBounds="true" preserveRatio="false">
+            <image>
+                <Image url="@../../../3066b18fbb5757089bcfe86525c335b7.jpg" />
+            </image>
+        </ImageView>
+
+        <!-- Nội dung -->
+        <VBox alignment="TOP_CENTER" prefHeight="600" prefWidth="900" spacing="0">
+            <!-- Header -->
+<HBox prefHeight="88.0" prefWidth="1204.0" spacing="10" style="-fx-background-color: lightblue; -fx-background-radius: 0;" styleClass="header-bar">
+                    <padding>
+                        <Insets bottom="10" left="10" right="10" top="10" />
+                    </padding>
+            <Label text="CÔNG TY ĐẤU GIÁ 4N">
+               <font>
+                  <Font name="System Bold" size="40.0" />
+               </font>
+            </Label>
+            <Label text="Cổng đấu giá tài sản uy tín" textFill="#1b1a1a" translateX="-350.0" translateY="45.0">
+               <font>
+                  <Font name="System Bold Italic" size="18.0" />
+               </font>
+            </Label>
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Button onAction="#goToSignUp" style="-fx-background-radius: 20;" styleClass="top-button" text="Đăng ký">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font></Button>
+                    <Button onAction="#goToLogin" style="-fx-background-radius: 20;" styleClass="top-button" text="Đăng nhập">
+               <font>
+                  <Font name="System Bold" size="23.0" />
+               </font></Button>
+            </HBox>
+
+            <!-- Menu bar -->
+            <HBox spacing="10" styleClass="menu-bar">
+                <padding>
+                    <Insets bottom="10" left="10" right="10" top="10" />
+                </padding>
+                <Button style="-fx-background-color: lightblue; -fx-background-radius: 10;" styleClass="menu-button" text="Trang chủ" translateY="3.0">
+               <font>
+                  <Font size="20.0" />
+               </font></Button>
+                <Button style="-fx-background-color: lightblue; -fx-background-radius: 10;" styleClass="menu-button" text="Giới thiệu" translateY="3.0">
+               <font>
+                  <Font size="20.0" />
+               </font></Button>
+                <Button style="-fx-background-color: lightblue; -fx-background-radius: 10;" styleClass="menu-button" text="Thông báo công khai việc đấu giá" translateY="3.0">
+               <font>
+                  <Font size="20.0" />
+               </font></Button>
+                <Button style="-fx-background-color: lightblue; -fx-background-radius: 10;" styleClass="menu-button" text="Thông báo lựa chọn tổ chức hành nghề đấu giá" translateY="3.0">
+               <font>
+                  <Font size="20.0" />
+               </font></Button>
+            </HBox>
+
+            <!-- Banner -->
+            <VBox alignment="CENTER" prefHeight="547.0" prefWidth="1226.0" style="-fx-background-color: lightblue; -fx-background-radius: 0;" styleClass="banner-box" translateY="10.0">
+                <padding>
+                    <Insets bottom="40" left="40" right="40" top="40" />
+                </padding>
+            <children>
+               <Label text="TỔ CHỨC THỰC HIỆN ĐẤU GIÁ TRỰC TUYẾN ĐẦU TIÊN TẠI VIỆT NAM" translateY="-240.0">
+                  <font>
+                     <Font name="System Bold" size="30.0" />
+                  </font>
+               </Label>
+            </children>
+            </VBox>
+        </VBox>
+    </children>
+</StackPane>
