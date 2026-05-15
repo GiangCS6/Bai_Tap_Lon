@@ -22,7 +22,6 @@ public class Server {
                 // Khởi tạo một Handler riêng cho Client này
                 ClientHandler clientHandler = new ClientHandler(clientSocket, clients);
                 clients.add(clientHandler); // Thêm vào danh sách quản lý
-
                 
                 // Khởi chạy trên một Thread mới (Đa luồng)
                 Thread thread = new Thread(clientHandler);
