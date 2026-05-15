@@ -24,11 +24,7 @@ public class Admin extends User {
         System.out.println("Role: Admin | Level: " + adminLevel + " | Username: " + getUsername());
     }
 
-    // --- CÁC PHƯƠNG THỨC LOGIC NGHIỆP VỤ CỦA ADMIN ---
 
-    /**
-     * Khóa tài khoản của một người dùng (Bidder hoặc Seller) vi phạm quy chế
-     */
     public boolean banUser(User targetUser, String reason) {
         if (targetUser instanceof Admin) {
             System.out.println("Không thể ban một Admin khác!");
@@ -39,9 +35,7 @@ public class Admin extends User {
         return true;
     }
 
-    /**
-     * Hủy bỏ một phiên đấu giá có dấu hiệu gian lận
-     */
+
     public boolean cancelAuction(String auctionId, String reason) {
         // TODO: Gọi logic kiểm tra Auction từ Database
         // Cập nhật trạng thái phiên đấu giá thành CANCELED
