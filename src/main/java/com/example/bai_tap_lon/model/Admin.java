@@ -13,13 +13,23 @@ public class Admin extends User {
         this(id, username, password, fullName, locked, UserRole.BIDDER);
     }
 
-    public Admin(int id, String username, String password, String fullName, boolean locked, UserRole originalRole) {
-        super(id, username, password, fullName, UserRole.ADMIN, locked);
-        this.originalRole = normalizeOriginalRole(originalRole);
+
+    public boolean banUser(User targetUser, String reason) {
+        if (targetUser instanceof Admin) {
+            System.out.println("Không thể ban một Admin khác!");
+            return false;
+        }
+        // TODO: Cập nhật trạng thái của targetUser thành BANNED trong Database (DAO)
+        System.out.println("Đã khóa tài khoản: " + targetUser.getUsername() + " | Lý do: " + reason);
+        return true;
     }
 
-    public UserRole getOriginalRole() {
-        return originalRole;
+
+    public boolean cancelAuction(String auctionId, String reason) {
+        // TODO: Gọi logic kiểm tra Auction từ Database
+        // Cập nhật trạng thái phiên đấu giá thành CANCELED
+        System.out.println("Phiên đấu giá " + auctionId + " đã bị Admin hủy. Lý do: " + reason);
+        return true;
     }
 
     private UserRole normalizeOriginalRole(UserRole role) {
