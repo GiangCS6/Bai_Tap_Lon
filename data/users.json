@@ -4,7 +4,6 @@
       "type": "ADMIN",
       "id": 1,
       "username": "admin",
-      "password": "Dung12345",
       "fullName": "Root admin",
       "locked": false,
       "originalRole": "BIDDER"
