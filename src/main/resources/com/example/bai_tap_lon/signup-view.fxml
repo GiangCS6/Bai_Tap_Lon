@@ -2,35 +2,32 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="460.0" prefWidth="600.0" spacing="14.0"
-      style="-fx-background-color: #f6f8fb;"
-      xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.example.bai_tap_lon.controller.LoginController">
+<VBox alignment="CENTER" prefHeight="460.0" prefWidth="600.0" spacing="14.0" style="-fx-background-color: #f6f8fb;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bai_tap_lon.controller.LoginController">
     <padding>
         <Insets bottom="32.0" left="48.0" right="48.0" top="32.0" />
     </padding>
 
-    <Label style="-fx-font-size: 28; -fx-font-weight: bold; -fx-text-fill: #1f3349;" text="Tạo tài khoản" />
-    <Label style="-fx-text-fill: #607080;" text="Nhập thông tin để bắt đầu đấu giá." />
+    <Label style="-fx-font-size: 28; -fx-font-weight: bold; -fx-text-fill: #1f3349;" text="TẠO TÀI KHOẢN" />
+    <Label style="-fx-text-fill: #607080;" text="Nhập thông tin để bắt đầu đấu giá." translateY="-10.0" />
 
     <VBox maxWidth="360.0" spacing="10.0">
-        <TextField prefHeight="38.0" promptText="Họ và tên" />
-        <TextField prefHeight="38.0" promptText="Địa chỉ thư điện tử" />
-        <TextField prefHeight="38.0" promptText="Tên đăng nhập" />
-        <PasswordField prefHeight="38.0" promptText="Mật khẩu" />
-        <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#handleCreateAccount" prefHeight="38.0"
-                style="-fx-background-color: #265f9f; -fx-text-fill: white; -fx-font-weight: bold;"
-                text="Đăng ký" />
-        <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#showLogin" prefHeight="36.0"
-                style="-fx-background-color: transparent; -fx-border-color: #265f9f; -fx-text-fill: #265f9f;"
-                text="Đã có tài khoản" />
-        <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#showWelcome" prefHeight="32.0"
-                style="-fx-background-color: transparent; -fx-text-fill: #607080;"
-                text="Quay lại" />
+        <TextField prefHeight="38.0" promptText="Họ và tên" style="-fx-background-radius: 10;" />
+        <TextField prefHeight="38.0" promptText="Địa chỉ thư điện tử" style="-fx-background-radius: 10;" />
+        <TextField prefHeight="38.0" promptText="Tên đăng nhập" style="-fx-background-radius: 10;" />
+        <PasswordField prefHeight="38.0" promptText="Mật khẩu" style="-fx-background-radius: 10;" />
+      <Label text="VAI TRÒ" translateX="25.0">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+        <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#handleCreateAccount" prefHeight="38.0" style="-fx-background-color: #265f9f; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;" text="Đăng ký" />
+      <Hyperlink onAction="#chuyenSceneLogin" text="Đã có tài khoản?" textFill="#265f9f" translateX="130.0" />
     </VBox>
 </VBox>
