@@ -5,31 +5,39 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="420.0" prefWidth="600.0" spacing="14.0"
-      style="-fx-background-color: #f6f8fb;"
-      xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.example.bai_tap_lon.controller.LoginController">
+<VBox alignment="CENTER" prefHeight="420.0" prefWidth="600.0" spacing="14.0" style="-fx-background-color: #f6f8fb;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bai_tap_lon.controller.LoginController">
     <padding>
         <Insets bottom="32.0" left="48.0" right="48.0" top="32.0" />
     </padding>
-
-    <Label style="-fx-font-size: 28; -fx-font-weight: bold; -fx-text-fill: #1f3349;" text="Đăng nhập" />
-    <Label style="-fx-text-fill: #607080;" text="Sử dụng tài khoản đấu giá của bạn." />
-
-    <VBox maxWidth="360.0" spacing="10.0">
-        <TextField fx:id="usernameField" prefHeight="38.0" promptText="Tên đăng nhập" />
-        <PasswordField fx:id="passwordField" prefHeight="38.0" promptText="Mật khẩu" />
-        <Label fx:id="messageLabel" minHeight="22.0" style="-fx-text-fill: #b42318;" />
-        <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#handleLogin" prefHeight="38.0"
-                style="-fx-background-color: #265f9f; -fx-text-fill: white; -fx-font-weight: bold;"
-                text="Đăng nhập" />
-        <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#handleSignup" prefHeight="36.0"
-                style="-fx-background-color: transparent; -fx-border-color: #265f9f; -fx-text-fill: #265f9f;"
-                text="Tạo tài khoản" />
-        <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#showWelcome" prefHeight="32.0"
-                style="-fx-background-color: transparent; -fx-text-fill: #607080;"
-                text="Quay lại" />
-    </VBox>
+   <StackPane prefHeight="150.0" prefWidth="200.0">
+      <children>
+         <ImageView fitHeight="638.0" fitWidth="1134.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+               <Image url="@../../../3066b18fbb5757089bcfe86525c335b7.jpg" />
+            </image>
+         </ImageView>
+      
+          <VBox maxWidth="360.0" spacing="10.0">
+         
+                      <Label style="-fx-font-size: 28; -fx-font-weight: bold; -fx-text-fill: #1f3349;" text="ĐĂNG NHẬP" translateX="95.0">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+            </Label>
+             <Label style="-fx-text-fill: #607080;" text="Sử dụng tài khoản đấu giá của bạn." translateX="85.0" translateY="-10.0" />
+              <TextField fx:id="usernameField" prefHeight="38.0" promptText="Tên đăng nhập" style="-fx-background-radius: 10;" />
+              <PasswordField fx:id="passwordField" prefHeight="38.0" promptText="Mật khẩu" style="-fx-background-radius: 10;" translateY="5.0" />
+              <Label fx:id="messageLabel" minHeight="22.0" style="-fx-text-fill: #b42318;" />
+              <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#handleLogin" prefHeight="38.0" style="-fx-background-color: darkblue; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 10;" text="Đăng nhập" />
+              <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#handleSignup" prefHeight="36.0" style="-fx-background-color: transparent; -fx-border-color: darkblue; -fx-text-fill: darkblue; -fx-background-radius: 10;" text="Tạo tài khoản" />
+              <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#showWelcome" prefHeight="32.0" style="-fx-background-color: transparent; -fx-text-fill: #607080;" text="Quay lại" textFill="DARKBLUE" />
+          </VBox>
+      </children>
+   </StackPane>
 </VBox>
