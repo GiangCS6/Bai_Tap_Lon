@@ -1,0 +1,205 @@
+/* ============================================================
+   register.css — AuctionHub Registration Form
+   Theme: Professional Ocean Blue
+   ============================================================ */
+
+/* ── Root container ─────────────────────────────────────── */
+.root-container {
+    -fx-background-color: #f0f4fa;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18), 32, 0.1, 0, 8);
+    -fx-background-radius: 18;
+}
+
+/* ── Left decorative panel ──────────────────────────────── */
+.left-panel {
+    -fx-background-color: linear-gradient(to bottom, #1565c0, #0d47a1, #1a237e);
+    -fx-background-radius: 18 0 0 18;
+}
+
+.brand-icon {
+    -fx-font-size: 40px;
+    -fx-text-fill: #90caf9;
+}
+
+.brand-title {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+    -fx-font-family: "Segoe UI Semibold", "SansSerif";
+    -fx-letter-spacing: 1.5px;
+}
+
+.brand-subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: #90caf9;
+    -fx-font-family: "Segoe UI", "SansSerif";
+    -fx-text-alignment: center;
+    -fx-line-spacing: 4px;
+    -fx-wrap-text: true;
+}
+
+.brand-footer {
+    -fx-font-size: 10px;
+    -fx-text-fill: #5c7fa8;
+    -fx-font-family: "Segoe UI", "SansSerif";
+}
+
+/* ── Right form panel ───────────────────────────────────── */
+.form-panel {
+    -fx-background-color: white;
+    -fx-background-radius: 0 18 18 0;
+}
+
+/* ── Form heading ───────────────────────────────────────── */
+.form-header-label {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #0d2a4f;
+    -fx-font-family: "Segoe UI Semibold", "SansSerif";
+}
+
+.form-subheader-label {
+    -fx-font-size: 13px;
+    -fx-text-fill: #607d9e;
+    -fx-font-family: "Segoe UI", "SansSerif";
+    -fx-padding: 4 0 0 0;
+}
+
+/* ── Field labels ───────────────────────────────────────── */
+.field-label {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #334e6e;
+    -fx-font-family: "Segoe UI Semibold", "SansSerif";
+    -fx-letter-spacing: 0.4px;
+}
+
+/* ── Text fields & password fields ─────────────────────── */
+.form-field {
+    -fx-pref-height: 40px;
+    -fx-background-color: #f4f7fc;
+    -fx-background-radius: 9;
+    -fx-border-color: #c8d9ef;
+    -fx-border-radius: 9;
+    -fx-border-width: 1.5;
+    -fx-padding: 0 14 0 14;
+    -fx-font-size: 13px;
+    -fx-font-family: "Segoe UI", "SansSerif";
+    -fx-text-fill: #1a2e44;
+    -fx-prompt-text-fill: #a0b4cc;
+}
+
+.form-field:focused {
+    -fx-background-color: #eaf1fb;
+    -fx-border-color: #1976d2;
+    -fx-border-width: 2;
+    -fx-effect: dropshadow(gaussian, rgba(25,118,210,0.18), 8, 0, 0, 0);
+}
+
+/* ── ComboBox ───────────────────────────────────────────── */
+.form-combobox {
+    -fx-pref-height: 40px;
+    -fx-background-color: #f4f7fc;
+    -fx-background-radius: 9;
+    -fx-border-color: #c8d9ef;
+    -fx-border-radius: 9;
+    -fx-border-width: 1.5;
+    -fx-font-size: 13px;
+    -fx-font-family: "Segoe UI", "SansSerif";
+    -fx-text-fill: #1a2e44;
+    -fx-prompt-text-fill: #a0b4cc;
+}
+
+.form-combobox:focused {
+    -fx-background-color: #eaf1fb;
+    -fx-border-color: #1976d2;
+    -fx-border-width: 2;
+    -fx-effect: dropshadow(gaussian, rgba(25,118,210,0.18), 8, 0, 0, 0);
+}
+
+.form-combobox .list-cell {
+    -fx-font-family: "Segoe UI", "SansSerif";
+    -fx-font-size: 13px;
+    -fx-text-fill: #1a2e44;
+    -fx-padding: 6 12;
+}
+
+.form-combobox-popup .list-view {
+    -fx-background-color: white;
+    -fx-border-color: #c8d9ef;
+    -fx-border-radius: 9;
+    -fx-background-radius: 9;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 12, 0, 0, 4);
+}
+
+.form-combobox-popup .list-view .list-cell:hover {
+    -fx-background-color: #e3f0fb;
+}
+
+.form-combobox-popup .list-view .list-cell:selected {
+    -fx-background-color: #1976d2;
+    -fx-text-fill: white;
+}
+
+/* ── Primary button ─────────────────────────────────────── */
+.btn-primary {
+    -fx-background-color: linear-gradient(to right, #1976d2, #1565c0);
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Segoe UI Semibold", "SansSerif";
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(21,101,192,0.35), 10, 0, 0, 4);
+    -fx-letter-spacing: 0.5px;
+}
+
+.btn-primary:hover {
+    -fx-background-color: linear-gradient(to right, #1e88e5, #1976d2);
+    -fx-effect: dropshadow(gaussian, rgba(21,101,192,0.5), 14, 0, 0, 5);
+    -fx-scale-x: 1.012;
+    -fx-scale-y: 1.012;
+}
+
+.btn-primary:pressed {
+    -fx-background-color: #0d47a1;
+    -fx-effect: dropshadow(gaussian, rgba(13,71,161,0.3), 6, 0, 0, 2);
+    -fx-scale-x: 0.99;
+    -fx-scale-y: 0.99;
+}
+
+/* ── Divider ────────────────────────────────────────────── */
+.divider-line {
+    -fx-background-color: #dde7f3;
+    -fx-pref-height: 1.5;
+    -fx-max-height: 1.5;
+}
+
+.divider-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #94aac4;
+    -fx-font-family: "Segoe UI", "SansSerif";
+}
+
+/* ── Login link row ─────────────────────────────────────── */
+.login-prompt-label {
+    -fx-font-size: 13px;
+    -fx-text-fill: #607d9e;
+    -fx-font-family: "Segoe UI", "SansSerif";
+}
+
+.login-link {
+    -fx-font-size: 13px;
+    -fx-text-fill: #1976d2;
+    -fx-font-weight: bold;
+    -fx-font-family: "Segoe UI Semibold", "SansSerif";
+    -fx-border-color: transparent;
+    -fx-cursor: hand;
+    -fx-underline: false;
+    -fx-padding: 0;
+}
+
+.login-link:hover {
+    -fx-text-fill: #0d47a1;
+    -fx-underline: true;
+}
