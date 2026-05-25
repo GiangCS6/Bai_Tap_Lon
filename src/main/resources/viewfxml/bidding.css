@@ -1,0 +1,35 @@
+.root {
+    -fx-background-color: #d2b48c;
+    -fx-font-family: "Courier New", monospace;
+}
+
+.top-bar {
+    -fx-background-color: #3c2f2f;
+    -fx-border-color: #ffd700;
+    -fx-border-width: 0 0 4 0;
+}
+
+.price-card, .section-card {
+    -fx-background-color: #f5e8c7;
+    -fx-border-color: #3c2f2f;
+    -fx-border-width: 4;
+}
+
+.current-price {
+    -fx-text-fill: #228b22;
+    -fx-font-size: 36px;
+    -fx-font-weight: bold;
+}
+
+.btn-primary {
+    -fx-background-color: #228b22;
+    -fx-text-fill: white;
+    -fx-border-color: #3c2f2f;
+    -fx-border-width: 3;
+}
+
+.input-field {
+    -fx-background-color: #1c2f1c;
+    -fx-text-fill: #aaddaa;
+    -fx-border-color: #ffd700;
+}

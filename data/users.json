@@ -4,42 +4,27 @@
       "type": "ADMIN",
       "id": 1,
       "username": "admin",
-      "password": "Dung12345!!!",
+      "password": "Dung12345",
       "fullName": "Root admin",
-      "locked": false
+      "locked": false,
+      "originalRole": "BIDDER"
     },
     {
       "type": "BIDDER",
       "id": 2,
-      "username": "khanhvan",
-      "password": "123456789",
-      "fullName": "Khánh Vân",
+      "username": "a",
+      "password": "a",
+      "fullName": "a",
       "locked": false
     },
     {
       "type": "SELLER",
       "id": 3,
-      "username": "linh",
-      "password": "123456789",
-      "fullName": "Linh",
-      "locked": false
-    },
-    {
-      "type": "BIDDER",
-      "id": 4,
-      "username": "khánh",
-      "password": "123456789",
-      "fullName": "khánh",
-      "locked": false
-    },
-    {
-      "type": "SELLER",
-      "id": 5,
-      "username": "hưng",
-      "password": "123456789",
-      "fullName": "hưng",
+      "username": "b",
+      "password": "b",
+      "fullName": "b",
       "locked": false
     }
   ],
-  "nextUserId": 6
+  "nextUserId": 4
 }

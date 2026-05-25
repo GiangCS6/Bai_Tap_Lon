@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Circle?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="bai_tap_lon.client.controller.BidderHistoryController"
+            styleClass="root-pane"
+            prefWidth="1550"
+            prefHeight="900"
+            stylesheets="@home-view.css,@style.css">
+
+    <top>
+        <HBox styleClass="navbar" alignment="CENTER_LEFT" spacing="20">
+            <padding>
+                <Insets top="10" right="25" bottom="10" left="25"/>
+            </padding>
+
+            <Label text="BidderHolic" styleClass="logo"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <!-- =========================  ADMIN NAV  ========================= -->
+            <HBox fx:id="adminNav" spacing="20" alignment="CENTER" visible="false" managed="false">
+                <Button text="Auction List"     styleClass="nav-link"  onAction="#goToAuctionList"/>
+                <Button text="Active Auction"   styleClass="nav-link"  onAction="#goToActiveAuctions"/>
+                <Button text="User Management"  styleClass="nav-link"  onAction="#goToUserManagement"/>
+                <Button text="Auction Approval" styleClass="nav-link"  onAction="#goToAuctionApproval"/>
+                <Button text="Reports"          styleClass="nav-link"  onAction="#goToReports"/>
+                <Button text="System Settings"  styleClass="nav-link"  onAction="#goToSystemSettings"/>
+            </HBox>
+
+            <!-- =========================  SELLER NAV  ======================== -->
+            <HBox fx:id="sellerNav" spacing="20" alignment="CENTER" visible="false" managed="false">
+                <Button text="Auction List"    styleClass="nav-link"  onAction="#goToAuctionList"/>
+                <Button text="Active Auction"  styleClass="nav-link"  onAction="#goToActiveAuctions"/>
+                <Button text="Selling History" styleClass="nav-link"  onAction="#goToSellerHistory"/>
+                <Button text="Add Item"        styleClass="nav-link"  onAction="#goToAddItem"/>
+            </HBox>
+
+            <!-- =========================  BIDDER NAV  ======================== -->
+            <HBox fx:id="bidderNav" spacing="20" alignment="CENTER" visible="false" managed="false">
+                <Button text="Auction List"    styleClass="nav-link"               onAction="#goToAuctionList"/>
+                <Button text="Active Auction"  styleClass="nav-link"               onAction="#goToActiveAuctions"/>
+                <Button text="Bidding History" styleClass="nav-link, active-link"/>
+                <Button text="Watchlist"       styleClass="nav-link"               onAction="#goToWatchlist"/>
+            </HBox>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <HBox spacing="15" alignment="CENTER_RIGHT" styleClass="user-section">
+                <HBox spacing="12" alignment="CENTER">
+                    <Button fx:id="walletBtn" text="💳" styleClass="icon-btn" onAction="#goToWallet"/>
+                    <StackPane>
+                        <Button fx:id="bellBtn" text="🔔" styleClass="icon-btn" onAction="#onBell"/>
+                        <Label fx:id="notificationBadge" text="0" styleClass="badge"
+                               StackPane.alignment="TOP_RIGHT"/>
+                    </StackPane>
+                </HBox>
+
+                <Separator orientation="VERTICAL" prefHeight="20" styleClass="sep"/>
+
+                <HBox spacing="8" alignment="CENTER">
+                    <Label fx:id="userNameLabel" text="Guest" styleClass="name"/>
+                    <MenuButton mnemonicParsing="false" styleClass="avatar-menu">
+                        <graphic>
+                            <Circle radius="14" fill="#00cda5"/>
+                        </graphic>
+                        <items>
+                            <MenuItem text="Profile"        onAction="#goToProfile"/>
+                            <SeparatorMenuItem/>
+                            <MenuItem text="Logout"         onAction="#onLogout"/>
+                        </items>
+                    </MenuButton>
+                </HBox>
+            </HBox>
+        </HBox>
+    </top>
+
+    <center>
+        <VBox spacing="20" styleClass="main-content">
+            <padding>
+                <Insets top="20" right="24" bottom="20" left="24"/>
+            </padding>
+
+            <!-- BẢNG 1: Đấu giá đang tham gia (RUNNING) -->
+            <VBox spacing="10.0" styleClass="form-card" VBox.vgrow="ALWAYS">
+                <Label style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: #00E5FF;" text="⏳ ACTIVE BIDS" />
+                <TableView fx:id="activeBidsTable" styleClass="table-view" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colActiveName"         prefWidth="250.0" style="-fx-alignment: CENTER;" text="Item Name" />
+                        <TableColumn fx:id="colActiveMyBid"        prefWidth="180.0" style="-fx-alignment: CENTER;" text="My Bid" />
+                        <TableColumn fx:id="colActiveCurrentPrice"  prefWidth="180.0" style="-fx-alignment: CENTER;" text="Current Price" />
+                        <TableColumn fx:id="colActiveWinning"      prefWidth="150.0" style="-fx-alignment: CENTER;" text="Winning" />
+                        <TableColumn fx:id="colActiveTimeLeft"     prefWidth="150.0" style="-fx-alignment: CENTER;" text="Time Left" />
+                    </columns>
+                    <placeholder>
+                        <Label text="You haven't participated in any running auctions" />
+                    </placeholder>
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                    </columnResizePolicy>
+                </TableView>
+            </VBox>
+
+            <!-- BẢNG 2: Sản phẩm đã mua thành công -->
+            <VBox spacing="10.0" styleClass="form-card" VBox.vgrow="ALWAYS">
+                <Label style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: #64FFDA;" text="🏆 WON ITEMS" />
+                <TableView fx:id="wonItemsTable" styleClass="table-view" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colWonName"        prefWidth="300.0" style="-fx-alignment: CENTER;" text="Item Name" />
+                        <TableColumn fx:id="colWonFinalPrice" prefWidth="200.0" style="-fx-alignment: CENTER;" text="Final Price" />
+                        <TableColumn fx:id="colWonStatus"     prefWidth="200.0" style="-fx-alignment: CENTER;" text="Status" />
+                        <TableColumn fx:id="colWonDate"       prefWidth="200.0" style="-fx-alignment: CENTER;" text="Date" />
+                    </columns>
+                    <placeholder>
+                        <Label text="No won items yet" />
+                    </placeholder>
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                    </columnResizePolicy>
+                </TableView>
+            </VBox>
+        </VBox>
+    </center>
+
+</BorderPane>

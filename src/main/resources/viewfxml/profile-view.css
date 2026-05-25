@@ -1,0 +1,30 @@
+.root {
+    -fx-background-color: #d2b48c;
+    -fx-font-family: "Courier New", monospace;
+}
+
+.section-title {
+    -fx-text-fill: #3c2f2f;
+    -fx-font-size: 42px;
+    -fx-font-weight: bold;
+}
+
+.auction-card {
+    -fx-background-color: #f5e8c7;
+    -fx-border-color: #3c2f2f;
+    -fx-border-width: 4;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-effect: dropshadow(gaussian, rgba(60, 47, 47, 0.6), 12, 0.2, 6, 6);
+}
+
+.auction-card:hover {
+    -fx-border-color: #ffd700;
+    -fx-effect: dropshadow(gaussian, #ffd700, 15, 0.3, 4, 4);
+}
+
+.btn-register, .btn-detail {
+    -fx-background-radius: 3;
+    -fx-border-width: 3;
+    -fx-font-family: "Courier New", monospace;
+}

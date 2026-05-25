@@ -1,19 +1,9 @@
 {
   "items": [
     {
-      "name": "xe sh",
-      "description": "sản xuất năm 2018, ngoại hình hơi xước nhẹ",
-      "startingPrice": 10000000,
-      "currentHighestPrice": 10000000,
-      "startTime": "2026-05-25T14:44:00",
-      "endTime": "2026-05-25T16:44:00",
       "status": "RUNNING",
       "seller": {
         "type": "SELLER",
-        "id": 5,
-        "username": "hưng",
-        "password": "123456789",
-        "fullName": "hưng",
         "locked": false
       },
       "bids": [],
@@ -21,5 +11,4 @@
       "id": 1
     }
   ],
-  "nextItemId": 3
 }

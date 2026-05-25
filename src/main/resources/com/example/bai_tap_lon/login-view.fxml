@@ -2,103 +2,34 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<HBox alignment="CENTER" prefHeight="480.0" prefWidth="820.0" styleClass="root-container" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.bai_tap_lon.controller.LoginController">
+<VBox alignment="CENTER" prefHeight="420.0" prefWidth="600.0" spacing="14.0"
+      style="-fx-background-color: #f6f8fb;"
+      xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.example.bai_tap_lon.controller.LoginController">
+    <padding>
+        <Insets bottom="32.0" left="48.0" right="48.0" top="32.0" />
+    </padding>
 
-    <!-- ══ LEFT DECORATIVE PANEL ══════════════════════════════ -->
-    <VBox alignment="CENTER" prefWidth="300.0" spacing="18.0" styleClass="left-panel">
-        <padding>
-            <Insets bottom="48.0" left="36.0" right="36.0" top="48.0" />
-        </padding>
-        <Label styleClass="brand-subtitle" text="NỀN TẢNG ĐẤU GIÁ&#10;TRỰC TUYẾN&#10;UY TÍN &amp; MINH BẠCH&#10;">
-            <font>
-                <Font name="System Bold" size="20.0" />
-            </font></Label>
+    <Label style="-fx-font-size: 28; -fx-font-weight: bold; -fx-text-fill: #1f3349;" text="Đăng nhập" />
+    <Label style="-fx-text-fill: #607080;" text="Sử dụng tài khoản đấu giá của bạn." />
 
-        <Region VBox.vgrow="ALWAYS" />
-
-        <VBox spacing="10.0">
-            <Label styleClass="brand-subtitle" text="✔  Đặt giá thầu dễ dàng" />
-            <Label styleClass="brand-subtitle" text="✔  Theo dõi phiên đấu giá real-time" />
-            <Label styleClass="brand-subtitle" text="✔  Giao dịch an toàn &amp; bảo mật" />
-        </VBox>
-
-        <Region VBox.vgrow="ALWAYS" />
+    <VBox maxWidth="360.0" spacing="10.0">
+        <TextField fx:id="usernameField" prefHeight="38.0" promptText="Tên đăng nhập" />
+        <PasswordField fx:id="passwordField" prefHeight="38.0" promptText="Mật khẩu" />
+        <Label fx:id="messageLabel" minHeight="22.0" style="-fx-text-fill: #b42318;" />
+        <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#handleLogin" prefHeight="38.0"
+                style="-fx-background-color: #265f9f; -fx-text-fill: white; -fx-font-weight: bold;"
+                text="Đăng nhập" />
+        <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#handleSignup" prefHeight="36.0"
+                style="-fx-background-color: transparent; -fx-border-color: #265f9f; -fx-text-fill: #265f9f;"
+                text="Tạo tài khoản" />
+        <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#showWelcome" prefHeight="32.0"
+                style="-fx-background-color: transparent; -fx-text-fill: #607080;"
+                text="Quay lại" />
     </VBox>
-
-    <!-- ══ RIGHT FORM PANEL ════════════════════════════════════ -->
-    <VBox alignment="CENTER" spacing="0.0" styleClass="form-panel" HBox.hgrow="ALWAYS">
-        <padding>
-            <Insets bottom="44.0" left="52.0" right="52.0" top="44.0" />
-        </padding>
-
-        <!-- Heading -->
-        <Label styleClass="form-header-label" text="ĐĂNG NHẬP">
-            <font>
-                <Font name="System Bold" size="20.0" />
-            </font></Label>
-        <Label styleClass="form-subheader-label" text="Sử dụng tài khoản đấu giá của bạn." />
-
-        <!-- Gap -->
-        <Region prefHeight="28.0" />
-
-        <!-- Fields -->
-        <VBox spacing="14.0">
-
-            <!-- Tên đăng nhập -->
-            <VBox spacing="4.0">
-                <Label styleClass="field-label" text="TÊN ĐĂNG NHẬP" />
-                <TextField fx:id="usernameField" prefHeight="42.0" promptText="username" styleClass="form-field" />
-            </VBox>
-
-            <!-- Mật khẩu -->
-            <VBox spacing="4.0">
-                <Label styleClass="field-label" text="MẬT KHẨU" translateY="20.0" />
-                <PasswordField fx:id="passwordField" prefHeight="42.0" promptText="••••••••" styleClass="form-field" translateY="20.0" />
-            </VBox>
-
-            <!-- Message label (lỗi) -->
-            <Label fx:id="messageLabel" minHeight="20.0" style="-fx-text-fill: #c0392b; -fx-font-size: 12px; -fx-font-family: 'Segoe UI', SansSerif;" />
-
-        </VBox>
-
-        <!-- Gap -->
-        <Region prefHeight="20.0" />
-
-        <!-- Đăng nhập button -->
-        <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#handleLogin" prefHeight="44.0" style="-fx-background-radius: 10;" styleClass="btn-primary" text="ĐĂNG NHẬP" />
-
-        <!-- Gap -->
-        <Region prefHeight="10.0" />
-
-        <!-- Tạo tài khoản button (outline) -->
-        <Button maxWidth="Infinity" mnemonicParsing="false" onAction="#handleSignup" prefHeight="42.0" style="-fx-background-color: transparent;                        -fx-border-color: #0277bd;                        -fx-border-width: 1.8;                        -fx-border-radius: 11;                        -fx-background-radius: 11;                        -fx-text-fill: #0277bd;                        -fx-font-size: 13px;                        -fx-font-weight: bold;                        -fx-font-family: 'Segoe UI Semibold', SansSerif;                        -fx-cursor: hand;" text="Tạo tài khoản mới" />
-
-        <!-- Gap -->
-        <Region prefHeight="18.0" />
-
-        <!-- Divider -->
-        <HBox alignment="CENTER" spacing="10.0">
-            <Region styleClass="divider-line" HBox.hgrow="ALWAYS" />
-            <Label styleClass="divider-label" text="hoặc" />
-            <Region styleClass="divider-line" HBox.hgrow="ALWAYS" />
-        </HBox>
-
-        <!-- Gap -->
-        <Region prefHeight="14.0" />
-
-        <!-- Quay lại -->
-        <HBox alignment="CENTER">
-            <Hyperlink onAction="#showWelcome" styleClass="login-link" text="← Quay lại trang chủ" />
-        </HBox>
-
-    </VBox>
-</HBox>
+</VBox>

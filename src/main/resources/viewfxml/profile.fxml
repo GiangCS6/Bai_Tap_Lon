@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Circle?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="bai_tap_lon.client.controller.ProfileController"
+            styleClass="root-pane"
+            stylesheets="@home-view.css,@profile-view.css">
+
+    <top>
+        <HBox styleClass="navbar" alignment="CENTER_LEFT" spacing="20">
+            <padding>
+                <Insets top="10" right="25" bottom="10" left="25"/>
+            </padding>
+
+            <Label text="BidderHolic" styleClass="logo"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <!-- =========================  ADMIN NAV  ========================= -->
+            <HBox fx:id="adminNav" spacing="20" alignment="CENTER" visible="false" managed="false">
+                <Button text="Auction List"     styleClass="nav-link"                onAction="#goToAuctionList"/>
+                <Button text="Active Auction"   styleClass="nav-link"                onAction="#goToActiveAuctions"/>
+                <Button text="User Management"  styleClass="nav-link"                onAction="#goToUserManagement"/>
+                <Button text="Auction Approval" styleClass="nav-link"                onAction="#goToAuctionApproval"/>
+                <Button text="Reports"          styleClass="nav-link"                onAction="#goToReports"/>
+                <Button text="System Settings"  styleClass="nav-link"                onAction="#goToSystemSettings"/>
+            </HBox>
+
+            <!-- =========================  SELLER NAV  ======================== -->
+            <HBox fx:id="sellerNav" spacing="20" alignment="CENTER" visible="false" managed="false">
+                <Button text="Auction List"    styleClass="nav-link"                onAction="#goToAuctionList"/>
+                <Button text="Active Auction"  styleClass="nav-link"                onAction="#goToActiveAuctions"/>
+                <Button text="Selling History" styleClass="nav-link"                onAction="#goToSellerHistory"/>
+                <Button text="Add Item"        styleClass="nav-link"                onAction="#goToAddItem"/>
+            </HBox>
+
+            <!-- =========================  BIDDER NAV  ======================== -->
+            <HBox fx:id="bidderNav" spacing="20" alignment="CENTER" visible="false" managed="false">
+                <Button text="Auction List"    styleClass="nav-link"                onAction="#goToAuctionList"/>
+                <Button text="Active Auction"  styleClass="nav-link"                onAction="#goToActiveAuctions"/>
+                <Button text="Bidding History" styleClass="nav-link"                onAction="#goToBiddingHistory"/>
+                <Button text="Watchlist"       styleClass="nav-link"                onAction="#goToWatchlist"/>
+            </HBox>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <HBox spacing="15" alignment="CENTER_RIGHT" styleClass="user-section">
+                <HBox spacing="12" alignment="CENTER">
+                    <Button fx:id="walletBtn" onAction="#goToWallet" styleClass="icon-btn" text="💳" />
+                    <StackPane>
+
+                        <Button fx:id="bellBtn" text="🔔" styleClass="icon-btn" onAction="#onBell"/>
+                        <Label fx:id="notificationBadge" text="0" styleClass="badge" StackPane.alignment="TOP_RIGHT"/>
+                    </StackPane>
+                </HBox>
+
+                <Separator orientation="VERTICAL" prefHeight="20" styleClass="sep"/>
+
+                <HBox spacing="8" alignment="CENTER">
+                    <Label fx:id="userNameLabel" text="" styleClass="name"/>
+                    <MenuButton mnemonicParsing="false" styleClass="avatar-menu">
+                        <graphic>
+                            <Circle radius="14" fill="#00cda5"/>
+                        </graphic>
+                        <items>
+                            <MenuItem text="Profile" onAction="#goToProfile"/>
+                            <SeparatorMenuItem/>
+                            <MenuItem text="Logout" onAction="#onLogout"/>
+                        </items>
+                    </MenuButton>
+                </HBox>
+            </HBox>
+        </HBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true"
+                    hbarPolicy="NEVER"
+                    vbarPolicy="AS_NEEDED"
+                    styleClass="transparent-scroll">
+
+            <content>
+                <VBox spacing="20" styleClass="profile-content">
+                    <padding>
+                        <Insets top="24" right="32" bottom="24" left="32"/>
+                    </padding>
+
+                    <!-- ── Profile Header Card ── -->
+                    <HBox spacing="24" alignment="CENTER_LEFT" styleClass="profile-header-card">
+                        <StackPane styleClass="avatar-wrap">
+                            <Circle radius="48" fill="#00cda5"/>
+                            <!-- fx:id unique: avatarInitialLabel -->
+                            <Label fx:id="avatarInitialLabel" text="" styleClass="avatar-text"/>
+                        </StackPane>
+
+                        <VBox spacing="8" alignment="CENTER_LEFT">
+                            <!-- fx:id unique: fullNameLabel -->
+                            <Label fx:id="fullNameLabel" text="" styleClass="profile-name"/>
+                            <HBox spacing="10" alignment="CENTER_LEFT">
+                                <!-- fx:id unique: headerRoleLabel (role pill ở header) -->
+                                <Label fx:id="headerRoleLabel" text="" styleClass="role-pill"/>
+                                <!-- fx:id unique: statusLabel (isActive từ protocol) -->
+                                <Label fx:id="statusLabel" text="" styleClass="status-pill"/>
+                            </HBox>
+                        </VBox>
+
+                        <Region HBox.hgrow="ALWAYS"/>
+
+                        <HBox spacing="10" alignment="CENTER">
+                            <Button text="Change Password" styleClass="btn-outline" disable="true"/>
+                        </HBox>
+                    </HBox>
+
+                    <!-- ── Basic Information Panel ── -->
+                    <VBox spacing="14" styleClass="panel-card">
+                        <Label text="Basic Information" styleClass="panel-title"/>
+
+                        <GridPane hgap="18" vgap="14">
+                            <columnConstraints>
+                                <ColumnConstraints percentWidth="25"/>
+                                <ColumnConstraints percentWidth="25"/>
+                                <ColumnConstraints percentWidth="25"/>
+                                <ColumnConstraints percentWidth="25"/>
+                            </columnConstraints>
+
+                            <Label text="User ID" styleClass="field-label" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                            <!-- fx:id unique: userIdValue -->
+                            <Label fx:id="userIdValue" text="-" styleClass="field-value" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                            <Label text="Join Date" styleClass="field-label" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+                            <!-- fx:id unique: createdAtValue -->
+                            <Label fx:id="createdAtValue" text="-" styleClass="field-value" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+
+                            <Label text="Username" styleClass="field-label" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                            <!-- fx:id unique: usernameValue -->
+                            <Label fx:id="usernameValue" text="-" styleClass="field-value" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                            <Label text="Email Address" styleClass="field-label" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+                            <!-- fx:id unique: emailValue -->
+                            <Label fx:id="emailValue" text="-" styleClass="field-value" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+
+                            <Label text="Account Role" styleClass="field-label" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                            <!-- fx:id unique: roleLabel (chỉ xuất hiện 1 lần, ở đây) -->
+                            <Label fx:id="roleLabel" text="-" styleClass="field-value" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                            <Label fx:id="walletBalanceFieldLabel" text="Wallet Balance" styleClass="field-label" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
+                            <!-- fx:id unique: walletBalanceLabel (chỉ xuất hiện 1 lần, ở đây) -->
+                            <Label fx:id="walletBalanceLabel" text="0 VNĐ" styleClass="field-value" GridPane.rowIndex="2" GridPane.columnIndex="3"/>
+                        </GridPane>
+                    </VBox>
+
+                    <!-- ── Stat Cards ── -->
+                    <HBox spacing="18">
+                        <VBox spacing="6" HBox.hgrow="ALWAYS" styleClass="stat-card">
+                            <Label text="Total Visited Auctions" styleClass="stat-title"/>
+                            <!-- fx:id unique: joinedAuctionCountLabel -->
+                            <Label fx:id="joinedAuctionCountLabel" text="0" styleClass="stat-value"/>
+                        </VBox>
+
+                        <VBox spacing="6" HBox.hgrow="ALWAYS" styleClass="stat-card">
+                            <Label text="Active Auction" styleClass="stat-title"/>
+                            <!-- fx:id unique: activeAuctionCountLabel -->
+                            <Label fx:id="activeAuctionCountLabel" text="0" styleClass="stat-value"/>
+                        </VBox>
+
+                        <VBox fx:id="balanceStatCard" spacing="6" HBox.hgrow="ALWAYS" styleClass="stat-card">
+                            <!-- fx:id unique: balanceStatLabel (tách riêng khỏi walletBalanceLabel ở grid) -->
+                            <Label fx:id="balanceStatLabel" text="0 đ" styleClass="stat-value"/>
+                        </VBox>
+                    </HBox>
+
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+</BorderPane>
