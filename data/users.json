@@ -1,0 +1,30 @@
+{
+  "users": [
+    {
+      "type": "ADMIN",
+      "id": 1,
+      "username": "admin",
+      "password": "Dung12345",
+      "fullName": "Root admin",
+      "locked": false,
+      "originalRole": "BIDDER"
+    },
+    {
+      "type": "BIDDER",
+      "id": 2,
+      "username": "a",
+      "password": "a",
+      "fullName": "a",
+      "locked": false
+    },
+    {
+      "type": "SELLER",
+      "id": 3,
+      "username": "b",
+      "password": "b",
+      "fullName": "b",
+      "locked": false
+    }
+  ],
+  "nextUserId": 4
+}

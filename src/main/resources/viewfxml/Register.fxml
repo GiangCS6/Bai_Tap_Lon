@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+
+
+<StackPane style="-fx-background-color: #0b1120;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bai_tap_lon.client.controller.LoginController">
+   <children>
+      <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="518.0" prefWidth="512.0" stylesheets="@style.css">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="319.99998474121094" minWidth="10.0" prefWidth="172.8000244140625" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="487.1999969482422" minWidth="10.0" prefWidth="339.9999755859375" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="66.4" minHeight="10.0" prefHeight="66.4" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="66.4" minHeight="10.0" prefHeight="66.4" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="74.79999389648438" minHeight="10.0" prefHeight="56.2000244140625" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="136.8000061035156" minHeight="10.0" prefHeight="55.99998779296877" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="149.39998474121091" minHeight="10.0" prefHeight="63.20000610351562" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="185.00002136230466" minHeight="10.0" prefHeight="88.80000000000001" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="171.20004882812498" minHeight="0.0" prefHeight="49.599999999999966" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="120.80002441406253" minHeight="3.6000000000000227" prefHeight="79.0000122070312" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label alignment="CENTER" styleClass="title-text" text="Register :  Create new account" GridPane.columnSpan="2" GridPane.halignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Label>
+            <TextField fx:id="regUsername" promptText="Your name" styleClass="input-line" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label alignment="CENTER" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" styleClass="radio-button" text="Email" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+            <Label alignment="CENTER" maxWidth="1.7976931348623157E308" styleClass="radio-button" text="Your password" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+            <Label alignment="CENTER" maxWidth="1.7976931348623157E308" prefHeight="58.0" prefWidth="154.0" styleClass="radio-button" text=" Confirm your password" textAlignment="CENTER" wrapText="true" GridPane.rowIndex="5" />
+            <TextField fx:id="regEmail"  styleClass="input-line" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Button mnemonicParsing="false" onAction="#onRegister" prefHeight="47.0" prefWidth="122.0" styleClass="btn-primary" text="Register" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="6">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Button>
+            <HBox alignment="CENTER" prefHeight="77.0" prefWidth="512.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="7">
+               <children>
+                  <Label alignment="CENTER" styleClass="radio-button" text="Your account has existed ?" />
+                  <Button minWidth="42.0" mnemonicParsing="false" onAction="#switchToLogin" prefHeight="32.0" prefWidth="42.0" styleClass="text-link" stylesheets="@style.css" text="Log in">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Button>
+               </children>
+            </HBox>
+            <PasswordField fx:id="regPassword" promptText="At least 6 character" styleClass="input-line" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <PasswordField fx:id="regConfirm" promptText="At least 6 character" styleClass="input-line" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <Label styleClass="radio-button" text="Name" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+            <HBox alignment="CENTER" prefHeight="59.0" prefWidth="512.0" spacing="60.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+               <children>
+                  <RadioButton fx:id="bidderRadio" mnemonicParsing="false" text="Bidder">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="roleGroup" />
+                     </toggleGroup>
+                  </RadioButton>
+                  <RadioButton fx:id="sellerRadio" mnemonicParsing="false" text="Seller" toggleGroup="$roleGroup" />
+               </children>
+            </HBox>
+            <Label alignment="CENTER" styleClass="radio-button" text="Role" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+         </children>
+      </GridPane>
+   </children>
+</StackPane>

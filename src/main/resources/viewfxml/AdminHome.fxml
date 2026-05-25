@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+
+
+<StackPane style="-fx-background-color: #0b1120;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bai_tap_lon.client.controller.AdminController">
+   <children>
+      <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="344.0" prefWidth="522.0" stylesheets="@style.css">
+          <columnConstraints>
+              <ColumnConstraints hgrow="SOMETIMES" maxWidth="256.20001220703125" minWidth="10.0" prefWidth="130.20001220703125" />
+              <ColumnConstraints hgrow="SOMETIMES" maxWidth="401.39995117187505" minWidth="10.0" prefWidth="390.9999877929688" />
+          </columnConstraints>
+          <rowConstraints>
+              <RowConstraints maxHeight="109.60001220703126" minHeight="10.0" prefHeight="83.19998397827149" vgrow="SOMETIMES" />
+              <RowConstraints maxHeight="151.19998779296876" minHeight="10.0" prefHeight="72.19998779296874" vgrow="SOMETIMES" />
+              <RowConstraints maxHeight="151.19998779296876" minHeight="10.0" prefHeight="52.399993896484375" vgrow="SOMETIMES" />
+              <RowConstraints maxHeight="151.19998779296876" minHeight="10.0" prefHeight="70.79998779296875" vgrow="SOMETIMES" />
+              <RowConstraints maxHeight="145.6000274658203" minHeight="10.0" prefHeight="85.20001220703125" vgrow="SOMETIMES" />
+          </rowConstraints>
+          <children>
+              <Label prefHeight="36.0" prefWidth="214.0" styleClass="title-text" text="Admin Dashboard" GridPane.columnSpan="2" GridPane.halignment="CENTER" />
+      
+              <Label styleClass="radio-button" text="Username" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+              <TextField fx:id="txtBanUsername" prefHeight="0.0" prefWidth="286.0" promptText="Search user by Username..." styleClass="input-line" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      
+              <Label styleClass="radio-button" text="Reason" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+              <ComboBox fx:id="cbReason" editable="true" prefHeight="40.0" prefWidth="398.0" promptText="Reason for banning" styleClass="combo-box-dark" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+      
+              <Label styleClass="radio-button" text="Duration" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+              <ComboBox fx:id="cbDuration" editable="true" prefHeight="38.0" prefWidth="400.0" promptText="Time for banning" styleClass="combo-box-dark" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      
+              <HBox alignment="CENTER" spacing="40.0" GridPane.columnSpan="2" GridPane.rowIndex="4">
+                  <children>
+                      <Button mnemonicParsing="false" onAction="#onLogout" prefHeight="36.0" prefWidth="103.0" styleClass="btn-primary" text="Logout" />
+                      <Button mnemonicParsing="false" onAction="#onBanUserClick" prefHeight="36.0" prefWidth="90.0" styleClass="btn-primary" stylesheets="@style.css" text="Ban" />
+                  </children>
+              </HBox>
+          </children>
+      </GridPane>
+   </children>
+</StackPane>

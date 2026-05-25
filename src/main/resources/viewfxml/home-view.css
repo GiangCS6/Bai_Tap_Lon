@@ -1,0 +1,40 @@
+.root {
+    -fx-background-color: #d2b48c;
+    -fx-font-family: "Courier New", monospace;
+}
+
+.navbar {
+    -fx-background-color: #3c2f2f;
+    -fx-border-color: #ffd700;
+    -fx-border-width: 0 0 4 0;
+}
+
+.logo {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffd700;
+    -fx-effect: dropshadow(gaussian, #228b22, 4, 0.3, 2, 2);
+}
+
+.nav-link {
+    -fx-text-fill: #f0f0d8;
+    -fx-font-size: 15px;
+}
+
+.active-link {
+    -fx-text-fill: #ffd700;
+    -fx-font-weight: bold;
+}
+
+.btn-primary {
+    -fx-background-color: #228b22;
+    -fx-text-fill: #f0f0d8;
+    -fx-border-color: #3c2f2f;
+    -fx-border-width: 3;
+}
+
+.dark-table {
+    -fx-background-color: #e8d5b8;
+    -fx-border-color: #3c2f2f;
+    -fx-border-width: 3;
+}

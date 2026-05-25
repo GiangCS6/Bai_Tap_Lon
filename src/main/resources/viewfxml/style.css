@@ -1,0 +1,74 @@
+.root {
+    -fx-background-color: #d2b48c; /* Beige vintage */
+    -fx-font-family: "Courier New", "Lucida Console", monospace;
+    -fx-font-size: 14px;
+}
+
+/* Card cổ điển */
+.form-card {
+    -fx-background-color: #f5e8c7;
+    -fx-background-radius: 4;           /* Bo góc rất nhỏ */
+    -fx-border-color: #3c2f2f;
+    -fx-border-width: 3;
+    -fx-border-style: solid;
+    -fx-padding: 30;
+    -fx-effect: dropshadow(gaussian, rgba(60, 47, 47, 0.6), 8, 0.1, 4, 4); /* Raised shadow */
+}
+
+/* Button Retro */
+.btn-primary {
+    -fx-background-color: #228b22;        /* Forest Green */
+    -fx-text-fill: #f0f0d8;
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-background-radius: 3;
+    -fx-border-color: #3c2f2f;
+    -fx-border-width: 2;
+    -fx-cursor: hand;
+    -fx-padding: 10 20;
+}
+
+.btn-primary:hover {
+    -fx-background-color: #32cd32;
+    -fx-effect: dropshadow(gaussian, #ffd700, 6, 0.3, 2, 2); /* Glow vàng vintage */
+}
+
+/* Input fields kiểu máy đánh chữ */
+.input-line {
+    -fx-background-color: #2c1f14;
+    -fx-text-fill: #aaddaa;
+    -fx-border-color: #3c2f2f;
+    -fx-border-width: 2 2 4 2;           /* Viền nổi dưới đậm */
+    -fx-font-family: "Courier New", monospace;
+    -fx-padding: 6 8;
+}
+
+.input-line:focused {
+    -fx-border-color: #ffd700;
+    -fx-background-color: #1a2f1a;
+}
+
+/* Table Retro */
+.table-view {
+    -fx-background-color: #e8d5b8;
+    -fx-border-color: #3c2f2f;
+    -fx-border-width: 3;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #8b5a2b;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #f5e8c7;
+    -fx-font-weight: bold;
+}
+
+/* Text Area */
+.text-area-dark {
+    -fx-background-color: #1a2f1a;
+    -fx-text-fill: #aaddaa;
+    -fx-border-color: #3c2f2f;
+    -fx-border-width: 3;
+}
