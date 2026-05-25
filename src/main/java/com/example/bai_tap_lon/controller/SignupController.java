@@ -18,29 +18,43 @@ public class SignupController {
     private final LoginService loginService = new LoginService();
 
     @FXML
+    public void initialize() {
+        // Đặt giá trị mặc định cho ComboBox khi FXML load xong
+        cbRole.getItems().setAll("Seller", "Bidder");
+        cbRole.setValue("Seller");
+    }
+
+    @FXML
     private void handleSignup() {
         String username = txtUsername.getText().trim();
         String password = txtPassword.getText().trim();
-        String confirm = txtConfirmPassword.getText().trim();
-        String role = cbRole.getValue();
+        String confirm  = txtConfirmPassword.getText().trim();
+        String role     = cbRole.getValue();
 
+        // Kiểm tra thiếu thông tin
         if (username.isEmpty() || password.isEmpty() || role == null) {
-            showAlert(Alert.AlertType.WARNING, "Thiếu thông tin", "Vui lòng điền đầy đủ thông tin!");
+            showAlert(Alert.AlertType.WARNING, "Thiếu thông tin",
+                    "Vui lòng điền đầy đủ thông tin!");
             return;
         }
 
+        // Kiểm tra mật khẩu khớp
         if (!password.equals(confirm)) {
-            showAlert(Alert.AlertType.ERROR, "Lỗi", "Mật khẩu xác nhận không khớp!");
+            showAlert(Alert.AlertType.ERROR, "Lỗi",
+                    "Mật khẩu xác nhận không khớp!");
             return;
         }
 
-        boolean success = loginService.register(username, password,role);
+        // Gọi service đăng ký
+        boolean success = loginService.register(username, password, role);
 
         if (success) {
-            showAlert(Alert.AlertType.INFORMATION, "Thành công", "Đăng ký tài khoản thành công!\nBạn có thể đăng nhập ngay.");
+            showAlert(Alert.AlertType.INFORMATION, "Thành công",
+                    "Đăng ký tài khoản thành công!\nBạn có thể đăng nhập ngay.");
             goToLogin();
         } else {
-            showAlert(Alert.AlertType.ERROR, "Thất bại", "Username đã tồn tại!" + username + password + role);
+            showAlert(Alert.AlertType.ERROR, "Thất bại",
+                    "Username đã tồn tại: " + username);
         }
     }
 
@@ -48,7 +62,8 @@ public class SignupController {
     private void goToLogin() {
         try {
             Stage stage = (Stage) txtUsername.getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/bai_tap_lon/login-view.fxml"));
+            FXMLLoader loader = new FXMLLoader(
+                    getClass().getResource("/com/example/bai_tap_lon/login-view.fxml"));
             Parent root = loader.load();
 
             Scene scene = new Scene(root, 400, 480);
@@ -57,7 +72,8 @@ public class SignupController {
             stage.centerOnScreen();
         } catch (Exception e) {
             e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Lỗi", "Không thể chuyển sang màn hình đăng nhập!");
+            showAlert(Alert.AlertType.ERROR, "Lỗi",
+                    "Không thể chuyển sang màn hình đăng nhập!");
         }
     }
 

@@ -5,62 +5,62 @@
 
 /* ── Root container ─────────────────────────────────────── */
 .root-container {
-    -fx-background-color: #f0f4fa;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.18), 32, 0.1, 0, 8);
-    -fx-background-radius: 18;
+    -fx-background-color: #e8f0fe;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.22), 36, 0.12, 0, 10);
+    -fx-background-radius: 20;
 }
 
 /* ── Left decorative panel ──────────────────────────────── */
 .left-panel {
-    -fx-background-color: linear-gradient(to bottom, #1565c0, #0d47a1, #1a237e);
-    -fx-background-radius: 18 0 0 18;
+    -fx-background-color: linear-gradient(to bottom, #0277bd, #01579b, #023872);
+    -fx-background-radius: 20 0 0 20;
 }
 
 .brand-icon {
-    -fx-font-size: 40px;
-    -fx-text-fill: #90caf9;
+    -fx-font-size: 44px;
+    -fx-text-fill: #81d4fa;
 }
 
 .brand-title {
-    -fx-font-size: 26px;
+    -fx-font-size: 27px;
     -fx-font-weight: bold;
     -fx-text-fill: white;
     -fx-font-family: "Segoe UI Semibold", "SansSerif";
-    -fx-letter-spacing: 1.5px;
+    -fx-letter-spacing: 2px;
 }
 
 .brand-subtitle {
     -fx-font-size: 13px;
-    -fx-text-fill: #90caf9;
+    -fx-text-fill: #81d4fa;
     -fx-font-family: "Segoe UI", "SansSerif";
     -fx-text-alignment: center;
-    -fx-line-spacing: 4px;
+    -fx-line-spacing: 5px;
     -fx-wrap-text: true;
 }
 
 .brand-footer {
     -fx-font-size: 10px;
-    -fx-text-fill: #5c7fa8;
+    -fx-text-fill: #4a6f96;
     -fx-font-family: "Segoe UI", "SansSerif";
 }
 
 /* ── Right form panel ───────────────────────────────────── */
 .form-panel {
     -fx-background-color: white;
-    -fx-background-radius: 0 18 18 0;
+    -fx-background-radius: 0 20 20 0;
 }
 
 /* ── Form heading ───────────────────────────────────────── */
 .form-header-label {
-    -fx-font-size: 26px;
+    -fx-font-size: 27px;
     -fx-font-weight: bold;
-    -fx-text-fill: #0d2a4f;
+    -fx-text-fill: #01294e;
     -fx-font-family: "Segoe UI Semibold", "SansSerif";
 }
 
 .form-subheader-label {
     -fx-font-size: 13px;
-    -fx-text-fill: #607d9e;
+    -fx-text-fill: #5482a0;
     -fx-font-family: "Segoe UI", "SansSerif";
     -fx-padding: 4 0 0 0;
 }
@@ -69,128 +69,128 @@
 .field-label {
     -fx-font-size: 12px;
     -fx-font-weight: bold;
-    -fx-text-fill: #334e6e;
+    -fx-text-fill: #1e3f60;
     -fx-font-family: "Segoe UI Semibold", "SansSerif";
-    -fx-letter-spacing: 0.4px;
+    -fx-letter-spacing: 0.5px;
 }
 
 /* ── Text fields & password fields ─────────────────────── */
 .form-field {
-    -fx-pref-height: 40px;
-    -fx-background-color: #f4f7fc;
-    -fx-background-radius: 9;
-    -fx-border-color: #c8d9ef;
-    -fx-border-radius: 9;
+    -fx-pref-height: 42px;
+    -fx-background-color: #f0f6ff;
+    -fx-background-radius: 10;
+    -fx-border-color: #b0cceb;
+    -fx-border-radius: 10;
     -fx-border-width: 1.5;
     -fx-padding: 0 14 0 14;
     -fx-font-size: 13px;
     -fx-font-family: "Segoe UI", "SansSerif";
-    -fx-text-fill: #1a2e44;
-    -fx-prompt-text-fill: #a0b4cc;
+    -fx-text-fill: #112233;
+    -fx-prompt-text-fill: #93b3cc;
 }
 
 .form-field:focused {
-    -fx-background-color: #eaf1fb;
-    -fx-border-color: #1976d2;
+    -fx-background-color: #e3f0ff;
+    -fx-border-color: #0277bd;
     -fx-border-width: 2;
-    -fx-effect: dropshadow(gaussian, rgba(25,118,210,0.18), 8, 0, 0, 0);
+    -fx-effect: dropshadow(gaussian, rgba(2,119,189,0.20), 9, 0, 0, 0);
 }
 
 /* ── ComboBox ───────────────────────────────────────────── */
 .form-combobox {
-    -fx-pref-height: 40px;
-    -fx-background-color: #f4f7fc;
-    -fx-background-radius: 9;
-    -fx-border-color: #c8d9ef;
-    -fx-border-radius: 9;
+    -fx-pref-height: 42px;
+    -fx-background-color: #f0f6ff;
+    -fx-background-radius: 10;
+    -fx-border-color: #b0cceb;
+    -fx-border-radius: 10;
     -fx-border-width: 1.5;
     -fx-font-size: 13px;
     -fx-font-family: "Segoe UI", "SansSerif";
-    -fx-text-fill: #1a2e44;
-    -fx-prompt-text-fill: #a0b4cc;
+    -fx-text-fill: #112233;
+    -fx-prompt-text-fill: #93b3cc;
 }
 
 .form-combobox:focused {
-    -fx-background-color: #eaf1fb;
-    -fx-border-color: #1976d2;
+    -fx-background-color: #e3f0ff;
+    -fx-border-color: #0277bd;
     -fx-border-width: 2;
-    -fx-effect: dropshadow(gaussian, rgba(25,118,210,0.18), 8, 0, 0, 0);
+    -fx-effect: dropshadow(gaussian, rgba(2,119,189,0.20), 9, 0, 0, 0);
 }
 
 .form-combobox .list-cell {
     -fx-font-family: "Segoe UI", "SansSerif";
     -fx-font-size: 13px;
-    -fx-text-fill: #1a2e44;
+    -fx-text-fill: #112233;
     -fx-padding: 6 12;
 }
 
 .form-combobox-popup .list-view {
     -fx-background-color: white;
-    -fx-border-color: #c8d9ef;
-    -fx-border-radius: 9;
-    -fx-background-radius: 9;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 12, 0, 0, 4);
+    -fx-border-color: #b0cceb;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.14), 14, 0, 0, 5);
 }
 
 .form-combobox-popup .list-view .list-cell:hover {
-    -fx-background-color: #e3f0fb;
+    -fx-background-color: #d6eaf8;
 }
 
 .form-combobox-popup .list-view .list-cell:selected {
-    -fx-background-color: #1976d2;
+    -fx-background-color: #0277bd;
     -fx-text-fill: white;
 }
 
 /* ── Primary button ─────────────────────────────────────── */
 .btn-primary {
-    -fx-background-color: linear-gradient(to right, #1976d2, #1565c0);
+    -fx-background-color: linear-gradient(to right, #0277bd, #01579b);
     -fx-text-fill: white;
     -fx-font-size: 14px;
     -fx-font-weight: bold;
     -fx-font-family: "Segoe UI Semibold", "SansSerif";
-    -fx-background-radius: 10;
+    -fx-background-radius: 11;
     -fx-cursor: hand;
-    -fx-effect: dropshadow(gaussian, rgba(21,101,192,0.35), 10, 0, 0, 4);
-    -fx-letter-spacing: 0.5px;
+    -fx-effect: dropshadow(gaussian, rgba(1,87,155,0.38), 12, 0, 0, 5);
+    -fx-letter-spacing: 0.6px;
 }
 
 .btn-primary:hover {
-    -fx-background-color: linear-gradient(to right, #1e88e5, #1976d2);
-    -fx-effect: dropshadow(gaussian, rgba(21,101,192,0.5), 14, 0, 0, 5);
-    -fx-scale-x: 1.012;
-    -fx-scale-y: 1.012;
+    -fx-background-color: linear-gradient(to right, #039be5, #0277bd);
+    -fx-effect: dropshadow(gaussian, rgba(1,87,155,0.54), 16, 0, 0, 6);
+    -fx-scale-x: 1.013;
+    -fx-scale-y: 1.013;
 }
 
 .btn-primary:pressed {
-    -fx-background-color: #0d47a1;
-    -fx-effect: dropshadow(gaussian, rgba(13,71,161,0.3), 6, 0, 0, 2);
-    -fx-scale-x: 0.99;
-    -fx-scale-y: 0.99;
+    -fx-background-color: #023872;
+    -fx-effect: dropshadow(gaussian, rgba(2,56,114,0.32), 7, 0, 0, 2);
+    -fx-scale-x: 0.988;
+    -fx-scale-y: 0.988;
 }
 
 /* ── Divider ────────────────────────────────────────────── */
 .divider-line {
-    -fx-background-color: #dde7f3;
+    -fx-background-color: #ccdff2;
     -fx-pref-height: 1.5;
     -fx-max-height: 1.5;
 }
 
 .divider-label {
     -fx-font-size: 12px;
-    -fx-text-fill: #94aac4;
+    -fx-text-fill: #88a8c4;
     -fx-font-family: "Segoe UI", "SansSerif";
 }
 
 /* ── Login link row ─────────────────────────────────────── */
 .login-prompt-label {
     -fx-font-size: 13px;
-    -fx-text-fill: #607d9e;
+    -fx-text-fill: #5482a0;
     -fx-font-family: "Segoe UI", "SansSerif";
 }
 
 .login-link {
     -fx-font-size: 13px;
-    -fx-text-fill: #1976d2;
+    -fx-text-fill: #0277bd;
     -fx-font-weight: bold;
     -fx-font-family: "Segoe UI Semibold", "SansSerif";
     -fx-border-color: transparent;
@@ -200,6 +200,6 @@
 }
 
 .login-link:hover {
-    -fx-text-fill: #0d47a1;
+    -fx-text-fill: #01294e;
     -fx-underline: true;
 }
