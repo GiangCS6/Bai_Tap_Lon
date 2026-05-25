@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="bai_tap_lon.client.controller.WalletController"
+      spacing="14"
+      style="-fx-background-color: #0A192F; -fx-border-color: #1E3A5F;
+             -fx-border-width: 1; -fx-border-radius: 14; -fx-background-radius: 14;
+             -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.55), 18, 0.2, 0, 6);
+             -fx-pref-width: 320;">
+    <padding>
+        <Insets top="18" right="18" bottom="18" left="18"/>
+    </padding>
+
+    <!-- Header: tiêu đề + nút đóng -->
+    <HBox alignment="CENTER_LEFT" spacing="8">
+        <Label text="Ví của tôi"
+               style="-fx-text-fill: #E2E8F0; -fx-font-size: 14px; -fx-font-weight: bold;"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button fx:id="closeBtn" text="✕" onAction="#onClose"
+                style="-fx-background-color: transparent; -fx-text-fill: #94A3B8;
+                       -fx-cursor: hand; -fx-font-size: 14px;"/>
+    </HBox>
+
+    <!-- Balance -->
+    <VBox spacing="4" alignment="CENTER_LEFT"
+          style="-fx-background-color: #0D2240; -fx-background-radius: 10; -fx-padding: 14;">
+        <Label text="Số dư hiện tại"
+               style="-fx-text-fill: #94A3B8; -fx-font-size: 11px;"/>
+        <Label fx:id="balanceLabel" text="0 đ"
+               style="-fx-text-fill: #64FFDA; -fx-font-size: 24px; -fx-font-weight: 800;"/>
+        <Label fx:id="roleHintLabel" text=""
+               style="-fx-text-fill: #64748B; -fx-font-size: 10px;"/>
+    </VBox>
+
+    <!-- Input -->
+    <VBox spacing="6">
+        <Label text="Số tiền (VNĐ)"
+               style="-fx-text-fill: #CBD5E1; -fx-font-size: 11px;"/>
+        <TextField fx:id="amountField" promptText="VD: 100000"
+                   style="-fx-pref-height: 34; -fx-font-size: 13px;"/>
+    </VBox>
+
+    <!-- Actions -->
+    <HBox spacing="10" alignment="CENTER">
+        <Button fx:id="depositBtn" text="Nạp"
+                onAction="#onDeposit" maxWidth="Infinity" HBox.hgrow="ALWAYS"
+                style="-fx-background-color: #00cda5; -fx-text-fill: white;
+                       -fx-font-weight: bold; -fx-padding: 8 0; -fx-cursor: hand;
+                       -fx-background-radius: 8;"/>
+        <Button fx:id="withdrawBtn" text="Rút"
+                onAction="#onWithdraw" maxWidth="Infinity" HBox.hgrow="ALWAYS"
+                style="-fx-background-color: #F59E0B; -fx-text-fill: white;
+                       -fx-font-weight: bold; -fx-padding: 8 0; -fx-cursor: hand;
+                       -fx-background-radius: 8;"/>
+    </HBox>
+
+    <Label fx:id="statusLabel" text="" wrapText="true"
+           style="-fx-font-size: 11px;"/>
+
+    <Label text="* Tối thiểu 1.000 VNĐ mỗi giao dịch"
+           style="-fx-text-fill: #475569; -fx-font-size: 10px;"/>
+</VBox>

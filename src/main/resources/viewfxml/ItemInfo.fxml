@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+
+<BorderPane prefHeight="900" prefWidth="1550" styleClass="root-pane" stylesheets="@home-view.css,@ItemInfo-view.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bai_tap_lon.client.controller.ItemInfoController">
+
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="20" styleClass="navbar">
+            <padding>
+                <Insets bottom="10" left="25" right="25" top="10" />
+            </padding>
+
+            <Label styleClass="logo" text="BidderHolic" />
+            <Region HBox.hgrow="ALWAYS" />
+
+            <!-- ADMIN NAV -->
+            <HBox fx:id="adminNav" alignment="CENTER" managed="false" spacing="20" visible="false">
+                <Button onAction="#goToAuctionList" styleClass="nav-link" text="Auction List" />
+                <Button onAction="#goToActiveAuctions" styleClass="nav-link" text="Active Auction" />
+                <Button onAction="#goToUserManagement" styleClass="nav-link" text="User Management" />
+                <Button onAction="#goToAuctionApproval" styleClass="nav-link" text="Auction Approval" />
+                <Button onAction="#goToReports" styleClass="nav-link" text="Reports" />
+                <Button onAction="#goToSystemSettings" styleClass="nav-link" text="System Settings" />
+            </HBox>
+
+            <!-- SELLER NAV -->
+            <HBox fx:id="sellerNav" alignment="CENTER" managed="false" spacing="20" visible="false">
+                <Button onAction="#goToAuctionList" styleClass="nav-link" text="Auction List" />
+                <Button onAction="#goToActiveAuctions" styleClass="nav-link" text="Active Auction" />
+                <Button onAction="#goToSellerHistory" styleClass="nav-link" text="Selling History" />
+                <Button onAction="#goToAddItem" styleClass="nav-link" text="Add Item" />
+            </HBox>
+
+            <!-- BIDDER NAV -->
+            <HBox fx:id="bidderNav" alignment="CENTER" managed="false" spacing="20" visible="false">
+                <Button onAction="#goToAuctionList" styleClass="nav-link" text="Auction List" />
+                <Button onAction="#goToActiveAuctions" styleClass="nav-link" text="Active Auction" />
+                <Button onAction="#goToBiddingHistory" styleClass="nav-link" text="Bidding History" />
+                <Button onAction="#goToWatchlist" styleClass="nav-link" text="Watchlist" />
+            </HBox>
+
+            <Region HBox.hgrow="ALWAYS" />
+
+            <HBox alignment="CENTER_RIGHT" spacing="15" styleClass="user-section">
+                <HBox alignment="CENTER" spacing="12">
+                    <Button fx:id="walletBtn" onAction="#goToWallet" styleClass="icon-btn" text="💳" />
+                    <StackPane>
+                        <Button fx:id="bellBtn" styleClass="icon-btn" text="🔔" onAction="#onBell" />
+                        <Label fx:id="notificationBadge" styleClass="badge" text="0" StackPane.alignment="TOP_RIGHT" />
+                    </StackPane>
+                </HBox>
+
+                <Separator orientation="VERTICAL" prefHeight="20" styleClass="sep" />
+
+                <HBox alignment="CENTER" spacing="8">
+                    <Label fx:id="userNameLabel" styleClass="name" text="Guest" />
+                    <MenuButton mnemonicParsing="false" styleClass="avatar-menu">
+                        <graphic>
+                            <Circle fill="#00cda5" radius="14" />
+                        </graphic>
+                        <items>
+                            <MenuItem onAction="#goToProfile" text="Profile" />
+                            <SeparatorMenuItem />
+                            <MenuItem onAction="#onLogout" text="Logout" />
+                        </items>
+                    </MenuButton>
+                </HBox>
+            </HBox>
+        </HBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" styleClass="transparent-scroll" vbarPolicy="AS_NEEDED">
+            <content>
+                <VBox spacing="18" styleClass="page-content">
+                    <padding>
+                        <Insets bottom="28" left="28" right="28" top="24" />
+                    </padding>
+
+                    <HBox alignment="CENTER_LEFT" spacing="10">
+                        <Label styleClass="section-title" text="PRODUCT DETAIL" />
+                    </HBox>
+
+                    <HBox spacing="22" styleClass="content-wrap">
+                        <StackPane styleClass="image-wrap" HBox.hgrow="ALWAYS">
+                            <ImageView fx:id="itemImageView" fitHeight="300" fitWidth="430" pickOnBounds="true" preserveRatio="true" />
+                            <Label fx:id="imagePlaceholderLabel" styleClass="image-placeholder" text="No Image" />
+                        </StackPane>
+
+                        <VBox spacing="14" styleClass="info-card" HBox.hgrow="ALWAYS">
+                            <HBox spacing="8">
+                                <Label fx:id="categoryLabel" styleClass="tag-chip" text="CATEGORY" />
+                                <Label fx:id="statusLabel" styleClass="status-chip" text="ACTIVE" />
+                            </HBox>
+
+                            <Label fx:id="itemNameLabel" styleClass="item-name" text="Item Name" />
+                            <Label fx:id="priceLabel" styleClass="item-price" text="Starting Price: 0 VND" />
+
+                            <Separator styleClass="sep-line" />
+
+                            <HBox spacing="14">
+                                <Label minWidth="140" styleClass="meta-key" text="Seller:" />
+                                <Label fx:id="sellerLabel" styleClass="meta-value" text="Unknown" />
+                            </HBox>
+
+                            <VBox fx:id="attributesBox" spacing="10" />
+
+                            <Separator styleClass="sep-line" />
+
+                            <VBox spacing="8">
+                                <Label styleClass="meta-key" text="Description" />
+                                <TextArea fx:id="descriptionArea" editable="false" prefRowCount="6" styleClass="description-box" wrapText="true" />
+                            </VBox>
+
+                            <HBox alignment="CENTER_RIGHT" spacing="10">
+                                <Region HBox.hgrow="ALWAYS" />
+                            </HBox>
+                        </VBox>
+                    </HBox>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+</BorderPane>

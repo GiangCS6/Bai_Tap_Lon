@@ -1,0 +1,25 @@
+.root {
+    -fx-background-color: #d2b48c;
+    -fx-font-family: "Courier New", monospace;
+}
+
+.info-card {
+    -fx-background-color: #f5e8c7;
+    -fx-border-color: #3c2f2f;
+    -fx-border-width: 4;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+
+.item-name {
+    -fx-text-fill: #3c2f2f;
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+}
+
+.btn-primary {
+    -fx-background-color: #228b22;
+    -fx-text-fill: #f0f0d8;
+    -fx-border-color: #3c2f2f;
+    -fx-border-width: 3;
+}
