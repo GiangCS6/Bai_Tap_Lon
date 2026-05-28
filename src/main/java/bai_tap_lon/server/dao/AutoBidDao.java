@@ -134,8 +134,8 @@ import bai_tap_lon.common.model.entity.AutoBidSetting;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.UUID;
 
 /**
  * DAO cho bảng auto_bid_settings.
@@ -158,8 +158,9 @@ public class AutoBidDao {
     // ── Upsert: nếu đã có thì update, chưa có thì insert (SQLite syntax) ──────────────
     public void save(String bidderId, String auctionId, long maxBid, long increment) {
         String sql =
-                "INSERT INTO auto_bid_settings (bidder_id, auction_id, max_bid, increment, is_active) " +
-                        "VALUES (?, ?, ?, ?, 1) " +
+                "INSERT INTO auto_bid_settings " +
+                        "(id, bidder_id, auction_id, max_bid, increment, is_active) " +
+                        "VALUES (?, ?, ?, ?, ?, 1) " +
                         "ON CONFLICT(bidder_id, auction_id) " +
                         "DO UPDATE SET " +
                         "max_bid = excluded.max_bid, " +
@@ -168,10 +169,11 @@ public class AutoBidDao {
 
         try (Connection conn = getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, bidderId);
-            stmt.setString(2, auctionId);
-            stmt.setLong(3, maxBid);
-            stmt.setLong(4, increment);
+            stmt.setString(1, UUID.randomUUID().toString());
+            stmt.setString(2, bidderId);
+            stmt.setString(3, auctionId);
+            stmt.setLong(4, maxBid);
+            stmt.setLong(5, increment);
             stmt.executeUpdate();
         } catch (SQLException e) {
             throw new DatabaseException("Error saving auto bid setting: " + e.getMessage());
