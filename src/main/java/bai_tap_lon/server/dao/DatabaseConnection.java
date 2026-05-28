@@ -124,6 +124,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+/*
 public class DatabaseConnection {
     private static DatabaseConnection instance;
     private Connection connection;
@@ -176,5 +177,47 @@ public class DatabaseConnection {
         } catch (SQLException e) {
             System.err.println("Lỗi khi đóng kết nối: " + e.getMessage());
         }
+    }
+}*/
+public class DatabaseConnection {
+
+    private static DatabaseConnection instance;
+
+    private final String url;
+    private final String user;
+    private final String password;
+
+    private DatabaseConnection() {
+        Properties props = new Properties();
+
+        try (InputStream input =
+                     getClass().getClassLoader()
+                             .getResourceAsStream("db.properties")) {
+
+            props.load(input);
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        this.url = props.getProperty("db.url");
+        this.user = props.getProperty("db.user");
+        this.password = props.getProperty("db.password");
+    }
+
+    public static synchronized DatabaseConnection getInstance() {
+        if (instance == null) {
+            instance = new DatabaseConnection();
+        }
+        return instance;
+    }
+
+    public Connection getConnection() throws SQLException {
+
+        if (url.startsWith("jdbc:sqlite:")) {
+            return DriverManager.getConnection(url);
+        }
+
+        return DriverManager.getConnection(url, user, password);
     }
 }

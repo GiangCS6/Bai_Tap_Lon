@@ -178,7 +178,7 @@ public class DatabaseInitializer {
             // Auto Bid Settings - Added this block
             stmt.execute("""
                 CREATE TABLE IF NOT EXISTS auto_bid_settings (
-                    id TEXT PRIMARY KEY DEFAULT (lower(hex(random_blob(16)))),
+                    id TEXT PRIMARY KEY,
                     bidder_id TEXT NOT NULL,
                     auction_id TEXT NOT NULL,
                     max_bid INTEGER NOT NULL,
