@@ -1,35 +1,408 @@
+/* ================================================================
+   BIDDING.CSS — Green & White Theme
+   ================================================================ */
+
+/* ── Root ────────────────────────────────────────────────────── */
 .root {
-    -fx-background-color: #d2b48c;
+    -fx-background-color: #f0f7f0;
     -fx-font-family: "Courier New", monospace;
 }
 
+/* ── Top bar ─────────────────────────────────────────────────── */
 .top-bar {
-    -fx-background-color: #3c2f2f;
-    -fx-border-color: #ffd700;
+    -fx-background-color: #1a6b2a;
+    -fx-border-color: transparent transparent #145220 transparent;
     -fx-border-width: 0 0 4 0;
+    -fx-effect: dropshadow(gaussian, rgba(20, 82, 32, 0.45), 10, 0.2, 0, 4);
 }
 
-.price-card, .section-card {
-    -fx-background-color: #f5e8c7;
-    -fx-border-color: #3c2f2f;
-    -fx-border-width: 4;
+/* ── Header row (back btn + item name + status) ──────────────── */
+.header-row {
+    -fx-padding: 12 20 6 20;
+}
+
+.item-name {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Courier New", monospace;
+}
+
+.status-badge {
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+    -fx-background-radius: 20;
+    -fx-border-color: rgba(255, 255, 255, 0.4);
+    -fx-border-width: 1;
+    -fx-border-radius: 20;
+    -fx-padding: 4 14 4 10;
+}
+
+.status-text {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Courier New", monospace;
+}
+
+/* ── Subheader row (end time + countdown) ────────────────────── */
+.subheader-row {
+    -fx-padding: 4 20 12 20;
+}
+
+.end-time {
+    -fx-text-fill: #c8e6c9;
+    -fx-font-size: 12px;
+    -fx-font-family: "Courier New", monospace;
+}
+
+.label-muted {
+    -fx-text-fill: #c8e6c9;
+    -fx-font-size: 12px;
+    -fx-font-family: "Courier New", monospace;
+}
+
+.countdown {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Courier New", monospace;
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.4), 6, 0.2, 0, 0);
+}
+
+/* ── Left panel ──────────────────────────────────────────────── */
+.left-panel {
+    -fx-background-color: #f0f7f0;
+    -fx-border-color: transparent #d0e8d2 transparent transparent;
+    -fx-border-width: 0 2 0 0;
+}
+
+/* ── Price card ──────────────────────────────────────────────── */
+.price-card {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #2e8b40;
+    -fx-border-width: 0 0 3 0;
+    -fx-padding: 20 24 20 24;
+    -fx-effect: dropshadow(gaussian, rgba(46, 139, 64, 0.15), 8, 0.1, 0, 3);
+}
+
+.label-tiny {
+    -fx-text-fill: #6aad78;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Courier New", monospace;
+    -fx-letter-spacing: 1px;
 }
 
 .current-price {
-    -fx-text-fill: #228b22;
+    -fx-text-fill: #1a6b2a;
     -fx-font-size: 36px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Courier New", monospace;
+}
+
+.leader-name {
+    -fx-text-fill: #3a6b44;
+    -fx-font-size: 13px;
+    -fx-font-family: "Courier New", monospace;
+}
+
+.balance-label {
+    -fx-text-fill: #5a8a62;
+    -fx-font-size: 12px;
+    -fx-font-family: "Courier New", monospace;
+    -fx-padding: 6 0 0 0;
+}
+
+/* ── Section card ────────────────────────────────────────────── */
+.section-card {
+    -fx-background-color: #ffffff;
+    -fx-border-color: transparent transparent #e8f5e9 transparent;
+    -fx-border-width: 0 0 2 0;
+    -fx-padding: 16 20 16 20;
+}
+
+.section-title {
+    -fx-text-fill: #145220;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Courier New", monospace;
+    -fx-letter-spacing: 0.5px;
+}
+
+/* ── Form labels ─────────────────────────────────────────────── */
+.label-form {
+    -fx-text-fill: #3a6b44;
+    -fx-font-size: 12px;
+    -fx-font-family: "Courier New", monospace;
     -fx-font-weight: bold;
 }
 
-.btn-primary {
-    -fx-background-color: #228b22;
-    -fx-text-fill: white;
-    -fx-border-color: #3c2f2f;
-    -fx-border-width: 3;
+/* ── Input field ─────────────────────────────────────────────── */
+.input-field {
+    -fx-background-color: #f8fdf8;
+    -fx-border-color: #a5d6a7;
+    -fx-border-width: 2;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-text-fill: #1a3a1e;
+    -fx-prompt-text-fill: #7ab87e;
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 13px;
+    -fx-padding: 8 10 8 10;
 }
 
-.input-field {
-    -fx-background-color: #1c2f1c;
-    -fx-text-fill: #aaddaa;
-    -fx-border-color: #ffd700;
+.input-field:focused {
+    -fx-border-color: #1a6b2a;
+    -fx-background-color: #ffffff;
+    -fx-effect: dropshadow(gaussian, rgba(26, 107, 42, 0.3), 6, 0.15, 0, 0);
+}
+
+/* ── Primary button ──────────────────────────────────────────── */
+.btn-primary {
+    -fx-background-color: #1a6b2a;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+    -fx-border-width: 0;
+    -fx-cursor: hand;
+    -fx-padding: 8 18 8 18;
+    -fx-effect: dropshadow(gaussian, rgba(26, 107, 42, 0.4), 6, 0.2, 0, 2);
+}
+
+.btn-primary:hover {
+    -fx-background-color: #145220;
+    -fx-effect: dropshadow(gaussian, rgba(26, 107, 42, 0.6), 10, 0.28, 0, 3);
+}
+
+.btn-primary:pressed {
+    -fx-background-color: #0f3d18;
+    -fx-effect: none;
+}
+
+/* ── Accent button (Enable Auto Bid) ─────────────────────────── */
+.btn-accent {
+    -fx-background-color: #2e8b40;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+    -fx-border-width: 0;
+    -fx-cursor: hand;
+    -fx-padding: 8 14 8 14;
+}
+
+.btn-accent:hover {
+    -fx-background-color: #1a6b2a;
+}
+
+.btn-accent:pressed {
+    -fx-background-color: #145220;
+}
+
+/* ── Ghost button (← Back) ───────────────────────────────────── */
+.btn-ghost {
+    -fx-background-color: rgba(255, 255, 255, 0.12);
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 13px;
+    -fx-background-radius: 5;
+    -fx-border-color: rgba(255, 255, 255, 0.35);
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-cursor: hand;
+    -fx-padding: 6 14 6 14;
+}
+
+.btn-ghost:hover {
+    -fx-background-color: rgba(255, 255, 255, 0.25);
+    -fx-border-color: #ffffff;
+}
+
+/* ── Ghost-sm button (Disable) ───────────────────────────────── */
+.btn-ghost-sm {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #b91c1c;
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 5;
+    -fx-border-color: #fca5a5;
+    -fx-border-width: 2;
+    -fx-border-radius: 5;
+    -fx-cursor: hand;
+    -fx-padding: 7 14 7 14;
+}
+
+.btn-ghost-sm:hover {
+    -fx-background-color: #fef2f2;
+    -fx-border-color: #b91c1c;
+}
+
+/* ── Message label ───────────────────────────────────────────── */
+.msg-label {
+    -fx-text-fill: #b91c1c;
+    -fx-font-size: 12px;
+    -fx-font-family: "Courier New", monospace;
+    -fx-background-color: #fef2f2;
+    -fx-background-radius: 4;
+    -fx-border-color: #fca5a5;
+    -fx-border-width: 1;
+    -fx-border-radius: 4;
+    -fx-padding: 6 10 6 10;
+}
+
+/* ── Auto-bid badge ──────────────────────────────────────────── */
+.autobid-badge {
+    -fx-background-color: #e8f5e9;
+    -fx-text-fill: #1a6b2a;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Courier New", monospace;
+    -fx-background-radius: 20;
+    -fx-border-color: #2e8b40;
+    -fx-border-width: 1;
+    -fx-border-radius: 20;
+    -fx-padding: 2 10 2 10;
+}
+
+/* ── Bid history table ───────────────────────────────────────── */
+.bid-table {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #a5d6a7;
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+}
+
+.bid-table .column-header-background {
+    -fx-background-color: #2e8b40;
+    -fx-background-radius: 4 4 0 0;
+}
+
+.bid-table .column-header,
+.bid-table .filler {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent #3aad52 transparent transparent;
+    -fx-border-width: 0 1 0 0;
+    -fx-size: 36px;
+}
+
+.bid-table .column-header .label {
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+}
+
+.bid-table .table-row-cell {
+    -fx-background-color: #ffffff;
+    -fx-border-color: transparent transparent #e8f5e9 transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 12px;
+}
+
+.bid-table .table-row-cell:odd {
+    -fx-background-color: #f8fdf8;
+}
+
+.bid-table .table-row-cell:hover {
+    -fx-background-color: #e8f5e9;
+}
+
+.bid-table .table-row-cell:selected {
+    -fx-background-color: #c8e6c9;
+}
+
+.bid-table .table-cell {
+    -fx-text-fill: #1a3a1e;
+    -fx-alignment: CENTER;
+    -fx-padding: 0 8 0 8;
+}
+
+.bid-table .table-row-cell:selected .table-cell {
+    -fx-text-fill: #145220;
+    -fx-font-weight: bold;
+}
+
+.bid-table .scroll-bar:vertical .thumb {
+    -fx-background-color: #2e8b40;
+    -fx-background-radius: 4;
+}
+
+.bid-table .scroll-bar:vertical .track {
+    -fx-background-color: #c8e6c9;
+    -fx-background-radius: 4;
+}
+
+/* ── Right panel ─────────────────────────────────────────────── */
+.right-panel {
+    -fx-background-color: #ffffff;
+}
+
+/* ── Realtime price chart ────────────────────────────────────── */
+.price-chart {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #a5d6a7;
+    -fx-border-width: 2;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+}
+
+.price-chart .chart-plot-background {
+    -fx-background-color: #f8fdf8;
+}
+
+.price-chart .chart-vertical-grid-lines {
+    -fx-stroke: #e0f0e3;
+    -fx-stroke-width: 1;
+}
+
+.price-chart .chart-horizontal-grid-lines {
+    -fx-stroke: #e0f0e3;
+    -fx-stroke-width: 1;
+}
+
+.price-chart .axis {
+    -fx-tick-label-fill: #3a6b44;
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 11px;
+}
+
+.price-chart .axis-label {
+    -fx-text-fill: #1a6b2a;
+    -fx-font-family: "Courier New", monospace;
+}
+
+.price-chart .chart-series-line {
+    -fx-stroke: #1a6b2a;
+    -fx-stroke-width: 2.5;
+}
+
+.price-chart .chart-line-symbol {
+    -fx-background-color: #1a6b2a, #ffffff;
+    -fx-background-radius: 5;
+    -fx-padding: 4;
+}
+
+.price-chart .chart-legend {
+    -fx-background-color: #f0f7f0;
+    -fx-border-color: #a5d6a7;
+    -fx-border-width: 1;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+}
+
+.price-chart .chart-legend-item-symbol {
+    -fx-background-color: #1a6b2a;
+}
+
+.price-chart .chart-legend-item {
+    -fx-text-fill: #1a6b2a;
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 11px;
 }

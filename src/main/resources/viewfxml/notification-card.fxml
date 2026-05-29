@@ -6,20 +6,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.TextFlow?>
 
-<VBox xmlns="http://javafx.com/javafx/21"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="bai_tap_lon.client.controller.NotificationCardController"
-      fx:id="cardRoot"
-      spacing="7"
-      style="-fx-background-color: #0D223D; -fx-background-radius: 10;
-             -fx-border-color: #1E3A5F; -fx-border-radius: 10; -fx-padding: 12;">
-    <HBox spacing="8" alignment="CENTER_LEFT">
-        <Label fx:id="titleLabel"
-               style="-fx-text-fill: #E2E8F0; -fx-font-size: 13px; -fx-font-weight: bold;"/>
-        <Region HBox.hgrow="ALWAYS"/>
-        <Label fx:id="timeLabel"
-               style="-fx-text-fill: #94A3B8; -fx-font-size: 10px;"/>
+<VBox fx:id="cardRoot" spacing="7" style="-fx-background-color: #a5d6a7; -fx-background-radius: 10; -fx-border-color: #1E3A5F; -fx-border-radius: 10; -fx-padding: 12;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bai_tap_lon.client.controller.NotificationCardController">
+    <HBox alignment="CENTER_LEFT" spacing="8">
+        <Label fx:id="titleLabel" style="-fx-text-fill: #E2E8F0; -fx-font-size: 13px; -fx-font-weight: bold;" />
+        <Region HBox.hgrow="ALWAYS" />
+        <Label fx:id="timeLabel" style="-fx-text-fill: #94A3B8; -fx-font-size: 10px;" />
     </HBox>
 
-    <TextFlow fx:id="bodyFlow" prefWidth="330"/>
+    <TextFlow fx:id="bodyFlow" prefWidth="330" />
 </VBox>

@@ -23,7 +23,7 @@
         <HBox alignment="CENTER_LEFT" spacing="20" styleClass="navbar">
             <padding><Insets bottom="10" left="25" right="25" top="10" /></padding>
 
-            <Label styleClass="logo" text="BidderHolic" />
+            <Label styleClass="logo" text="CÔNG TY 4N" />
 
             <Region HBox.hgrow="ALWAYS" />
 
@@ -58,7 +58,7 @@
                 <HBox alignment="CENTER" spacing="12">
                     <Button fx:id="walletBtn" onAction="#goToWallet" styleClass="icon-btn" text="💳" />
                     <StackPane>
-                        <Button fx:id="bellBtn" styleClass="icon-btn" text="🔔" onAction="#onBell" />
+                        <Button fx:id="bellBtn" onAction="#onBell" styleClass="icon-btn" text="🔔" />
                         <Label fx:id="notificationBadge" styleClass="badge" text="0" StackPane.alignment="TOP_RIGHT" />
                     </StackPane>
                 </HBox>
@@ -69,7 +69,7 @@
                     <Label fx:id="userNameLabel" styleClass="name" text="Guest" />
                     <MenuButton mnemonicParsing="false" styleClass="avatar-menu">
                         <graphic>
-                            <Circle fill="#00cda5" radius="14" />
+                            <Circle fill="#2e8b40" radius="14" />
                         </graphic>
                         <items>
                             <MenuItem onAction="#goToProfile" text="Profile" />
@@ -86,10 +86,12 @@
         <VBox spacing="25" styleClass="main-content">
             <padding><Insets bottom="30" left="50" right="50" top="30" /></padding>
 
+            <!-- Page title -->
             <VBox alignment="CENTER" spacing="15">
-                <Label styleClass="nav-link" text="WATCHLIST" />
+                <Label styleClass="section-title" text="WATCHLIST" />
             </VBox>
 
+            <!-- Search & filter -->
             <VBox spacing="15" styleClass="filter-section">
                 <HBox alignment="CENTER_LEFT" spacing="15">
                     <TextField fx:id="searchField" promptText="Search by item name..." styleClass="input-field" HBox.hgrow="ALWAYS" />
@@ -97,6 +99,7 @@
                 </HBox>
             </VBox>
 
+            <!-- Watchlist table -->
             <TableView fx:id="auctionTable" styleClass="dark-table" VBox.vgrow="ALWAYS">
                 <placeholder>
                     <Label styleClass="placeholder-label" text="Watchlist trống. Hãy thêm phiên bằng nút Care/Join/Place Bid." />
@@ -117,4 +120,5 @@
             </TableView>
         </VBox>
     </center>
+
 </BorderPane>

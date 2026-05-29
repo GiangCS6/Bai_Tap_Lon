@@ -5,41 +5,70 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
 
-<VBox xmlns="http://javafx.com/javafx/21"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="bai_tap_lon.client.controller.AuctionCardController"
-      spacing="10"
-      styleClass="auction-card">
+<VBox prefHeight="101.0" prefWidth="144.0" spacing="10" styleClass="auction-card" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bai_tap_lon.client.controller.AuctionCardController">
 
     <VBox styleClass="product-image-wrap">
-        <StackPane fx:id="imageBox" styleClass="product-image-box"/>
+        <StackPane fx:id="imageBox" styleClass="product-image-box" />
     </VBox>
 
-    <Label fx:id="itemNameLabel"
-           wrapText="true"
-           style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: 800;"/>
+    <Label fx:id="itemNameLabel" style="-fx-text-fill: white; -fx-font-size: 20px; -fx-font-weight: 800;" wrapText="true" />
 
-    <HBox spacing="8" styleClass="meta-row">
-        <Label text="●" styleClass="meta-icon"/>
-        <Label fx:id="statusLabel" styleClass="session-pill"/>
+    <HBox spacing="8" styleClass="meta-row" translateY="-20.0">
+        <Label styleClass="meta-icon" text="●" />
+        <Label fx:id="statusLabel" styleClass="session-pill" />
     </HBox>
 
 
     <HBox spacing="8" styleClass="meta-row">
-        <Label text="💰" styleClass="meta-icon"/>
-        <Label text="Current Price:" styleClass="meta-label"/>
-        <Label fx:id="priceValueLabel" styleClass="highest-price-value"/>
+        <Label styleClass="meta-icon" text="💰" translateY="-15.0" />
+        <Label styleClass="meta-label" text="Current Price:" translateY="-15.0" />
+        <Label fx:id="priceValueLabel" styleClass="highest-price-value" />
     </HBox>
 
     <HBox spacing="8" styleClass="meta-row">
-        <Label text="⏱" styleClass="meta-icon"/>
-        <Label text="Time-left:" styleClass="meta-label"/>
-        <Label fx:id="timeValueLabel" styleClass="time-left-value"/>
+        <Label styleClass="meta-icon" text="⏱" translateY="-10.0" />
+        <Label styleClass="meta-label" text="Time-left:" translateY="-10.0" />
+        <Label fx:id="timeValueLabel" styleClass="time-left-value" />
     </HBox>
 
     <HBox spacing="10" styleClass="action-row">
-        <Button fx:id="registerBtn" text="Register" styleClass="btn-register"/>
-        <Button fx:id="detailBtn" text="Details" styleClass="btn-detail"/>
+        <Button fx:id="registerBtn" styleClass="btn-register" text="Register" translateX="10.0" translateY="-5.0">
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill></Button>
+        <Button fx:id="detailBtn" styleClass="btn-detail" text="Details" translateX="10.0" translateY="-5.0">
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </textFill></Button>
     </HBox>
 </VBox>

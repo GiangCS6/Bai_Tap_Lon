@@ -1,19 +1,9 @@
 {
   "items": [
     {
-      "name": "a",
-      "description": "a",
-      "startingPrice": 100,
-      "currentHighestPrice": 100,
-      "startTime": "2026-05-21T14:38:00",
-      "endTime": "2026-05-21T16:38:00",
       "status": "RUNNING",
       "seller": {
         "type": "SELLER",
-        "id": 3,
-        "username": "b",
-        "password": "b",
-        "fullName": "b",
         "locked": false
       },
       "bids": [],
@@ -21,5 +11,4 @@
       "id": 1
     }
   ],
-  "nextItemId": 2
 }

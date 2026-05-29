@@ -1,0 +1,156 @@
+/* ================================================================
+   WALLET.CSS — Green & White Theme
+   ================================================================ */
+
+/* ── Popup panel (root VBox) ─────────────────────────────────── */
+.wallet-panel {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #a5d6a7;
+    -fx-border-width: 2;
+    -fx-border-radius: 14;
+    -fx-background-radius: 14;
+    -fx-pref-width: 320;
+    -fx-effect: dropshadow(gaussian, rgba(46, 139, 64, 0.38), 18, 0.2, 0, 6);
+}
+
+/* ── Header ──────────────────────────────────────────────────── */
+.wallet-title {
+    -fx-text-fill: #145220;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Courier New", monospace;
+}
+
+.wallet-close-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #7ab87e;
+    -fx-cursor: hand;
+    -fx-font-size: 14px;
+    -fx-border-width: 0;
+    -fx-padding: 2 6 2 6;
+}
+
+.wallet-close-btn:hover {
+    -fx-text-fill: #b91c1c;
+}
+
+/* ── Balance card ────────────────────────────────────────────── */
+.balance-card {
+    -fx-background-color: #e8f5e9;
+    -fx-border-color: #a5d6a7;
+    -fx-border-width: 1;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 14;
+}
+
+.balance-hint {
+    -fx-text-fill: #6aad78;
+    -fx-font-size: 11px;
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-weight: bold;
+    -fx-letter-spacing: 0.5px;
+}
+
+.balance-amount {
+    -fx-text-fill: #1a6b2a;
+    -fx-font-size: 26px;
+    -fx-font-weight: 800;
+    -fx-font-family: "Courier New", monospace;
+}
+
+.role-hint {
+    -fx-text-fill: #7ab87e;
+    -fx-font-size: 10px;
+    -fx-font-family: "Courier New", monospace;
+}
+
+/* ── Amount input ────────────────────────────────────────────── */
+.input-label {
+    -fx-text-fill: #3a6b44;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Courier New", monospace;
+}
+
+.wallet-input {
+    -fx-background-color: #f8fdf8;
+    -fx-border-color: #a5d6a7;
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-text-fill: #1a3a1e;
+    -fx-prompt-text-fill: #7ab87e;
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 13px;
+    -fx-pref-height: 34;
+    -fx-padding: 6 10 6 10;
+}
+
+.wallet-input:focused {
+    -fx-border-color: #1a6b2a;
+    -fx-background-color: #ffffff;
+    -fx-effect: dropshadow(gaussian, rgba(26, 107, 42, 0.28), 6, 0.12, 0, 0);
+}
+
+/* ── Deposit button ──────────────────────────────────────────── */
+.btn-deposit {
+    -fx-background-color: #1a6b2a;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-border-width: 0;
+    -fx-cursor: hand;
+    -fx-padding: 8 0 8 0;
+    -fx-effect: dropshadow(gaussian, rgba(26, 107, 42, 0.4), 6, 0.2, 0, 2);
+}
+
+.btn-deposit:hover {
+    -fx-background-color: #145220;
+    -fx-effect: dropshadow(gaussian, rgba(26, 107, 42, 0.6), 10, 0.28, 0, 3);
+}
+
+.btn-deposit:pressed {
+    -fx-background-color: #0f3d18;
+    -fx-effect: none;
+}
+
+/* ── Withdraw button ─────────────────────────────────────────── */
+.btn-withdraw {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #d97706;
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-border-color: #fbbf24;
+    -fx-border-width: 2;
+    -fx-border-radius: 8;
+    -fx-cursor: hand;
+    -fx-padding: 8 0 8 0;
+}
+
+.btn-withdraw:hover {
+    -fx-background-color: #fffbeb;
+    -fx-border-color: #d97706;
+}
+
+.btn-withdraw:pressed {
+    -fx-background-color: #fef3c7;
+}
+
+/* ── Status label ────────────────────────────────────────────── */
+.wallet-status {
+    -fx-font-size: 11px;
+    -fx-font-family: "Courier New", monospace;
+    -fx-text-fill: #1a6b2a;
+}
+
+/* ── Disclaimer ──────────────────────────────────────────────── */
+.wallet-disclaimer {
+    -fx-text-fill: #7ab87e;
+    -fx-font-size: 10px;
+    -fx-font-family: "Courier New", monospace;
+}

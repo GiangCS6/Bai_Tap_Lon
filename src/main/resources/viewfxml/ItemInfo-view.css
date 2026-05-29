@@ -1,25 +1,199 @@
+/* ================================================================
+   ITEMINFO-VIEW.CSS — Green & White Theme
+   Covers every styleClass used in ItemInfo.fxml
+   ================================================================ */
+
+/* ── Root / page background ──────────────────────────────────── */
 .root {
-    -fx-background-color: #d2b48c;
+    -fx-background-color: #f0f7f0;
     -fx-font-family: "Courier New", monospace;
 }
 
-.info-card {
-    -fx-background-color: #f5e8c7;
-    -fx-border-color: #3c2f2f;
-    -fx-border-width: 4;
-    -fx-border-radius: 4;
+/* ── Scroll pane (transparent) ───────────────────────────────── */
+.transparent-scroll {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.transparent-scroll > .viewport {
+    -fx-background-color: transparent;
+}
+
+.transparent-scroll .scroll-bar:vertical .thumb {
+    -fx-background-color: #2e8b40;
     -fx-background-radius: 4;
 }
 
-.item-name {
-    -fx-text-fill: #3c2f2f;
+.transparent-scroll .scroll-bar:vertical .track {
+    -fx-background-color: #c8e6c9;
+    -fx-background-radius: 4;
+}
+
+/* ── Page content wrapper ────────────────────────────────────── */
+.page-content {
+    -fx-background-color: transparent;
+}
+
+/* ── Section title ───────────────────────────────────────────── */
+.section-title {
+    -fx-text-fill: #145220;
     -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Courier New", monospace;
+    -fx-letter-spacing: 1px;
+}
+
+/* ── Content wrap (image + info side by side) ────────────────── */
+.content-wrap {
+    -fx-alignment: TOP_LEFT;
+}
+
+/* ── Image panel ─────────────────────────────────────────────── */
+.image-wrap {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #a5d6a7;
+    -fx-border-width: 2;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-min-height: 320;
+    -fx-max-width: 460;
+    -fx-effect: dropshadow(gaussian, rgba(46, 139, 64, 0.18), 10, 0.12, 0, 3);
+}
+
+.image-placeholder {
+    -fx-text-fill: #a5d6a7;
+    -fx-font-size: 16px;
+    -fx-font-family: "Courier New", monospace;
+}
+
+/* ── Info card ───────────────────────────────────────────────── */
+.info-card {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #a5d6a7;
+    -fx-border-width: 2;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 24 28 24 28;
+    -fx-effect: dropshadow(gaussian, rgba(46, 139, 64, 0.18), 10, 0.12, 0, 3);
+}
+
+/* ── Category chip ───────────────────────────────────────────── */
+.tag-chip {
+    -fx-background-color: #e8f5e9;
+    -fx-text-fill: #2e8b40;
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20;
+    -fx-border-color: #a5d6a7;
+    -fx-border-width: 1;
+    -fx-border-radius: 20;
+    -fx-padding: 3 12 3 12;
+}
+
+/* ── Status chip ─────────────────────────────────────────────── */
+.status-chip {
+    -fx-background-color: #1a6b2a;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20;
+    -fx-border-width: 0;
+    -fx-padding: 3 12 3 12;
+}
+
+/* ── Item name ───────────────────────────────────────────────── */
+.item-name {
+    -fx-text-fill: #145220;
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Courier New", monospace;
+    -fx-wrap-text: true;
+}
+
+/* ── Item price ──────────────────────────────────────────────── */
+.item-price {
+    -fx-text-fill: #1a6b2a;
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-font-family: "Courier New", monospace;
+}
+
+/* ── Separator line ──────────────────────────────────────────── */
+.sep-line {
+    -fx-background-color: #c8e6c9;
+    -fx-pref-height: 1;
+}
+
+/* ── Meta key / value rows ───────────────────────────────────── */
+.meta-key {
+    -fx-text-fill: #3a6b44;
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 13px;
     -fx-font-weight: bold;
 }
 
+.meta-value {
+    -fx-text-fill: #1a3a1e;
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 13px;
+}
+
+/* ── Description text area ───────────────────────────────────── */
+.description-box {
+    -fx-background-color: #f8fdf8;
+    -fx-border-color: #a5d6a7;
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 13px;
+    -fx-text-fill: #1a3a1e;
+}
+
+.description-box .content {
+    -fx-background-color: #f8fdf8;
+    -fx-background-radius: 4;
+}
+
+.description-box:focused {
+    -fx-border-color: #2e8b40;
+    -fx-effect: dropshadow(gaussian, rgba(46, 139, 64, 0.2), 6, 0.12, 0, 0);
+}
+
+.description-box .scroll-bar:vertical .thumb {
+    -fx-background-color: #2e8b40;
+    -fx-background-radius: 4;
+}
+
+.description-box .scroll-bar:vertical .track {
+    -fx-background-color: #c8e6c9;
+    -fx-background-radius: 4;
+}
+
+/* ── Primary button ──────────────────────────────────────────── */
 .btn-primary {
-    -fx-background-color: #228b22;
-    -fx-text-fill: #f0f0d8;
-    -fx-border-color: #3c2f2f;
-    -fx-border-width: 3;
+    -fx-background-color: #1a6b2a;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6;
+    -fx-border-color: #145220;
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+    -fx-cursor: hand;
+    -fx-padding: 9 22 9 22;
+    -fx-effect: dropshadow(gaussian, rgba(26, 107, 42, 0.35), 6, 0.2, 0, 2);
+}
+
+.btn-primary:hover {
+    -fx-background-color: #145220;
+    -fx-effect: dropshadow(gaussian, rgba(26, 107, 42, 0.55), 10, 0.28, 0, 3);
+}
+
+.btn-primary:pressed {
+    -fx-background-color: #0f3d18;
+    -fx-effect: none;
 }
