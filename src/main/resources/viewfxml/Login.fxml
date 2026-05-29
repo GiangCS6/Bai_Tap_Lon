@@ -57,7 +57,10 @@
                 <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" stylesheets="@style.css" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                     <children>
                         <Label alignment="CENTER" styleClass="radio-button" text="No account yet? " textFill="#f6f2f2" translateX="35.0" />
-                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#switchToRegister" prefHeight="25.0" prefWidth="63.0" styleClass="text-link" text="Register" translateX="35.0" />
+                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#switchToRegister" prefHeight="28.0" prefWidth="87.0" styleClass="text-link" text="Register" textFill="#1a6b2a" translateX="35.0">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Button>
                     </children>
                 </HBox>
             </children>
