@@ -9,14 +9,15 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
 
-
-<StackPane style="-fx-background-color: #0b1120;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bai_tap_lon.client.controller.AdminController">
+<StackPane style="-fx-background-color: #f0f7f0;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bai_tap_lon.client.controller.AdminController">
    <children>
       <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="344.0" prefWidth="522.0" stylesheets="@style.css">
           <columnConstraints>
-              <ColumnConstraints hgrow="SOMETIMES" maxWidth="256.20001220703125" minWidth="10.0" prefWidth="130.20001220703125" />
-              <ColumnConstraints hgrow="SOMETIMES" maxWidth="401.39995117187505" minWidth="10.0" prefWidth="390.9999877929688" />
+              <ColumnConstraints hgrow="SOMETIMES" maxWidth="309.66666412353516" minWidth="10.0" prefWidth="125.3333231608073" />
+              <ColumnConstraints hgrow="SOMETIMES" maxWidth="474.66665649414057" minWidth="10.0" prefWidth="364.3333333333333" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="474.66665649414057" minWidth="10.0" prefWidth="45.0" />
           </columnConstraints>
           <rowConstraints>
               <RowConstraints maxHeight="109.60001220703126" minHeight="10.0" prefHeight="83.19998397827149" vgrow="SOMETIMES" />
@@ -26,10 +27,13 @@
               <RowConstraints maxHeight="145.6000274658203" minHeight="10.0" prefHeight="85.20001220703125" vgrow="SOMETIMES" />
           </rowConstraints>
           <children>
-              <Label prefHeight="36.0" prefWidth="214.0" styleClass="title-text" text="Admin Dashboard" GridPane.columnSpan="2" GridPane.halignment="CENTER" />
+              <Label prefHeight="36.0" prefWidth="214.0" styleClass="title-text" text="ADMIN DASHBOARD" GridPane.columnSpan="2" GridPane.halignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font></Label>
       
               <Label styleClass="radio-button" text="Username" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-              <TextField fx:id="txtBanUsername" prefHeight="0.0" prefWidth="286.0" promptText="Search user by Username..." styleClass="input-line" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+              <TextField fx:id="txtBanUsername" prefHeight="33.0" prefWidth="283.0" promptText="Search user by Username..." styleClass="input-line" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       
               <Label styleClass="radio-button" text="Reason" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
               <ComboBox fx:id="cbReason" editable="true" prefHeight="40.0" prefWidth="398.0" promptText="Reason for banning" styleClass="combo-box-dark" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
@@ -39,8 +43,8 @@
       
               <HBox alignment="CENTER" spacing="40.0" GridPane.columnSpan="2" GridPane.rowIndex="4">
                   <children>
-                      <Button mnemonicParsing="false" onAction="#onLogout" prefHeight="36.0" prefWidth="103.0" styleClass="btn-primary" text="Logout" />
-                      <Button mnemonicParsing="false" onAction="#onBanUserClick" prefHeight="36.0" prefWidth="90.0" styleClass="btn-primary" stylesheets="@style.css" text="Ban" />
+                      <Button mnemonicParsing="false" onAction="#onLogout" prefHeight="36.0" prefWidth="103.0" styleClass="btn-primary" text="Logout" translateX="10.0" />
+                      <Button mnemonicParsing="false" onAction="#onBanUserClick" prefHeight="36.0" prefWidth="90.0" styleClass="btn-primary" stylesheets="@style.css" text="Ban" translateX="25.0" />
                   </children>
               </HBox>
           </children>

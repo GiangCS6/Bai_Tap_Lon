@@ -12,13 +12,13 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-
-<StackPane style="-fx-background-color: #0b1120;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bai_tap_lon.client.controller.LoginController">
+<StackPane style="-fx-background-color: #a5d6a7;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bai_tap_lon.client.controller.LoginController">
     <children>
         <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="316.0" prefWidth="572.0" stylesheets="@style.css">
             <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="285.20001220703125" minWidth="10.0" prefWidth="86.80004882812497" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="526.0" minWidth="10.0" prefWidth="493.199951171875" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="285.20001220703125" minWidth="10.0" prefWidth="101.99998982747395" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="526.0" minWidth="10.0" prefWidth="388.6666768391927" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="526.0" minWidth="10.0" prefWidth="87.99995930989581" />
             </columnConstraints>
             <rowConstraints>
                 <RowConstraints maxHeight="71.99999389648437" minHeight="10.0" prefHeight="71.99999389648437" vgrow="SOMETIMES" />
@@ -28,24 +28,24 @@
                 <RowConstraints maxHeight="93.39999999999998" minHeight="0.0" prefHeight="45.59995117187498" vgrow="SOMETIMES" />
             </rowConstraints>
             <children>
-                <Label styleClass="title-text" text="LOGIN OR REGISTER" GridPane.columnSpan="2" GridPane.halignment="CENTER">
+                <Label styleClass="title-text" text="LOGIN" textFill="#efebeb" translateX="-50.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="CENTER">
+                    <font>
+                        <Font name="System Bold" size="20.0" />
+                    </font>
+                </Label>
+                <Label styleClass="radio-button" text="Email" textFill="#fbfafa" GridPane.rowIndex="1">
                     <font>
                         <Font name="System Bold" size="12.0" />
                     </font>
                 </Label>
-                <Label styleClass="radio-button" text="Email" GridPane.rowIndex="1">
-                    <font>
-                        <Font name="System Bold" size="12.0" />
-                    </font>
-                </Label>
-                <Label styleClass="radio-button" text="Password" GridPane.rowIndex="2">
+                <Label styleClass="radio-button" text="Password" textFill="#f8f6f6" GridPane.rowIndex="2">
                     <font>
                         <Font name="System Bold" size="12.0" />
                     </font>
                 </Label>
                 <HBox alignment="CENTER" prefHeight="4.0" prefWidth="479.0" spacing="200.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="3">
                     <children>
-                        <Button mnemonicParsing="false" onAction="#onLogin" prefHeight="36.0" prefWidth="100.0" styleClass="btn-primary" text="Login">
+                        <Button mnemonicParsing="false" onAction="#onLogin" prefHeight="36.0" prefWidth="100.0" styleClass="btn-primary" text="Login" translateX="40.0">
                             <font>
                                 <Font name="System Bold" size="13.0" />
                             </font>
@@ -56,8 +56,8 @@
                 <TextField fx:id="loginUsername" promptText="Enter your username here" styleClass="input-line" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                 <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" stylesheets="@style.css" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="4">
                     <children>
-                        <Label alignment="CENTER" styleClass="radio-button" text="No account yet? " />
-                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#switchToRegister" prefHeight="19.0" prefWidth="56.0" styleClass="text-link" text="Register" />
+                        <Label alignment="CENTER" styleClass="radio-button" text="No account yet? " textFill="#f6f2f2" translateX="35.0" />
+                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#switchToRegister" prefHeight="25.0" prefWidth="63.0" styleClass="text-link" text="Register" translateX="35.0" />
                     </children>
                 </HBox>
             </children>

@@ -1,74 +1,381 @@
+/* ================================================================
+   STYLE.CSS — Green & White Theme
+   Covers shared classes for: AddItem, AdminHome, BidderHistory,
+   auction-card, and any view using @style.css
+   ================================================================ */
+
+/* ── Root / body ─────────────────────────────────────────────── */
 .root {
-    -fx-background-color: #d2b48c; /* Beige vintage */
-    -fx-font-family: "Courier New", "Lucida Console", monospace;
-    -fx-font-size: 14px;
-}
-
-/* Card cổ điển */
-.form-card {
-    -fx-background-color: #f5e8c7;
-    -fx-background-radius: 4;           /* Bo góc rất nhỏ */
-    -fx-border-color: #3c2f2f;
-    -fx-border-width: 3;
-    -fx-border-style: solid;
-    -fx-padding: 30;
-    -fx-effect: dropshadow(gaussian, rgba(60, 47, 47, 0.6), 8, 0.1, 4, 4); /* Raised shadow */
-}
-
-/* Button Retro */
-.btn-primary {
-    -fx-background-color: #228b22;        /* Forest Green */
-    -fx-text-fill: #f0f0d8;
+    -fx-background-color: #f0f7f0;
     -fx-font-family: "Courier New", monospace;
+}
+
+/* ── Top-bar title ───────────────────────────────────────────── */
+.title-text {
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 18px;
     -fx-font-weight: bold;
-    -fx-font-size: 14px;
-    -fx-background-radius: 3;
-    -fx-border-color: #3c2f2f;
-    -fx-border-width: 2;
-    -fx-cursor: hand;
-    -fx-padding: 10 20;
 }
 
-.btn-primary:hover {
-    -fx-background-color: #32cd32;
-    -fx-effect: dropshadow(gaussian, #ffd700, 6, 0.3, 2, 2); /* Glow vàng vintage */
-}
-
-/* Input fields kiểu máy đánh chữ */
-.input-line {
-    -fx-background-color: #2c1f14;
-    -fx-text-fill: #aaddaa;
-    -fx-border-color: #3c2f2f;
-    -fx-border-width: 2 2 4 2;           /* Viền nổi dưới đậm */
+/* ── Back / text link button ─────────────────────────────────── */
+.text-link {
+    -fx-background-color: transparent;
+    -fx-text-fill: #c8e6c9;
     -fx-font-family: "Courier New", monospace;
-    -fx-padding: 6 8;
+    -fx-font-size: 13px;
+    -fx-border-width: 0;
+    -fx-cursor: hand;
+    -fx-padding: 6 10 6 10;
+}
+
+.text-link:hover {
+    -fx-text-fill: #ffffff;
+    -fx-underline: true;
+}
+
+/* ── Form card ───────────────────────────────────────────────── */
+.form-card {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #a5d6a7;
+    -fx-border-width: 2;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 20 24 20 24;
+    -fx-effect: dropshadow(gaussian, rgba(46, 139, 64, 0.18), 10, 0.12, 0, 3);
+}
+
+/* ── Card section title (replaces inline #64FFDA / #00E5FF) ──── */
+.card-section-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1a6b2a;
+    -fx-font-family: "Courier New", monospace;
+}
+
+/* ── Field labels ────────────────────────────────────────────── */
+.radio-button {
+    -fx-text-fill: #3a6b44;
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-letter-spacing: 0.5px;
+}
+
+.normal-label {
+    -fx-text-fill: #3a6b44;
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+/* ── Text inputs ─────────────────────────────────────────────── */
+.input-line {
+    -fx-background-color: #f8fdf8;
+    -fx-border-color: #a5d6a7;
+    -fx-border-width: 0 0 2 0;
+    -fx-background-radius: 4;
+    -fx-border-radius: 4;
+    -fx-text-fill: #1a3a1e;
+    -fx-prompt-text-fill: #7ab87e;
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 13px;
+    -fx-padding: 8 10 8 10;
 }
 
 .input-line:focused {
-    -fx-border-color: #ffd700;
-    -fx-background-color: #1a2f1a;
+    -fx-border-color: #1a6b2a;
+    -fx-background-color: #ffffff;
+    -fx-effect: dropshadow(gaussian, rgba(26, 107, 42, 0.25), 6, 0.12, 0, 0);
 }
 
-/* Table Retro */
+/* ── Text area ───────────────────────────────────────────────── */
+.text-area-dark {
+    -fx-background-color: #f8fdf8;
+    -fx-border-color: #a5d6a7;
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 13px;
+    -fx-text-fill: #1a3a1e;
+    -fx-prompt-text-fill: #7ab87e;
+}
+
+.text-area-dark .content {
+    -fx-background-color: #f8fdf8;
+    -fx-background-radius: 4;
+}
+
+.text-area-dark:focused {
+    -fx-border-color: #1a6b2a;
+    -fx-effect: dropshadow(gaussian, rgba(26, 107, 42, 0.25), 6, 0.12, 0, 0);
+}
+
+.text-area-dark .scroll-bar:vertical .thumb {
+    -fx-background-color: #2e8b40;
+    -fx-background-radius: 4;
+}
+
+/* ── Combo box / DatePicker ──────────────────────────────────── */
+.combo-box-dark {
+    -fx-background-color: #f8fdf8;
+    -fx-border-color: #a5d6a7;
+    -fx-border-width: 2;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 13px;
+    -fx-text-fill: #1a3a1e;
+}
+
+.combo-box-dark .list-cell {
+    -fx-text-fill: #1a3a1e;
+    -fx-background-color: #ffffff;
+    -fx-font-family: "Courier New", monospace;
+    -fx-padding: 6 10 6 10;
+}
+
+.combo-box-dark .list-cell:hover {
+    -fx-background-color: #e8f5e9;
+    -fx-text-fill: #145220;
+}
+
+.combo-box-dark .arrow-button {
+    -fx-background-color: #2e8b40;
+    -fx-background-radius: 0 4 4 0;
+}
+
+.combo-box-dark .arrow {
+    -fx-background-color: #ffffff;
+}
+
+/* DatePicker calendar popup */
+.combo-box-dark .date-picker-popup {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #a5d6a7;
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+}
+
+/* ── Primary button ──────────────────────────────────────────── */
+.btn-primary {
+    -fx-background-color: #1a6b2a;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 6;
+    -fx-border-width: 0;
+    -fx-cursor: hand;
+    -fx-padding: 9 20 9 20;
+    -fx-effect: dropshadow(gaussian, rgba(26, 107, 42, 0.35), 6, 0.2, 0, 2);
+}
+
+.btn-primary:hover {
+    -fx-background-color: #145220;
+    -fx-effect: dropshadow(gaussian, rgba(26, 107, 42, 0.55), 10, 0.28, 0, 3);
+}
+
+.btn-primary:pressed {
+    -fx-background-color: #0f3d18;
+    -fx-effect: none;
+}
+
+/* ── Table view (used in BidderHistory, etc.) ────────────────── */
 .table-view {
-    -fx-background-color: #e8d5b8;
-    -fx-border-color: #3c2f2f;
-    -fx-border-width: 3;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #a5d6a7;
+    -fx-border-width: 2;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
 }
 
 .table-view .column-header-background {
-    -fx-background-color: #8b5a2b;
+    -fx-background-color: #2e8b40;
+    -fx-background-radius: 4 4 0 0;
+}
+
+.table-view .column-header,
+.table-view .filler {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent #3aad52 transparent transparent;
+    -fx-border-width: 0 1 0 0;
+    -fx-size: 40px;
 }
 
 .table-view .column-header .label {
-    -fx-text-fill: #f5e8c7;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-alignment: CENTER;
+}
+
+.table-view .table-row-cell {
+    -fx-background-color: #ffffff;
+    -fx-border-color: transparent transparent #e8f5e9 transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 13px;
+}
+
+.table-view .table-row-cell:odd {
+    -fx-background-color: #f8fdf8;
+}
+
+.table-view .table-row-cell:hover {
+    -fx-background-color: #e8f5e9;
+}
+
+.table-view .table-row-cell:selected {
+    -fx-background-color: #c8e6c9;
+}
+
+.table-view .table-cell {
+    -fx-text-fill: #1a3a1e;
+    -fx-alignment: CENTER;
+    -fx-padding: 0 10 0 10;
+}
+
+.table-view .table-row-cell:selected .table-cell {
+    -fx-text-fill: #145220;
     -fx-font-weight: bold;
 }
 
-/* Text Area */
-.text-area-dark {
-    -fx-background-color: #1a2f1a;
-    -fx-text-fill: #aaddaa;
-    -fx-border-color: #3c2f2f;
+/* Table scrollbars */
+.table-view .scroll-bar:vertical .thumb,
+.table-view .scroll-bar:horizontal .thumb {
+    -fx-background-color: #2e8b40;
+    -fx-background-radius: 4;
+}
+
+.table-view .scroll-bar:vertical .track,
+.table-view .scroll-bar:horizontal .track {
+    -fx-background-color: #c8e6c9;
+    -fx-background-radius: 4;
+}
+
+/* ── Placeholder label ───────────────────────────────────────── */
+.placeholder-label {
+    -fx-text-fill: #7ab87e;
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 13px;
+}
+
+/* ── Auction card (auction-card.fxml) ────────────────────────── */
+.auction-card {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #2e8b40;
     -fx-border-width: 3;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 12;
+    -fx-effect: dropshadow(gaussian, rgba(46, 139, 64, 0.3), 12, 0.15, 4, 4);
+}
+
+.auction-card:hover {
+    -fx-border-color: #1a6b2a;
+    -fx-effect: dropshadow(gaussian, rgba(26, 107, 42, 0.55), 16, 0.28, 4, 4);
+}
+
+.product-image-wrap {
+    -fx-background-color: #f0f7f0;
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+    -fx-padding: 4;
+}
+
+.product-image-box {
+    -fx-background-color: #e8f5e9;
+    -fx-background-radius: 6;
+    -fx-pref-height: 160px;
+    -fx-min-height: 160px;
+}
+
+.meta-row {
+    -fx-alignment: CENTER_LEFT;
+}
+
+.meta-icon {
+    -fx-font-size: 14px;
+}
+
+.meta-label {
+    -fx-text-fill: #3a6b44;
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 12px;
+}
+
+.session-pill {
+    -fx-background-color: #e8f5e9;
+    -fx-text-fill: #1a6b2a;
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20;
+    -fx-padding: 2 10 2 10;
+    -fx-border-color: #2e8b40;
+    -fx-border-width: 1;
+    -fx-border-radius: 20;
+}
+
+.highest-price-value {
+    -fx-text-fill: #1a6b2a;
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.time-left-value {
+    -fx-text-fill: #ef4444;
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+.action-row {
+    -fx-alignment: CENTER;
+    -fx-padding: 6 0 2 0;
+}
+
+.btn-register {
+    -fx-background-color: #1a6b2a;
+    -fx-text-fill: #ffffff;
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-background-radius: 5;
+    -fx-border-width: 0;
+    -fx-cursor: hand;
+    -fx-padding: 7 16 7 16;
+}
+
+.btn-register:hover {
+    -fx-background-color: #145220;
+}
+
+.btn-detail {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #1a6b2a;
+    -fx-font-family: "Courier New", monospace;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-background-radius: 5;
+    -fx-border-color: #2e8b40;
+    -fx-border-width: 2;
+    -fx-border-radius: 5;
+    -fx-cursor: hand;
+    -fx-padding: 5 14 5 14;
+}
+
+.btn-detail:hover {
+    -fx-background-color: #e8f5e9;
+    -fx-border-color: #1a6b2a;
+}
+
+/* ── Admin dashboard (AdminHome.fxml) ────────────────────────── */
+/* GridPane root */
+.admin-root {
+    -fx-background-color: #f0f7f0;
 }

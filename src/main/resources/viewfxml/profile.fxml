@@ -1,76 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane xmlns="http://javafx.com/javafx/21"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="bai_tap_lon.client.controller.ProfileController"
-            styleClass="root-pane"
-            stylesheets="@home-view.css,@profile-view.css">
+<BorderPane styleClass="root-pane" stylesheets="@home-view.css,@profile-view.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bai_tap_lon.client.controller.ProfileController">
 
     <top>
-        <HBox styleClass="navbar" alignment="CENTER_LEFT" spacing="20">
+        <HBox alignment="CENTER_LEFT" spacing="20" styleClass="navbar">
             <padding>
-                <Insets top="10" right="25" bottom="10" left="25"/>
+                <Insets bottom="10" left="25" right="25" top="10" />
             </padding>
 
-            <Label text="BidderHolic" styleClass="logo"/>
+            <Label styleClass="logo" text="CÔNG TY 4N" textFill="#fbf7f7">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font></Label>
 
-            <Region HBox.hgrow="ALWAYS"/>
+            <Region HBox.hgrow="ALWAYS" />
 
             <!-- =========================  ADMIN NAV  ========================= -->
-            <HBox fx:id="adminNav" spacing="20" alignment="CENTER" visible="false" managed="false">
-                <Button text="Auction List"     styleClass="nav-link"                onAction="#goToAuctionList"/>
-                <Button text="Active Auction"   styleClass="nav-link"                onAction="#goToActiveAuctions"/>
-                <Button text="User Management"  styleClass="nav-link"                onAction="#goToUserManagement"/>
-                <Button text="Auction Approval" styleClass="nav-link"                onAction="#goToAuctionApproval"/>
-                <Button text="Reports"          styleClass="nav-link"                onAction="#goToReports"/>
-                <Button text="System Settings"  styleClass="nav-link"                onAction="#goToSystemSettings"/>
+            <HBox fx:id="adminNav" alignment="CENTER" managed="false" spacing="20" visible="false">
+                <Button onAction="#goToAuctionList" styleClass="nav-link" text="Auction List" />
+                <Button onAction="#goToActiveAuctions" styleClass="nav-link" text="Active Auction" />
+                <Button onAction="#goToUserManagement" styleClass="nav-link" text="User Management" />
+                <Button onAction="#goToAuctionApproval" styleClass="nav-link" text="Auction Approval" />
+                <Button onAction="#goToReports" styleClass="nav-link" text="Reports" />
+                <Button onAction="#goToSystemSettings" styleClass="nav-link" text="System Settings" />
             </HBox>
 
             <!-- =========================  SELLER NAV  ======================== -->
-            <HBox fx:id="sellerNav" spacing="20" alignment="CENTER" visible="false" managed="false">
-                <Button text="Auction List"    styleClass="nav-link"                onAction="#goToAuctionList"/>
-                <Button text="Active Auction"  styleClass="nav-link"                onAction="#goToActiveAuctions"/>
-                <Button text="Selling History" styleClass="nav-link"                onAction="#goToSellerHistory"/>
-                <Button text="Add Item"        styleClass="nav-link"                onAction="#goToAddItem"/>
+            <HBox fx:id="sellerNav" alignment="CENTER" managed="false" spacing="20" visible="false">
+                <Button onAction="#goToAuctionList" styleClass="nav-link" text="Auction List" />
+                <Button onAction="#goToActiveAuctions" styleClass="nav-link" text="Active Auction" />
+                <Button onAction="#goToSellerHistory" styleClass="nav-link" text="Selling History" />
+                <Button onAction="#goToAddItem" styleClass="nav-link" text="Add Item" />
             </HBox>
 
             <!-- =========================  BIDDER NAV  ======================== -->
-            <HBox fx:id="bidderNav" spacing="20" alignment="CENTER" visible="false" managed="false">
-                <Button text="Auction List"    styleClass="nav-link"                onAction="#goToAuctionList"/>
-                <Button text="Active Auction"  styleClass="nav-link"                onAction="#goToActiveAuctions"/>
-                <Button text="Bidding History" styleClass="nav-link"                onAction="#goToBiddingHistory"/>
-                <Button text="Watchlist"       styleClass="nav-link"                onAction="#goToWatchlist"/>
+            <HBox fx:id="bidderNav" alignment="CENTER" managed="false" spacing="20" visible="false">
+                <Button onAction="#goToAuctionList" styleClass="nav-link" text="Auction List" />
+                <Button onAction="#goToActiveAuctions" styleClass="nav-link" text="Active Auction" />
+                <Button onAction="#goToBiddingHistory" styleClass="nav-link" text="Bidding History" />
+                <Button onAction="#goToWatchlist" styleClass="nav-link" text="Watchlist" />
             </HBox>
 
-            <Region HBox.hgrow="ALWAYS"/>
+            <Region HBox.hgrow="ALWAYS" />
 
-            <HBox spacing="15" alignment="CENTER_RIGHT" styleClass="user-section">
-                <HBox spacing="12" alignment="CENTER">
+            <HBox alignment="CENTER_RIGHT" spacing="15" styleClass="user-section">
+                <HBox alignment="CENTER" spacing="12">
                     <Button fx:id="walletBtn" onAction="#goToWallet" styleClass="icon-btn" text="💳" />
                     <StackPane>
 
-                        <Button fx:id="bellBtn" text="🔔" styleClass="icon-btn" onAction="#onBell"/>
-                        <Label fx:id="notificationBadge" text="0" styleClass="badge" StackPane.alignment="TOP_RIGHT"/>
+                        <Button fx:id="bellBtn" onAction="#onBell" styleClass="icon-btn" text="🔔" />
+                        <Label fx:id="notificationBadge" styleClass="badge" text="0" StackPane.alignment="TOP_RIGHT" />
                     </StackPane>
                 </HBox>
 
-                <Separator orientation="VERTICAL" prefHeight="20" styleClass="sep"/>
+                <Separator orientation="VERTICAL" prefHeight="20" styleClass="sep" />
 
-                <HBox spacing="8" alignment="CENTER">
-                    <Label fx:id="userNameLabel" text="" styleClass="name"/>
+                <HBox alignment="CENTER" spacing="8">
+                    <Label fx:id="userNameLabel" styleClass="name" text="" />
                     <MenuButton mnemonicParsing="false" styleClass="avatar-menu">
                         <graphic>
-                            <Circle radius="14" fill="#00cda5"/>
+                            <Circle fill="#1a6b2a" radius="14" />
                         </graphic>
                         <items>
-                            <MenuItem text="Profile" onAction="#goToProfile"/>
-                            <SeparatorMenuItem/>
-                            <MenuItem text="Logout" onAction="#onLogout"/>
+                            <MenuItem onAction="#goToProfile" text="Profile" />
+                            <SeparatorMenuItem />
+                            <MenuItem onAction="#onLogout" text="Logout" />
                         </items>
                     </MenuButton>
                 </HBox>
@@ -79,98 +92,100 @@
     </top>
 
     <center>
-        <ScrollPane fitToWidth="true"
-                    hbarPolicy="NEVER"
-                    vbarPolicy="AS_NEEDED"
-                    styleClass="transparent-scroll">
+        <ScrollPane fitToWidth="true" hbarPolicy="NEVER" styleClass="transparent-scroll" vbarPolicy="AS_NEEDED">
 
             <content>
-                <VBox spacing="20" styleClass="profile-content">
+                <VBox prefHeight="377.0" prefWidth="543.0" spacing="20" style="-fx-region-background: #1a6b2a;" styleClass="profile-content">
                     <padding>
-                        <Insets top="24" right="32" bottom="24" left="32"/>
+                        <Insets bottom="24" left="32" right="32" top="24" />
                     </padding>
 
                     <!-- ── Profile Header Card ── -->
-                    <HBox spacing="24" alignment="CENTER_LEFT" styleClass="profile-header-card">
+                    <HBox alignment="CENTER_LEFT" spacing="24" styleClass="profile-header-card">
                         <StackPane styleClass="avatar-wrap">
-                            <Circle radius="48" fill="#00cda5"/>
+                            <Circle fill="#1a6b2a" radius="48" />
                             <!-- fx:id unique: avatarInitialLabel -->
-                            <Label fx:id="avatarInitialLabel" text="" styleClass="avatar-text"/>
+                            <Label fx:id="avatarInitialLabel" styleClass="avatar-text" text="" />
                         </StackPane>
 
-                        <VBox spacing="8" alignment="CENTER_LEFT">
+                        <VBox alignment="CENTER_LEFT" spacing="8">
                             <!-- fx:id unique: fullNameLabel -->
-                            <Label fx:id="fullNameLabel" text="" styleClass="profile-name"/>
-                            <HBox spacing="10" alignment="CENTER_LEFT">
+                            <Label fx:id="fullNameLabel" styleClass="profile-name" text="" />
+                            <HBox alignment="CENTER_LEFT" spacing="10">
                                 <!-- fx:id unique: headerRoleLabel (role pill ở header) -->
-                                <Label fx:id="headerRoleLabel" text="" styleClass="role-pill"/>
+                                <Label fx:id="headerRoleLabel" styleClass="role-pill" text="" />
                                 <!-- fx:id unique: statusLabel (isActive từ protocol) -->
-                                <Label fx:id="statusLabel" text="" styleClass="status-pill"/>
+                                <Label fx:id="statusLabel" styleClass="status-pill" text="" />
                             </HBox>
                         </VBox>
 
-                        <Region HBox.hgrow="ALWAYS"/>
+                        <Region HBox.hgrow="ALWAYS" />
 
-                        <HBox spacing="10" alignment="CENTER">
-                            <Button text="Change Password" styleClass="btn-outline" disable="true"/>
+                        <HBox alignment="CENTER" spacing="10">
+                            <Button disable="true" styleClass="btn-outline" text="Change Password" textFill="#040404" />
                         </HBox>
                     </HBox>
 
                     <!-- ── Basic Information Panel ── -->
                     <VBox spacing="14" styleClass="panel-card">
-                        <Label text="Basic Information" styleClass="panel-title"/>
+                        <Label styleClass="panel-title" text="Basic Information" />
 
                         <GridPane hgap="18" vgap="14">
                             <columnConstraints>
-                                <ColumnConstraints percentWidth="25"/>
-                                <ColumnConstraints percentWidth="25"/>
-                                <ColumnConstraints percentWidth="25"/>
-                                <ColumnConstraints percentWidth="25"/>
+                                <ColumnConstraints percentWidth="25" />
+                                <ColumnConstraints percentWidth="25" />
+                                <ColumnConstraints percentWidth="25" />
+                                <ColumnConstraints percentWidth="25" />
                             </columnConstraints>
 
-                            <Label text="User ID" styleClass="field-label" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                            <Label styleClass="field-label" text="User ID" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                             <!-- fx:id unique: userIdValue -->
-                            <Label fx:id="userIdValue" text="-" styleClass="field-value" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                            <Label fx:id="userIdValue" styleClass="field-value" text="-" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-                            <Label text="Join Date" styleClass="field-label" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+                            <Label styleClass="field-label" text="Join Date" GridPane.columnIndex="2" GridPane.rowIndex="0" />
                             <!-- fx:id unique: createdAtValue -->
-                            <Label fx:id="createdAtValue" text="-" styleClass="field-value" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+                            <Label fx:id="createdAtValue" styleClass="field-value" text="-" GridPane.columnIndex="3" GridPane.rowIndex="0" />
 
-                            <Label text="Username" styleClass="field-label" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                            <Label styleClass="field-label" text="Username" GridPane.columnIndex="0" GridPane.rowIndex="1" />
                             <!-- fx:id unique: usernameValue -->
-                            <Label fx:id="usernameValue" text="-" styleClass="field-value" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                            <Label fx:id="usernameValue" styleClass="field-value" text="-" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-                            <Label text="Email Address" styleClass="field-label" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+                            <Label prefHeight="15.0" prefWidth="115.0" styleClass="field-label" text="Email Address" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                             <!-- fx:id unique: emailValue -->
-                            <Label fx:id="emailValue" text="-" styleClass="field-value" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+                            <Label fx:id="emailValue" styleClass="field-value" text="-" GridPane.columnIndex="3" GridPane.rowIndex="1" />
 
-                            <Label text="Account Role" styleClass="field-label" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                            <Label styleClass="field-label" text="Account Role" GridPane.columnIndex="0" GridPane.rowIndex="2" />
                             <!-- fx:id unique: roleLabel (chỉ xuất hiện 1 lần, ở đây) -->
-                            <Label fx:id="roleLabel" text="-" styleClass="field-value" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                            <Label fx:id="roleLabel" styleClass="field-value" text="-" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-                            <Label fx:id="walletBalanceFieldLabel" text="Wallet Balance" styleClass="field-label" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
+                            <Label fx:id="walletBalanceFieldLabel" styleClass="field-label" text="Wallet Balance" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                             <!-- fx:id unique: walletBalanceLabel (chỉ xuất hiện 1 lần, ở đây) -->
-                            <Label fx:id="walletBalanceLabel" text="0 VNĐ" styleClass="field-value" GridPane.rowIndex="2" GridPane.columnIndex="3"/>
+                            <Label fx:id="walletBalanceLabel" styleClass="field-value" text="0 VNĐ" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                     <rowConstraints>
+                        <RowConstraints />
+                        <RowConstraints />
+                        <RowConstraints />
+                     </rowConstraints>
                         </GridPane>
                     </VBox>
 
                     <!-- ── Stat Cards ── -->
                     <HBox spacing="18">
-                        <VBox spacing="6" HBox.hgrow="ALWAYS" styleClass="stat-card">
-                            <Label text="Total Visited Auctions" styleClass="stat-title"/>
+                        <VBox spacing="6" styleClass="stat-card" HBox.hgrow="ALWAYS">
+                            <Label styleClass="stat-title" text="Total Visited Auctions" />
                             <!-- fx:id unique: joinedAuctionCountLabel -->
-                            <Label fx:id="joinedAuctionCountLabel" text="0" styleClass="stat-value"/>
+                            <Label fx:id="joinedAuctionCountLabel" styleClass="stat-value" text="0" />
                         </VBox>
 
-                        <VBox spacing="6" HBox.hgrow="ALWAYS" styleClass="stat-card">
-                            <Label text="Active Auction" styleClass="stat-title"/>
+                        <VBox spacing="6" styleClass="stat-card" HBox.hgrow="ALWAYS">
+                            <Label styleClass="stat-title" text="Active Auction" translateX="15.0" />
                             <!-- fx:id unique: activeAuctionCountLabel -->
-                            <Label fx:id="activeAuctionCountLabel" text="0" styleClass="stat-value"/>
+                            <Label fx:id="activeAuctionCountLabel" styleClass="stat-value" text="0" translateX="15.0" />
                         </VBox>
 
-                        <VBox fx:id="balanceStatCard" spacing="6" HBox.hgrow="ALWAYS" styleClass="stat-card">
+                        <VBox fx:id="balanceStatCard" spacing="6" styleClass="stat-card" HBox.hgrow="ALWAYS">
                             <!-- fx:id unique: balanceStatLabel (tách riêng khỏi walletBalanceLabel ở grid) -->
-                            <Label fx:id="balanceStatLabel" text="0 đ" styleClass="stat-value"/>
+                            <Label fx:id="balanceStatLabel" styleClass="stat-value" text="0 đ" translateX="-30.0" />
                         </VBox>
                     </HBox>
 

@@ -22,10 +22,10 @@
 <StackPane styleClass="root" stylesheets="@style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bai_tap_lon.client.controller.AddItemController">
     <children>
 
-        <VBox prefHeight="780.0" prefWidth="900.0">
+        <VBox prefHeight="780.0" prefWidth="900.0" style="-fx-background-color: #f0f7f0;">
 
             <!-- ══════════ TOP BAR ══════════ -->
-            <HBox alignment="CENTER_LEFT" minHeight="60.0" prefHeight="60.0" style="-fx-background-color: #0D1F3C;                          -fx-border-color: transparent transparent #1E3A5F transparent;                          -fx-border-width: 0 0 2 0;">
+            <HBox alignment="CENTER_LEFT" minHeight="60.0" prefHeight="60.0" style="-fx-background-color: #1a6b2a;                          -fx-border-color: transparent transparent #145220 transparent;                          -fx-border-width: 0 0 2 0;                          -fx-effect: dropshadow(gaussian, rgba(20,82,32,0.4), 8, 0.2, 0, 3);">
                 <padding><Insets left="30.0" right="30.0" /></padding>
                 <children>
                     <Button mnemonicParsing="false" onAction="#onBack" styleClass="text-link" text="← Back" />
@@ -48,8 +48,8 @@
                             <!-- ─────────────────────────────────────── -->
                             <VBox spacing="16.0" styleClass="form-card">
                                 <children>
-                                    <Label style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #64FFDA;" text="📋  Basic Information" />
-                                    <Separator style="-fx-background-color: #1E3A5F;" />
+                                    <Label style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #1a6b2a;" text="📋  Basic Information" />
+                                    <Separator style="-fx-background-color: #a5d6a7;" />
 
                                     <!-- Row 1: Item Name (60%) + Category (40%) -->
                                     <GridPane hgap="16.0" vgap="0.0">
@@ -60,35 +60,32 @@
                                         <children>
                                             <VBox spacing="5.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
                                                 <children>
-                                                    <Label styleClass="radio-button" text="ITEM NAME  *">
-                                          <font>
-                                             <Font size="10.0" />
-                                          </font></Label>
+                                                    <Label styleClass="radio-button" text="ITEM NAME  *" textFill="#191717">
+                                                        <font><Font size="10.0" /></font>
+                                                    </Label>
                                                     <TextField fx:id="fieldName" maxWidth="Infinity" promptText="e.g. Vintage Guitar 1968" styleClass="input-line" />
                                                 </children>
                                             </VBox>
                                             <VBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
                                                 <children>
-                                                    <Label styleClass="radio-button" text="CATEGORY  *">
-                                          <font>
-                                             <Font size="10.0" />
-                                          </font></Label>
+                                                    <Label styleClass="radio-button" text="CATEGORY  *" textFill="#262525">
+                                                        <font><Font size="10.0" /></font>
+                                                    </Label>
                                                     <ComboBox fx:id="comboCategory" maxWidth="Infinity" prefWidth="Infinity" promptText="Select category..." styleClass="combo-box-dark" />
                                                 </children>
                                             </VBox>
                                         </children>
-                              <rowConstraints>
-                                 <RowConstraints />
-                              </rowConstraints>
+                                        <rowConstraints>
+                                            <RowConstraints />
+                                        </rowConstraints>
                                     </GridPane>
 
                                     <!-- Description (full width) -->
                                     <VBox spacing="5.0">
                                         <children>
-                                            <Label styleClass="radio-button" text="DESCRIPTION">
-                                    <font>
-                                       <Font size="10.0" />
-                                    </font></Label>
+                                            <Label styleClass="radio-button" text="DESCRIPTION" textFill="#100f0f">
+                                                <font><Font size="10.0" /></font>
+                                            </Label>
                                             <TextArea fx:id="fieldDescription" prefHeight="110.0" promptText="Describe your item — condition, origin, specs..." styleClass="text-area-dark" wrapText="true" />
                                         </children>
                                     </VBox>
@@ -96,20 +93,19 @@
                                     <!-- ═══ IMAGE UPLOAD ZONE ═══ -->
                                     <VBox spacing="8.0">
                                         <children>
-                                            <Label styleClass="radio-button" text="ITEM IMAGE">
-                                    <font>
-                                       <Font size="10.0" />
-                                    </font></Label>
+                                            <Label styleClass="radio-button" text="ITEM IMAGE" textFill="#161616">
+                                                <font><Font size="10.0" /></font>
+                                            </Label>
 
                                             <!-- Upload / Drop Zone (click to pick file) -->
-                                            <StackPane fx:id="imageUploadZone" onDragDropped="#onImageDragDropped" onDragOver="#onImageDragOver" onMouseClicked="#onChooseImageMouse" prefHeight="180.0" style="-fx-background-color: #0A192F;                                                               -fx-border-color: #1E3A5F;                                                               -fx-border-style: dashed;                                                               -fx-border-width: 2;                                                               -fx-border-radius: 10;                                                               -fx-background-radius: 10;                                                               -fx-cursor: hand;">
+                                            <StackPane fx:id="imageUploadZone" onDragDropped="#onImageDragDropped" onDragOver="#onImageDragOver" onMouseClicked="#onChooseImageMouse" prefHeight="180.0" style="-fx-background-color: #f8fdf8;                                                               -fx-border-color: #2e8b40;                                                               -fx-border-style: dashed;                                                               -fx-border-width: 2;                                                               -fx-border-radius: 10;                                                               -fx-background-radius: 10;                                                               -fx-cursor: hand;">
 
                                                 <!-- Placeholder (shown when no image) -->
                                                 <VBox fx:id="uploadPlaceholder" alignment="CENTER" spacing="10.0">
                                                     <children>
                                                         <Label style="-fx-font-size: 36px;" text="📁" />
-                                                        <Label style="-fx-text-fill: #CCD6F6;                                                                       -fx-font-size: 14px;                                                                       -fx-font-weight: bold;" text="Click to upload  or  drag &amp; drop" />
-                                                        <Label style="-fx-text-fill: #4A5B7A;                                                                       -fx-font-size: 12px;" text="PNG, JPG, WEBP  —  max 10 MB" />
+                                                        <Label style="-fx-text-fill: #1a6b2a;                                                                       -fx-font-size: 14px;                                                                       -fx-font-weight: bold;" text="Click to upload  or  drag &amp; drop" />
+                                                        <Label style="-fx-text-fill: #6aad78;                                                                       -fx-font-size: 12px;" text="PNG, JPG, WEBP  —  max 10 MB" />
                                                     </children>
                                                 </VBox>
 
@@ -122,8 +118,8 @@
                                             <HBox alignment="CENTER_LEFT" spacing="10.0">
                                                 <children>
                                                     <!-- Hidden field keeps the path/URL for controller -->
-                                                    <TextField fx:id="fieldImageUrl" editable="false" maxWidth="Infinity" promptText="No file chosen" style="-fx-text-fill: #8892B0;                                                                       -fx-font-size: 12px;" styleClass="input-line" HBox.hgrow="ALWAYS" />
-                                                    <Button mnemonicParsing="false" onAction="#onChooseImageAction" style="-fx-background-color: #1E3A5F;                                                                    -fx-border-color: #64FFDA;                                                                    -fx-border-radius: 6;                                                                    -fx-background-radius: 6;                                                                    -fx-text-fill: #64FFDA;                                                                    -fx-font-weight: bold;                                                                    -fx-cursor: hand;                                                                    -fx-padding: 7 18 7 18;" text="📂  Browse" />
+                                                    <TextField fx:id="fieldImageUrl" editable="false" maxWidth="Infinity" promptText="No file chosen" style="-fx-text-fill: #1a6b2a; -fx-font-size: 12px;" styleClass="input-line" HBox.hgrow="ALWAYS" />
+                                                    <Button mnemonicParsing="false" onAction="#onChooseImageAction" style="-fx-background-color: #1a6b2a;                                                                    -fx-border-color: #ffffff;                                                                    -fx-border-radius: 6;                                                                    -fx-background-radius: 6;                                                                    -fx-text-fill: #ffffff;                                                                    -fx-font-weight: bold;                                                                    -fx-cursor: hand;                                                                    -fx-padding: 7 18 7 18;" text="📂  Browse" />
                                                     <Button fx:id="btnRemoveImage" managed="false" mnemonicParsing="false" onAction="#onRemoveImage" style="-fx-background-color: transparent;                                                                    -fx-border-color: #FF6B6B;                                                                    -fx-border-radius: 6;                                                                    -fx-background-radius: 6;                                                                    -fx-text-fill: #FF6B6B;                                                                    -fx-cursor: hand;                                                                    -fx-padding: 7 14 7 14;" text="✕  Remove" visible="false" />
                                                 </children>
                                             </HBox>
@@ -141,8 +137,8 @@
                             <!-- Electronics -->
                             <VBox fx:id="panelElectronics" managed="false" spacing="16.0" styleClass="form-card" visible="false">
                                 <children>
-                                    <Label style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #64FFDA;" text="🔌  Electronics Details" />
-                                    <Separator style="-fx-background-color: #1E3A5F;" />
+                                    <Label style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #1a6b2a;" text="🔌  Electronics Details" />
+                                    <Separator style="-fx-background-color: #a5d6a7;" />
                                     <GridPane hgap="16.0">
                                         <columnConstraints>
                                             <ColumnConstraints hgrow="ALWAYS" percentWidth="60.0" />
@@ -162,9 +158,9 @@
                                                 </children>
                                             </VBox>
                                         </children>
-                              <rowConstraints>
-                                 <RowConstraints />
-                              </rowConstraints>
+                                        <rowConstraints>
+                                            <RowConstraints />
+                                        </rowConstraints>
                                     </GridPane>
                                 </children>
                             </VBox>
@@ -172,8 +168,8 @@
                             <!-- Art -->
                             <VBox fx:id="panelArt" managed="false" spacing="16.0" styleClass="form-card" visible="false">
                                 <children>
-                                    <Label style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #64FFDA;" text="🎨  Art Details" />
-                                    <Separator style="-fx-background-color: #1E3A5F;" />
+                                    <Label style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #1a6b2a;" text="🎨  Art Details" />
+                                    <Separator style="-fx-background-color: #a5d6a7;" />
                                     <GridPane hgap="16.0">
                                         <columnConstraints>
                                             <ColumnConstraints hgrow="ALWAYS" percentWidth="60.0" />
@@ -193,9 +189,9 @@
                                                 </children>
                                             </VBox>
                                         </children>
-                              <rowConstraints>
-                                 <RowConstraints />
-                              </rowConstraints>
+                                        <rowConstraints>
+                                            <RowConstraints />
+                                        </rowConstraints>
                                     </GridPane>
                                 </children>
                             </VBox>
@@ -203,8 +199,8 @@
                             <!-- Vehicle -->
                             <VBox fx:id="panelVehicle" managed="false" spacing="16.0" styleClass="form-card" visible="false">
                                 <children>
-                                    <Label style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #64FFDA;" text="🚗  Vehicle Details" />
-                                    <Separator style="-fx-background-color: #1E3A5F;" />
+                                    <Label style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #1a6b2a;" text="🚗  Vehicle Details" />
+                                    <Separator style="-fx-background-color: #a5d6a7;" />
                                     <GridPane hgap="16.0">
                                         <columnConstraints>
                                             <ColumnConstraints hgrow="ALWAYS" percentWidth="60.0" />
@@ -224,9 +220,9 @@
                                                 </children>
                                             </VBox>
                                         </children>
-                              <rowConstraints>
-                                 <RowConstraints />
-                              </rowConstraints>
+                                        <rowConstraints>
+                                            <RowConstraints />
+                                        </rowConstraints>
                                     </GridPane>
                                 </children>
                             </VBox>
@@ -236,8 +232,8 @@
                             <!-- ─────────────────────────────────────── -->
                             <VBox spacing="16.0" styleClass="form-card">
                                 <children>
-                                    <Label style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #64FFDA;" text="💰  Pricing &amp; Auction Duration" />
-                                    <Separator style="-fx-background-color: #1E3A5F;" />
+                                    <Label style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #1a6b2a;" text="💰  Pricing &amp; Auction Duration" />
+                                    <Separator style="-fx-background-color: #a5d6a7;" />
 
                                     <!-- Row 1: Starting Price (60%) + Duration Minutes (40%) -->
                                     <GridPane hgap="16.0" vgap="0.0">
@@ -250,9 +246,8 @@
                                             <VBox spacing="5.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
                                                 <children>
                                                     <Label styleClass="radio-button" text="STARTING PRICE (VNĐ)  *">
-                                          <font>
-                                             <Font size="10.0" />
-                                          </font></Label>
+                                                        <font><Font size="10.0" /></font>
+                                                    </Label>
                                                     <TextField fx:id="fieldStartingPrice" maxWidth="Infinity" promptText="e.g. 500000" styleClass="input-line" />
                                                 </children>
                                             </VBox>
@@ -260,16 +255,15 @@
                                             <VBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
                                                 <children>
                                                     <Label styleClass="radio-button" text="DURATION (MINUTES)  *">
-                                          <font>
-                                             <Font size="10.0" />
-                                          </font></Label>
+                                                        <font><Font size="10.0" /></font>
+                                                    </Label>
                                                     <TextField fx:id="fieldDurationMinutes" maxWidth="Infinity" promptText="5 – 10080 (max 7 days)" styleClass="input-line" />
                                                 </children>
                                             </VBox>
                                         </children>
-                              <rowConstraints>
-                                 <RowConstraints />
-                              </rowConstraints>
+                                        <rowConstraints>
+                                            <RowConstraints />
+                                        </rowConstraints>
                                     </GridPane>
 
                                     <!-- Row 2: Start Date + Time (HH:mm:ss) -->
@@ -282,9 +276,7 @@
                                             <VBox spacing="5.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
                                                 <children>
                                                     <Label styleClass="radio-button" text="START DATE  *">
-                                                        <font>
-                                                            <Font size="10.0" />
-                                                        </font>
+                                                        <font><Font size="10.0" /></font>
                                                     </Label>
                                                     <DatePicker fx:id="pickerStartDate" maxWidth="Infinity" styleClass="combo-box-dark" />
                                                 </children>
@@ -292,9 +284,7 @@
                                             <VBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
                                                 <children>
                                                     <Label styleClass="radio-button" text="START TIME (HH:mm:ss)  *">
-                                                        <font>
-                                                            <Font size="10.0" />
-                                                        </font>
+                                                        <font><Font size="10.0" /></font>
                                                     </Label>
                                                     <TextField fx:id="fieldStartTimeClock" maxWidth="Infinity" promptText="e.g. 09:30:00" styleClass="input-line" />
                                                 </children>
