@@ -59,7 +59,10 @@
             <HBox alignment="CENTER" prefHeight="77.0" prefWidth="512.0" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="7">
                <children>
                   <Label alignment="CENTER" styleClass="radio-button" text="Your account has existed ?" translateX="40.0" />
-                  <Button minWidth="42.0" mnemonicParsing="false" onAction="#switchToLogin" prefHeight="28.0" prefWidth="59.0" styleClass="text-link" stylesheets="@style.css" text="Log in" translateX="40.0" />
+                  <Button minWidth="42.0" mnemonicParsing="false" onAction="#switchToLogin" prefHeight="28.0" prefWidth="70.0" styleClass="text-link" stylesheets="@style.css" text="Log in" textFill="#1a6b2a" translateX="40.0">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Button>
                </children>
             </HBox>
             <PasswordField fx:id="regPassword" promptText="At least 6 character" styleClass="input-line" GridPane.columnIndex="1" GridPane.rowIndex="4" />
