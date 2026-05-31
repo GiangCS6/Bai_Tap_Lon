@@ -58,7 +58,7 @@
               <shadedClassifierName>server</shadedClassifierName>
               <transformers>
                 <transformer>
-                  <mainClass>com.example.bai_tap_lon.server.network.ServerLauncher</mainClass>
+                  <mainClass>package bai_tap_lon.server.network</mainClass>
                 </transformer>
               </transformers>
             </configuration>
