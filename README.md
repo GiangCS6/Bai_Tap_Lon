@@ -218,15 +218,11 @@ Có thể chạy nhiều Client để mô phỏng nhiều người dùng tham gi
 
 ### Báo cáo
 
-```text
-BÁO CÁO BÀI TẬP LỚN MÔN LTNC.pdf
-```
+https://drive.google.com/file/d/1lxVYww8aUfMQl85tc8BANrXxEocKn378/view?usp=sharing
 
 ### Video Demo
 
-```text
-lv_0_20260531222418.mp4
-```
+https://drive.google.com/file/d/1E3Cj7yUpIfdZkWr-seEI9A0GbSPlP0MB/view?usp=sharing
 
 ---
 
