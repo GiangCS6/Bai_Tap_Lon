@@ -5,6 +5,7 @@ module com.example.bai_tap_lon {
     requires com.google.gson;
     requires jdk.httpserver;
     requires java.net.http;
+    requires mysql.connector.j;
 
     /*opens bai_tap_lon to javafx.fxml;
     opens bai_tap_lon.common.model to com.google.gson;

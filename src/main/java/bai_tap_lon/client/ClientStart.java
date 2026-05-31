@@ -30,7 +30,7 @@ public class ClientStart extends Application {
     // ──────────────────────────────────────────────────────
     //  CONFIG
     // ──────────────────────────────────────────────────────
-    private static final String SERVER_HOST = "192.168.1.15";
+    private static final String SERVER_HOST = "localhost";
     private static final int    SERVER_PORT = 8000;
 
     private static final String FXML_LOGIN  = "/viewfxml/Login.fxml";
