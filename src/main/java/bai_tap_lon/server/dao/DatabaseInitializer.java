@@ -107,11 +107,11 @@ public class DatabaseInitializer {
             // Users
             stmt.execute("""
                 CREATE TABLE IF NOT EXISTS users (
-                    id TEXT PRIMARY KEY,
-                    username TEXT UNIQUE NOT NULL,
-                    password TEXT NOT NULL,
-                    email TEXT UNIQUE NOT NULL,
-                    role TEXT NOT NULL CHECK(role IN ('BIDDER', 'SELLER', 'ADMIN')),
+                    id VARCHAR(255) PRIMARY KEY,
+                    username VARCHAR(255) UNIQUE NOT NULL,
+                    password VARCHAR(255) NOT NULL,
+                    email VARCHAR(255) UNIQUE NOT NULL,
+                    role VARCHAR(255) NOT NULL CHECK(role IN ('BIDDER', 'SELLER', 'ADMIN')),
                     isActive BOOLEAN DEFAULT 1,
                     is_deleted BOOLEAN DEFAULT 0,
                     balance INTEGER DEFAULT 0,
@@ -122,14 +122,14 @@ public class DatabaseInitializer {
             // Items - IMPORTANT: must have item_name
             stmt.execute("""
                 CREATE TABLE IF NOT EXISTS items (
-                    id TEXT PRIMARY KEY,
-                    item_name TEXT NOT NULL,
-                    description TEXT,
+                    id VARCHAR(255) PRIMARY KEY,
+                    item_name VARCHAR(255) NOT NULL,
+                    description VARCHAR(255),
                     starting_price INTEGER DEFAULT 0,
-                    category TEXT,
-                    seller_id TEXT,
-                    image_Url TEXT,
-                    attributes TEXT,
+                    category VARCHAR(255),
+                    seller_id VARCHAR(255),
+                    image_Url VARCHAR(255),
+                    attributes VARCHAR(255),
                     create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     FOREIGN KEY (seller_id) REFERENCES users(id) ON DELETE CASCADE
                 )
@@ -138,13 +138,13 @@ public class DatabaseInitializer {
             // Auctions
             stmt.execute("""
                 CREATE TABLE IF NOT EXISTS auctions (
-                    id TEXT PRIMARY KEY,
-                    item_id TEXT,
-                    status TEXT DEFAULT 'OPEN',
+                    id VARCHAR(255) PRIMARY KEY,
+                    item_id VARCHAR(255),
+                    status VARCHAR(255) DEFAULT 'OPEN',
                     current_price INTEGER DEFAULT 0,
-                    start_time TEXT,
-                    end_time TEXT,
-                    winner_id TEXT,
+                    start_time VARCHAR(255),
+                    end_time VARCHAR(255),
+                    winner_id VARCHAR(255),
                     is_deleted BOOLEAN DEFAULT 0,
                     FOREIGN KEY (item_id) REFERENCES items(id) ON DELETE CASCADE
                 )
@@ -153,9 +153,9 @@ public class DatabaseInitializer {
             // Bids
             stmt.execute("""
                 CREATE TABLE IF NOT EXISTS bids (
-                    id TEXT PRIMARY KEY,
-                    auction_id TEXT,
-                    bidder_id TEXT,
+                    id VARCHAR(255) PRIMARY KEY,
+                    auction_id VARCHAR(255),
+                    bidder_id VARCHAR(255),
                     amount INTEGER NOT NULL,
                     bid_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     FOREIGN KEY (auction_id) REFERENCES auctions(id) ON DELETE CASCADE,
@@ -166,8 +166,8 @@ public class DatabaseInitializer {
             // Watchlist
             stmt.execute("""
                 CREATE TABLE IF NOT EXISTS user_watched_auctions (
-                    user_id TEXT,
-                    auction_id TEXT,
+                    user_id VARCHAR(255),
+                    auction_id VARCHAR(255),
                     added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     PRIMARY KEY (user_id, auction_id),
                     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
@@ -178,9 +178,9 @@ public class DatabaseInitializer {
             // Auto Bid Settings - Added this block
             stmt.execute("""
                 CREATE TABLE IF NOT EXISTS auto_bid_settings (
-                    id TEXT PRIMARY KEY,
-                    bidder_id TEXT NOT NULL,
-                    auction_id TEXT NOT NULL,
+                    id VARCHAR(255) PRIMARY KEY,
+                    bidder_id VARCHAR(255) NOT NULL,
+                    auction_id VARCHAR(255) NOT NULL,
                     max_bid INTEGER NOT NULL,
                     increment INTEGER NOT NULL DEFAULT 1000,
                     is_active BOOLEAN DEFAULT 1,
